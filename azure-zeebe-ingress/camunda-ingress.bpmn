@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0hcqb1t" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.0.0">
+  <bpmn:process id="Process_0khkenk" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_3gglo2m">{
+  "components": [
+    {
+      "label": "How are you today?",
+      "type": "textfield",
+      "id": "Field_1slzjtq",
+      "key": "field_1dssrwz",
+      "validate": {
+        "minLength": 3,
+        "maxLength": 200
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_024cebu",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}</zeebe:userTaskForm>
+      <zeebe:userTaskForm id="userTaskForm_3nojg6u">{
+  "components": [
+    {
+      "label": "How are you today?",
+      "type": "textfield",
+      "id": "Field_1slzjtq",
+      "key": "field_1dssrwz",
+      "validate": {
+        "minLength": 3,
+        "maxLength": 200
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_024cebu",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1yjt8fi</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1yjt8fi" sourceRef="StartEvent_1" targetRef="Activity_05rp2jh" />
+    <bpmn:endEvent id="Event_0audujt">
+      <bpmn:incoming>Flow_0rc3soh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_11sq1q5" sourceRef="Activity_05rp2jh" targetRef="Activity_1xw1vkv" />
+    <bpmn:userTask id="Activity_05rp2jh" name="Simple User Task">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_3gglo2m" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1yjt8fi</bpmn:incoming>
+      <bpmn:outgoing>Flow_11sq1q5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0rc3soh" sourceRef="Activity_1xw1vkv" targetRef="Event_0audujt" />
+    <bpmn:userTask id="Activity_1xw1vkv" name="Another Task">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_3nojg6u" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11sq1q5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rc3soh</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0khkenk">
+      <bpmndi:BPMNEdge id="Flow_1yjt8fi_di" bpmnElement="Flow_1yjt8fi">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11sq1q5_di" bpmnElement="Flow_11sq1q5">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="420" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rc3soh_di" bpmnElement="Flow_0rc3soh">
+        <di:waypoint x="520" y="117" />
+        <di:waypoint x="562" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lhgngb_di" bpmnElement="Activity_05rp2jh">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0audujt_di" bpmnElement="Event_0audujt">
+        <dc:Bounds x="562" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nzkpyd_di" bpmnElement="Activity_1xw1vkv">
+        <dc:Bounds x="420" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

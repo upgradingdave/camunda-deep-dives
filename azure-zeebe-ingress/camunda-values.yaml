@@ -1,0 +1,77 @@
+# Chart values for the Camunda Platform 8 Helm chart.
+# This file deliberately contains only the values that differ from the defaults.
+# For changes and documentation, use your favorite diff tool to compare it with:
+# https://github.com/camunda/camunda-platform-helm/blob/main/charts/camunda-platform/values.yaml
+
+global:
+  identity:
+    auth:
+      # Disable the Identity authentication for small environment
+      # it will fall back to basic-auth: demo/demo as default user
+      enabled: false
+  image:
+    tag: latest
+  elasticsearch:
+    disableExporter: false
+
+identity:
+  enabled: false
+
+optimize:
+  enabled: false
+
+operate:
+  enabled: true
+  env:
+    - name: SERVER_SERVLET_CONTEXT_PATH
+      value: "/operate"
+
+tasklist:
+  enabled: true
+  env:
+    - name: SERVER_SERVLET_CONTEXT_PATH
+      value: "/tasklist"
+
+# prometheusServiceMonitor:
+#  enabled: false
+
+# elasticsearch:
+#   enabled: false
+
+zeebe:
+  clusterSize: 1
+  partitionCount: 1
+  replicationFactor: 1
+  pvcSize: 10Gi
+  affinity: null
+  env:
+    - name: ZEEBE_BROKER_EXPERIMENTAL_DISABLEEXPLICITRAFTFLUSH
+      value: "true"
+
+zeebe-gateway:
+  replicas: 1
+
+  # Configure elastic search to make it running for small environment
+  elasticsearch:
+    imageTag: 7.17.3
+    replicas: 1
+    minimumMasterNodes: 1
+    # Allow no backup for single node setups
+    clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+
+    # Allocate smaller chunks of memory per pod.
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "512M"
+      limits:
+        cpu: "1000m"
+        memory: "512M"
+
+    # Request smaller persistent volumes.
+    volumeClaimTemplate:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 15Gi

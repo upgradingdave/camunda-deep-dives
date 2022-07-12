@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "How are you today?",
+      "type": "textfield",
+      "id": "Field_1slzjtq",
+      "key": "field_1dssrwz",
+      "validate": {
+        "minLength": 3,
+        "maxLength": 200
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_024cebu",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}

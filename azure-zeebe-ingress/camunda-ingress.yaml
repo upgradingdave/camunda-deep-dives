@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: camunda
+  name: camunda-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: CHANGEME.eastus2.cloudapp.azure.com
+      http:
+        paths:
+          - path: /operate
+            pathType: Prefix
+            backend:
+              service:
+                name: camunda8-operate
+                port:
+                  number: 80
+          - path: /tasklist
+            pathType: Prefix
+            backend:
+              service:
+                name: camunda8-tasklist
+                port:
+                  number: 80
+  tls:
+  - secretName: tls-secret
+    hosts:
+      - CHANGEME.eastus2.cloudapp.azure.com
