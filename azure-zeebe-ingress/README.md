@@ -115,7 +115,7 @@ At this point, I like to check to make sure Camunda services are up. Since we ha
 way to access the services. Use the following command to temporarily open a port on our localhost network so we can
 check on things: 
 
-     kubectl port-forward svc/camunda8-operate  8081:80
+     kubectl port-forward svc/camunda8-operate  8081:80 --namespace camunda
 
 Now, you should be able to see operate up and running here: 
 
@@ -127,6 +127,8 @@ If that comes up, congrats! You're getting close!
 
 Here's the command I used to create an ingress controller. Note that I created my ingress controller inside a namespace
 called `ingress-basic`. See this link for more info: https://docs.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#create-an-ingress-controller
+
+     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
      helm install nginx-ingress ingress-nginx/ingress-nginx \
        --version 4.1.3 \
