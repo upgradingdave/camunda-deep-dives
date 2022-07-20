@@ -4,14 +4,13 @@
 
 When creating a Zeebe Kubernetes Environment based on the 
 [helm charts](https://github.com/camunda/camunda-platform-helm), each 
-Zeebe Broker will create a persistent volume claim, for example, "data-camunda-zeebe-0". 
+`Zeebe` Broker will create a persistent volume claim along with a corresponding persistent volume,
+for example, "data-camunda-zeebe-0". 
 
-Each elastic search instance will also create a persistent volume claim, for example:  
+Each `elasticsearch` replica will also create a pvc and pv, for example:  
 "elasticsearch-master-elasticsearch-master-0".
 
-Each of these claims are tied to a corresponding persistent volume (see below).
-
-In this example, I created a cluster with 3 `zeebe` brokers and 3 `elasticsearch` pods.
+The screenshots below show the pvc's and pv's created in a cluster with 3 `zeebe` brokers and 3 `elasticsearch` pods.
 
 Here are the Persistent Volume Claims created: 
 
@@ -21,7 +20,7 @@ Here are the Persistent Volumes created:
 
 <img src="pv.png" alt="Persistent Volumes">
 
-It's possible to customize the following via `values.yaml` file: 
+It's possible to control the following for zeebe brokers via `values.yaml` file: 
 
 | Section | Parameter | Description | Default |
 |-|-|-|-|
@@ -29,7 +28,7 @@ It's possible to customize the following via `values.yaml` file:
 | | `pvcAccessModes` | Can be used to configure the [persistent volume claim access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) | `[ "ReadWriteOnce" ]` |
 | | `pvcStorageClassName` | Can be used to set the storage class name which should be used by the persistent volume claim. It is recommended to use a storage class, which is backed with a SSD. | ` ` |
 
-And, `elasticsearch` can be customized as described [here](https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml):
+And, `elasticsearch` volume claims can be customized as described [here](https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml). For example: 
 
      volumeClaimTemplate:
        accessModes: ["ReadWriteOnce"]
