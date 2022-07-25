@@ -2,19 +2,38 @@
 
 <img src="https://img.shields.io/badge/Tutorial%20Reference%20Project-Tutorials%20for%20getting%20started%20with%20Camunda-%2338A3E1" alt="A blue badge that reads: 'Tutorial Reference Project - Tutorials for getting started with Camunda'">
 
-Usually (especially from a security perspective) it's best to limit the ports and services exposed from a Kubernetes Cluster to http and https. 
-But, sometimes it might be convenient to access Zeebe Gateway from outside your Kubernetes Cluster.
+Usually (especially from a security perspective) it's best to limit the ports and services exposed from a Kubernetes 
+Cluster as much as possible. But, sometimes it might be convenient (and even necessary) to access Zeebe Gateway from 
+outside your Kubernetes Cluster.
 
-This project is a record of how I created an Azure Kubernetes Cluster from scratch and configured a nginx ingress
-to serve gRPC traffic to a Zeebe Gateway. 
+The following is a write up of how I created an Azure Kubernetes Camunda Cluster from scratch. And then I describe how 
+it's possible to open network traffic communication between Zeebe Brokers and an outside network.
 
-## Disclaimer
+Note that the "outside network" can either be the public internet, or it could also refer to a private virtual network.
 
-I am not an Azure expert by any stretch of the imagination! There very well could be better ways to configure Azure to get this same result. 
+Also, because Camunda is often an integral part of a larger network, sometimes it can be difficult to understand where
+Camunda ends and the larger network begins. So, just to be clear: nothing I discuss here is specific to Camunda. This 
+task of opening the Zeebe port to a network is very similar to opening a network port to a database, or to an
+email server. 
 
-This is a proof of concept / research project. Hopefully it will give you ideas on what's possible.  
+Ok, now that all that boring stuff is out of the way(!) here are 2 strategies to open access to your zeebe brokers: 
 
-## Create an Azure Account
+1. [Configure a Nginx Ingress](#) 
+
+This is convenient for when you want to open traffic to the public internet over https/tls on port 443.  
+
+Note that this uses a Layer 7 load balancer. Layer 7 provides more control over routing, however due to the 
+implementation of Nginx support for grpc, this option requires setting up tls certificates. In other words, the 
+connection must be made over tls in order for the nginx ingress to allow grpc communication.
+
+2. [Kubernetes Load Balancer Service](#)
+
+This is probably more convenient for opening backend communication between networks. 
+
+This solution uses networking Layer 4. This option gives less control over routing, but it's a direct connection over 
+TCP which, in some cases, might be more convenient than having to go thru nginx.
+
+# Create an Azure Account
 
 If you don't already have one, sign up for a new Azure Account. At the time of this writing, you can sign up for a free
 account with a $200 free credit. 
@@ -123,7 +142,15 @@ Now, you should be able to see operate up and running here:
 
 If that comes up, congrats! You're getting close!
 
-## Create a nginx ingress controller
+Now you have 2 options (actually, to be precise, there are many, many options, but here are at least 2):
+
+- [Create a nginx ingress controller](#)
+- [Create a load balancer type service](#)
+
+# Create a nginx ingress controller
+
+Again, this option is very convenient for opening connection to a public ip address. This option requires you to setup a custom dns name and valid tls 
+certificate. Another option, that doesn't require certificates is to use a Kubernetes Load Balance Service [describe here]().
 
 Here's the command I used to create an ingress controller. Note that I created my ingress controller inside a namespace
 called `ingress-basic`. See this link for more info: https://docs.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#create-an-ingress-controller
@@ -224,7 +251,7 @@ Then, run the following command.
 
      kubectl apply -f zeebe-ingress.yaml
 
-Now you should be able to connect over gRPC on port 26500. Use `zbctl` to confirm that it's working: 
+Now you should be able to connect over gRPC on port 26500. Use `zbctl` to confirm that it's working:
 
     zbctl --address camundadave.eastus2.cloudapp.azure.com:443 status
 
@@ -239,11 +266,60 @@ Version: 8.0.4
 Partition 1 : Leader, Healthy
 ```
 
-You can even try deploying a process if you'd like: 
+You can even try deploying a process if you'd like:
 
     zbctl --address camundadave.eastus2.cloudapp.azure.com:443 deploy camunda-ingress.bpmn
 
-## Cleaning up
+# Create Kubernetes Load Balancer Service
+
+This option establishes a load balancer that manages traffic over TCP. This can be a great option 
+for internal communication between different networks. 
+
+By this point, I assume you have a Azure Kubernetes cluster running a Camunda environment. Your Camunda Kubernetes 
+cluster should contain a service called `camunda-zeebe-gateway`. For example, it will look something like this:
+
+    $ kubectl get service camunda-zeebe-gateway --namespace camunda
+
+    NAME                    TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)              AGE
+    camunda-zeebe-gateway   ClusterIP   10.0.63.140   <none>        9600/TCP,26500/TCP   3h1m
+
+Notice this service only has a Cluster-IP. In other words, only Nodes in the cluster can communicate with this service. 
+
+We can create another Kubernetes Service of type "Load Balancer" to route traffic between the Kubernetes Cluster and an
+outside network. Again, this "outside" network can be the public internet or a virtual private network. This depends on 
+how you configure your Azure Load balancer. 
+
+Run the following: 
+
+     $ kubectl apply -f ./zeebe-loadbalancer.yaml
+
+This creates a new Kubenetes Service.  
+
+    kubectl get service zeebe-lb --namespace camunda
+
+    NAME       TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)           AGE
+    zeebe-lb   LoadBalancer   10.0.103.248   20.237.59.201   26500:32314/TCP   11m
+
+Notice that we now have a external ip to connect. This is because, behind the scenes, Azure will create a corresponding 
+Azure Load Balance Object that connects this external ip address to the kubernetes service loadbalancer. 
+
+Note that if you run this command from a on prem environment, the "external ip address" most likely will not be completly
+publicly available. It completely depends on how you have configured your network.
+
+Now you should be able to connect over gRPC on port 26500 to the `EXTERNAL-IP`. Use `zbctl` to confirm that it's 
+working:
+
+    $ zbctl --address 20.237.59.201:26500 --insecure status
+
+Note that the connection is not `tls` enabled. If you need to encrypt the traffic over `tls`, you have more work to do.
+But it should be as simple as configuring this new Azure IP address with a corresponding tls certificate. This is no 
+different than configuring a web server ip address with a tls cerficate. 
+
+You can even try deploying a process if you'd like:
+
+    zbctl --address 20.237.59.201:26500 --insecure deploy camunda-ingress.bpmn
+
+# Cleaning up
 
 Don't forget to clean things up so that you're not charged!
 
