@@ -291,7 +291,7 @@ how you configure your Azure Load balancer.
 
 Run the following: 
 
-     $ kubectl apply -f ./zeebe-loadbalancer.yaml
+     $ kubectl apply -f ./zeebe-lb.yaml
 
 This creates a new Kubenetes Service.  
 
@@ -300,24 +300,25 @@ This creates a new Kubenetes Service.
     NAME       TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)           AGE
     zeebe-lb   LoadBalancer   10.0.103.248   20.237.59.201   26500:32314/TCP   11m
 
-Notice that we now have a external ip to connect. This is because, behind the scenes, Azure will create a corresponding 
-Azure Load Balance Object that connects this external ip address to the kubernetes service loadbalancer. 
-
-Note that if you run this command from a on prem environment, the "external ip address" most likely will not be completly
-publicly available. It completely depends on how you have configured your network.
-
-Now you should be able to connect over gRPC on port 26500 to the `EXTERNAL-IP`. Use `zbctl` to confirm that it's 
+Now you should be able to connect over gRPC on port 26500 to the `EXTERNAL-IP`. Use `zbctl` to confirm that it's
 working:
 
     $ zbctl --address 20.237.59.201:26500 --insecure status
 
-Note that the connection is not `tls` enabled. If you need to encrypt the traffic over `tls`, you have more work to do.
-But it should be as simple as configuring this new Azure IP address with a corresponding tls certificate. This is no 
-different than configuring a web server ip address with a tls cerficate. 
-
 You can even try deploying a process if you'd like:
 
     zbctl --address 20.237.59.201:26500 --insecure deploy camunda-ingress.bpmn
+
+A few notes: 
+
+- Notice that we now have an "external ip". This is because, behind the scenes, Azure will create a corresponding 
+Azure Load Balance Object that connects this external ip address to the kubernetes service loadbalancer. 
+
+- Note that if you run this command from an internal network (such as an on premise Azure environment), the "external 
+ip address" most likely will not be completely publicly available.
+
+- Note that this connection is not `tls` enabled. However, configuring this ip address to be encrypted by tls should be 
+  no different then configuring a web server's ip address with a tls certificate.
 
 # Cleaning up
 
