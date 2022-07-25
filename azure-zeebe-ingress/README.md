@@ -18,7 +18,7 @@ email server.
 
 Ok, now that all that boring stuff is out of the way(!) here are 2 strategies to open access to your zeebe brokers: 
 
-1. [Configure a Nginx Ingress](#) 
+1. [Configure a Nginx Ingress](#create-a-nginx-ingress-controller) 
 
 This is convenient for when you want to open traffic to the public internet over https/tls on port 443.  
 
@@ -26,7 +26,7 @@ Note that this uses a Layer 7 load balancer. Layer 7 provides more control over 
 implementation of Nginx support for grpc, this option requires setting up tls certificates. In other words, the 
 connection must be made over tls in order for the nginx ingress to allow grpc communication.
 
-2. [Kubernetes Load Balancer Service](#)
+2. [Kubernetes Load Balancer Service](#create-kubernetes-load-balancer-service)
 
 This is probably more convenient for opening backend communication between networks. 
 
@@ -144,13 +144,13 @@ If that comes up, congrats! You're getting close!
 
 Now you have 2 options (actually, to be precise, there are many, many options, but here are at least 2):
 
-- [Create a nginx ingress controller](#)
-- [Create a load balancer type service](#)
+- [Create a nginx ingress controller](#create-a-nginx-ingress-controller)
+- [Create a load balancer type service](#create-kubernetes-load-balancer-service)
 
 # Create a nginx ingress controller
 
 Again, this option is very convenient for opening connection to a public ip address. This option requires you to setup a custom dns name and valid tls 
-certificate. Another option, that doesn't require certificates is to use a Kubernetes Load Balance Service [describe here]().
+certificate. Another option, that doesn't require certificates is to use a Kubernetes Load Balance Service [describe here](#create-kubernetes-load-balancer-service).
 
 Here's the command I used to create an ingress controller. Note that I created my ingress controller inside a namespace
 called `ingress-basic`. See this link for more info: https://docs.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#create-an-ingress-controller
