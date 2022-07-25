@@ -311,8 +311,9 @@ You can even try deploying a process if you'd like:
 
 A few notes: 
 
-- Notice that we now have an "external ip". This is because, behind the scenes, Azure will create a corresponding 
-Azure Load Balance Object that connects this external ip address to the kubernetes service loadbalancer. 
+- Notice that we now have an "external ip". This is because, behind the scenes, Azure will associate a new 
+"Front End IP Configuration" Address with the existing "kubernetes" Azure Load Balancer. This can be configured using
+all the standard Azure objects including Network Security Groups, etc, to ALLOW or DENY traffic as needed. 
 
 - Note that if you run this command from an internal network (such as an on premise Azure environment), the "external 
 ip address" most likely will not be completely publicly available.
