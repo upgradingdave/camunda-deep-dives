@@ -1,0 +1,84 @@
+{
+  "components": [
+    {
+      "text": "## Please Review the following Information",
+      "type": "text",
+      "id": "Field_1m6bl2n"
+    },
+    {
+      "text": "### Personal Details",
+      "type": "text",
+      "id": "Field_1ys37dh"
+    },
+    {
+      "label": "First Name",
+      "type": "textfield",
+      "id": "Field_02mixz4",
+      "key": "field_firstName",
+      "disabled": true
+    },
+    {
+      "label": "Last Name",
+      "type": "textfield",
+      "id": "Field_1w9xd43",
+      "key": "field_lastName",
+      "disabled": true
+    },
+    {
+      "text": "### Address",
+      "type": "text",
+      "id": "Field_0tm8oyb"
+    },
+    {
+      "label": "Street",
+      "type": "textfield",
+      "id": "Field_0oswl3g",
+      "key": "field_street",
+      "disabled": true
+    },
+    {
+      "label": "City",
+      "type": "textfield",
+      "id": "Field_0cxnoja",
+      "key": "field_city",
+      "disabled": true
+    },
+    {
+      "label": "State",
+      "type": "textfield",
+      "id": "Field_0k7170c",
+      "key": "field_state",
+      "disabled": true
+    },
+    {
+      "label": "Zip Code",
+      "type": "textfield",
+      "id": "Field_0je8k8f",
+      "key": "field_zipCode",
+      "disabled": true
+    },
+    {
+      "label": "Edit before submitting",
+      "type": "checkbox",
+      "id": "Field_00bpxzy",
+      "key": "field_needsEdit",
+      "defaultValue": false
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "id": "Field_0xwroxk",
+      "key": "field_1eurp52"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0j2bli5",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}

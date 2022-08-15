@@ -1,0 +1,56 @@
+{
+  "components": [
+    {
+      "label": "Street",
+      "type": "textfield",
+      "id": "Field_14kdc9c",
+      "key": "field_street",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "City",
+      "type": "textfield",
+      "id": "Field_0l4ylhu",
+      "key": "field_city",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "State",
+      "type": "textfield",
+      "id": "Field_00d4ztv",
+      "key": "field_state",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Zip Code",
+      "type": "textfield",
+      "id": "Field_0krqtlt",
+      "key": "field_zipCode",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "id": "Field_0c3tbya",
+      "key": "field_18v3hvs"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1gdh582",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}

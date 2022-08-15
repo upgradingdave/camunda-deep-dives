@@ -1,0 +1,36 @@
+{
+  "components": [
+    {
+      "label": "Last Name",
+      "type": "textfield",
+      "id": "Field_1b4bm3o",
+      "key": "field_lastName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Enter Address?",
+      "type": "checkbox",
+      "id": "Field_1g2pqj9",
+      "key": "field_enterAddress",
+      "description": "Check this box if you want to enter your address"
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "id": "Field_10bri64",
+      "key": "field_11c5v9m"
+    }
+  ],
+  "type": "default",
+  "id": "Form_13qlifx",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}
