@@ -35,7 +35,7 @@ public final class ProcessSolutionResponse {
 
   public static ProcessSolutionResponse withResult(
       String responseType, Map<String, Object> processVariables, Object result) {
-    final var response = new ProcessSolutionResponse();
+    final ProcessSolutionResponse response = new ProcessSolutionResponse();
     response.setResponseType(responseType);
     response.setVariables(processVariables);
     response.setResult(result);
@@ -46,7 +46,7 @@ public final class ProcessSolutionResponse {
     Map<String, Object> errorInfo = new HashMap<>();
     errorInfo.put("errorType", errorType);
     errorInfo.put("errorMessage", error.getMessage());
-    final var response = new ProcessSolutionResponse();
+    final ProcessSolutionResponse response = new ProcessSolutionResponse();
     response.setError(errorInfo);
     return response;
   }

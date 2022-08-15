@@ -1,5 +1,6 @@
 package org.example.camunda.process.solution.facade;
 
+import java.util.Map;
 import org.example.camunda.process.solution.model.ProcessSolutionRequest;
 import org.example.camunda.process.solution.model.ProcessSolutionResponse;
 import org.example.camunda.process.solution.service.ZeebeService;
@@ -10,8 +11,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Map;
 
 @Controller
 public class SocketController {

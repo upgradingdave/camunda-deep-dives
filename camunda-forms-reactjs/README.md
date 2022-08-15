@@ -2,20 +2,13 @@
 ![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-0072Ce)
 [![](https://img.shields.io/badge/Lifecycle-Incubating-blue)](https://github.com/Camunda-Community-Hub/community/blob/main/extension-lifecycle.md#incubating-)
 
-# Process Solution Template for Camunda Platform 8 using Java and Spring Boot
+# Camunda Forms, ReactJs, and Websockets Example
 
-This repository contains a Java application template for Camunda Platform 8 using Spring Boot
-and a [docker-compose.yaml](docker-compose.yaml) file for local development. For production setups we recommend to use our [helm charts](https://docs.camunda.io/docs/self-managed/platform-deployment/kubernetes-helm/).
+This project shows an example of how to write custom code to display User Task Forms in Camunda 8
 
-- [Documentation](https://docs.camunda.io)
-- [Camunda Platform SaaS](https://camunda.io)
-- [Getting Started Guide](https://github.com/camunda/camunda-platform-get-started)
-- [Releases](https://github.com/camunda/camunda-platform/releases)
-- [Helm Charts](https://helm.camunda.io/)
-- [Zeebe Workflow Engine](https://github.com/camunda/zeebe)
-- [Contact](https://docs.camunda.io/contact/)
+If you were looking for a more mature, ready-to-use solution, checkout the [Camunda Tasklist](https://docs.camunda.io/docs/next/components/tasklist/introduction-to-tasklist/). 
 
-## Using the Spring Boot application
+# Backend
 
 The application requires a running Zeebe engine.
 You can run Zeebe locally using the instructions below for Docker Compose
@@ -24,10 +17,28 @@ or have a look at our
 
 Run the application via
 ```
-./mvnw spring-boot:run
+./mvn spring-boot:run
 ```
 
-Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+By default, the application should start listening on port 8080. Try opening your browser to http://localhost:8080.  
+
+# Frontend
+
+The `reactjs` directory contains a [ReactJs](https://reactjs.org/) application. A prebuilt version of this application 
+is already available under src/main/html
+
+## How it works
+
+This project uses a combination of the [Camunda 8 Task List GraphQL API](https://docs.camunda.io/docs/next/apis-clients/tasklist-api/tasklist-api-overview/) 
+and the [Zeebe Client GRPC API](https://docs.camunda.io/docs/next/apis-clients/grpc/) to retrieve, display, and complete user tasks
+
+## Dependencies
+
+- This project is loosely based on the [Camunda 8 Process Solution](https://github.com/camunda-community-hub/camunda-8-process-solution-template)
+- The [Camunda Forms](https://github.com/bpmn-io/form-js) javascript library is used to render forms
+- The [Stomp Js](https://stomp-js.github.io/) javascript library is used to send Simple Text Oriented Messaging Protocol
+  (STOMP) messages over websockets
+-  is used to implement a single page web client
 
 ## Using docker-compose
 

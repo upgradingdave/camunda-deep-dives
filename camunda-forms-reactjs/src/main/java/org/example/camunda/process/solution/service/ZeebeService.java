@@ -2,14 +2,13 @@ package org.example.camunda.process.solution.service;
 
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.CompleteJobResponse;
-import org.example.camunda.process.solution.config.ProcessSolutionConfiguration;
-import org.example.camunda.process.solution.model.ProcessSolutionResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
+import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,12 +16,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.IOException;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.example.camunda.process.solution.config.ProcessSolutionConfiguration;
+import org.example.camunda.process.solution.model.ProcessSolutionResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 @Service
 public class ZeebeService {
@@ -65,7 +65,7 @@ public class ZeebeService {
   }
 
   public ProcessSolutionResponse startProcess(String processId, Map<String, Object> variables) {
-    final var processInstanceResult =
+    final ProcessInstanceEvent processInstanceResult =
         zeebe
             .newCreateInstanceCommand()
             .bpmnProcessId(processId)
