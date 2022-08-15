@@ -2,6 +2,12 @@
 
 <img src="https://img.shields.io/badge/Tutorial%20Reference%20Project-Tutorials%20for%20getting%20started%20with%20Camunda-%2338A3E1" alt="A blue badge that reads: 'Tutorial Reference Project - Tutorials for getting started with Camunda'">
 
+
+> :information_source: **Heads up!** Check out the [Camunda 8 Greenfield](https://github.com/camunda-community-hub/camunda8-greenfield-installation)
+> repository for an easier way to quickly create and start a Camunda 8 Environment in AWS.  
+> The [Camunda 8 Greenfield](https://github.com/camunda-community-hub/camunda8-greenfield-installation) project provides
+> `make` files that automate the steps described below
+
 The following is a writeup of how to install Camunda with a nginx ingress on AWS. 
 
 ## Create AWS Cluster

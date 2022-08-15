@@ -1,5 +1,9 @@
 <img src="https://img.shields.io/badge/Tutorial%20Reference%20Project-Tutorials%20for%20getting%20started%20with%20Camunda-%2338A3E1" alt="A blue badge that reads: 'Tutorial Reference Project - Tutorials for getting started with Camunda'">
 
+> :information_source: **Heads up!** Check out the [Camunda 8 Greenfield](https://github.com/camunda-community-hub/camunda8-greenfield-installation)
+> repository for an easy way to quickly create and start a Camunda 8 Environment in Azure. After creating your kubernetes
+> cluster, you'll be able to easily see the Persistent Volume Claims that are created by default
+ 
 ### Persistent Volumes and Persistent Volume Claims in Azure
 
 When creating a Zeebe Kubernetes Environment based on the 
