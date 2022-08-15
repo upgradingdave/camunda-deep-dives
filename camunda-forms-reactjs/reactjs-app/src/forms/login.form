@@ -9,7 +9,7 @@
       }
     },
     {
-      "label": "Care Recipient Id",
+      "label": "User Id",
       "type": "textfield",
       "id": "Field_1kf29yv",
       "key": "field_userId",

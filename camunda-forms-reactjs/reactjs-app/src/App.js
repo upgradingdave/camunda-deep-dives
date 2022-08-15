@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Form } from '@bpmn-io/form-js-viewer';
 import Login from './Login';
+import AppScreen from './AppScreen';
 import {Stomp} from '@stomp/stompjs';
 
 const sockUrl = 'ws://localhost:8080/ws';
 let stompClient = null;
 
 const initial = {
-    user: { userId: null },
+    user: { userId: localStorage.getItem("userId") },
     bpmnForm: null,
     schema: null,
     processVariables: {},
@@ -39,8 +40,11 @@ class App extends Component {
     wsConnect = () => {
         stompClient = Stomp.client(sockUrl);
         let onProcessEvent = this.onProcessEvent.bind(this);
+        let userId = this.state.user.userId;
+        let onFormReady = this.onFormReady.bind(this);
         stompClient.onConnect = function(frame){
             stompClient.subscribe('/topic/process', onProcessEvent);
+            stompClient.subscribe('/topic/forms/'+userId, onFormReady)
         };
 
         stompClient.onStompError =function(frame) {
@@ -87,14 +91,26 @@ class App extends Component {
         this.handleForm(schema);
     }
 
+    init = () => {
+        console.log("init");
+        if(this.state.user.userId) {
+            this.wsConnect();
+            this.setState({screen: "home"});
+            //this.startProcess(userId);
+        }
+    }
+
     onLogin = (result) => {
         this.setState({processVariables: merge(this.state.processVariables, result.data)});
-        let userId = result.data.field_userId;
-        if(userId) {
-            this.setState({user: {userId: userId}});
-            stompClient.subscribe('/topic/forms/'+userId, this.onFormReady)
-            this.startProcess(userId);
-        }
+        this.setState({user: {userId: result.data.field_userId}});
+        localStorage.setItem("userId", result.data.field_userId);
+        this.init();
+    }
+
+    onLogout = (result) => {
+        stompClient.deactivate();
+        this.setState({user: {userId: null}});
+        localStorage.removeItem("userId");
     }
 
     doTaskComplete = (e, results) => {
@@ -104,7 +120,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.wsConnect();
+        this.init();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -133,12 +149,24 @@ class App extends Component {
             if(this.state.screen === "waiting") {
 
                 return (
-                    <div>Processing ...</div>
-                )
+                  <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
+                      <div>Processing ...</div>
+                  </AppScreen>)
+
+            } else if(this.state.screen === "home") {
+
+                return (
+                  <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
+                      <div></div>
+                  </AppScreen>
+                );
 
             } else if(this.state.screen === "loadForm" || this.state.screen === "form") {
 
-                return (<div id={"form"}></div>);
+                return (
+                  <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
+                      <div id={"form"}></div>
+                  </AppScreen>);
 
             } else if (this.state.screen === "tasks") {
 
@@ -146,22 +174,25 @@ class App extends Component {
                   <li key={task.id}><button id={task.id} onClick={this.onTaskClick}>{task.name}></button>[ {task.id} ]</li>
                 );
 
-                return (<ul>{listItems}</ul>);
+                return (
+                  <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
+                      <ul>{listItems}</ul>
+                  </AppScreen>);
 
             } else if (this.state.screen === "task") {
 
                 return (
-                    <div>
-                        <div>Loading Task ...</div>
-                    </div>
+                  <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
+                      <div>Loading Task ...</div>
+                  </AppScreen>
                 );
 
             } else {
 
                 return (
-                    <div>
-                        <div>Hmm, not sure what to do?</div>
-                    </div>
+                  <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
+                      <div>Hmm, not sure what to do?</div>
+                  </AppScreen>
                 );
 
             }
@@ -170,10 +201,12 @@ class App extends Component {
 
             // User is not Authenticated
             return (
+              <AppScreen userId={this.state.user.userId} onlogout={this.onLogout}>
                 <Login
                     data={this.state.processVariables}
                     onSubmit={this.onLogin}
                 />
+              </AppScreen>
             )
 
         }
