@@ -8,7 +8,7 @@
 
 This is a summary of persistence volumes that are created by default when using the Camunda Greenfield Project to create a Camunda environment in a AWS EKS cluster. 
 
-Recommending which is the "best" type of storage to use is too complex to answer, especially since every environment has unique requirements. But hopefully the following notes will help shed some light on how many and which types of persistent volumes are created in order to help you design and plan for your specific installation.
+Recommending which is the "best" type of ebs storage is too complex to answer, especially since every environment has unique requirements. But hopefully the following notes will help shed some light on how many and which types of persistent volumes are created in order to help you design and plan for your specific installation.
 
 ### Storage Types/Class
 
@@ -42,15 +42,15 @@ The screenshots below show the pvc's and pv's created in a cluster with 3 `zeebe
 
 Here are the Persistent Volume Claims created: 
 
-![PVC](Screen Shot 2022-09-23 at 1.40.41 PM.png)
+<img src="Screen Shot 2022-09-23 at 1.40.41 PM.png" alt="Persistent Volumes">
 
 Here are the Persistent Volumes created (one volume for each claim above)
 
-![PV](Screen Shot 2022-09-23 at 1.47.35 PM.png)
+<img src="Screen Shot 2022-09-23 at 1.47.35 PM.png" alt="Persistent Volumes">
 
-Here's a view from the EC2 / Volumes Admin Screen. I believe the three, 32GiB pvc volumes are the brokers, the 2 64GiB volumes are used by the elasticsearch nodes, and the [8GiB](https://github.com/helm/charts/tree/master/stable/postgresql) is used by postgresql which is used by keycloak: 
+Here's a view from the EC2 / Volumes Admin Screen. I believe the three, 32GiB pvc volumes are the brokers, the 2 64GiB volumes are used by the elasticsearch nodes, and the [8GiB](https://github.com/helm/charts/tree/master/stable/postgresql) is used by postgresql which is used by keycloak:
 
-![EC2 Volumes](Screen Shot 2022-09-23 at 1.48.31 PM.png)
+<img src="Screen Shot 2022-09-23 at 1.48.31 PM.png" alt="Persistent Volumes">
 
 It's possible to control the following for zeebe brokers via `values.yaml` file: 
 
