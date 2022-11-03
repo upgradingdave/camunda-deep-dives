@@ -3,7 +3,6 @@ package org.example.camunda.lambda;
 import io.camunda.zeebe.client.CredentialsProvider;
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ZeebeService {
@@ -35,11 +34,9 @@ public class ZeebeService {
     this.zeebeClient = zeebeClient;
   }
 
-  public String createInstance() {
+  public String createInstance(Map<String, Object> variables) {
 
     String bpmnProcessId = "Process_tripBooking";
-    Map<String, String> variables = new HashMap<>();
-    variables.put("name", "dave");
 
     final ProcessInstanceEvent event =
         zeebeClient
