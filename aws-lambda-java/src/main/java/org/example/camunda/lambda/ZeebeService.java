@@ -34,7 +34,7 @@ public class ZeebeService {
     this.zeebeClient = zeebeClient;
   }
 
-  public String createInstance(Map<String, Object> variables) {
+  public long createInstance(Map<String, Object> variables) {
 
     String bpmnProcessId = "Process_tripBooking";
 
@@ -47,6 +47,6 @@ public class ZeebeService {
             .send()
             .join();
 
-    return "Process Instance Key: " + event.getProcessDefinitionKey();
+    return event.getProcessDefinitionKey();
   }
 }
