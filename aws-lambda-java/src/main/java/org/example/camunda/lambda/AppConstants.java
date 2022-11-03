@@ -1,10 +1,14 @@
 package org.example.camunda.lambda;
 
 public class AppConstants {
-  final static String ZEEBE_CLUSTER_ID = "";
-  final static String ZEEBE_CLIENT_ID = "";
-  final static String ZEEBE_CLIENT_SECRET = "";
-  final static String ZEEBE_REGION = "bru-2";
-  final static String ZEEBE_AUTHORIZATION_SERVER_URL = "https://login.cloud.camunda.io/oauth/token";
-  final static String ZEEBE_ADDRESS = ZEEBE_CLUSTER_ID + "." + ZEEBE_REGION + ".zeebe.camunda.io:443";
+
+  static final String BASE_ADDRESS = "zeebe.camunda.io";
+  static final String BASE_AUTH_URL = "https://login.cloud.camunda.io/oauth/token";
+  static final String DEFAULT_REGION = "bru-2";
+  static final String ZEEBE_CLUSTER_ID = "";
+  static final String ZEEBE_CLIENT_ID = "";
+  static final String ZEEBE_CLIENT_SECRET = "";
+
+  static final String ZEEBE_ADDRESS =
+      ZEEBE_CLUSTER_ID + "." + DEFAULT_REGION + "." + BASE_ADDRESS + "443";
 }
