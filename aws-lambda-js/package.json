@@ -1,0 +1,17 @@
+{
+  "name": "camunda-lambda-example",
+  "version": "1.0.0",
+  "description": "Example of using zeebe client in lambda function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "camunda"
+  ],
+  "author": "Dave Paroulek",
+  "license": "ISC",
+  "dependencies": {
+    "zeebe-node": "^8.1.2"
+  }
+}
