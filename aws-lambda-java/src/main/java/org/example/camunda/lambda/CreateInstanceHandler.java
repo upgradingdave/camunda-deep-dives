@@ -4,13 +4,10 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import java.util.Map;
 
-public class CreateInstanceHandler implements RequestHandler {
+public class CreateInstanceHandler implements RequestHandler<Map<String, Object>, String> {
 
   @Override
-  public Object handleRequest(Object input, Context context) {
-
-    Map<String, Object> variables =
-        (Map<String, Object>) JsonUtils.toObject((String) input, Map.class);
+  public String handleRequest(Map<String, Object> variables, Context context) {
     ZeebeService zeebeService = new ZeebeService(ZeebeService.fromAppConstants());
     return zeebeService.createInstance(variables);
   }
