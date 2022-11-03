@@ -10,5 +10,5 @@ public class AppConstants {
   static final String ZEEBE_CLIENT_SECRET = "";
 
   static final String ZEEBE_ADDRESS =
-      ZEEBE_CLUSTER_ID + "." + DEFAULT_REGION + "." + BASE_ADDRESS + "443";
+      ZEEBE_CLUSTER_ID + "." + DEFAULT_REGION + "." + BASE_ADDRESS + ":443";
 }

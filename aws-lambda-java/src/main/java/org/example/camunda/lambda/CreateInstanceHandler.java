@@ -8,7 +8,7 @@ public class CreateInstanceHandler implements RequestHandler {
   @Override
   public Object handleRequest(Object input, Context context) {
 
-    ZeebeService zeebeService = new ZeebeService();
+    ZeebeService zeebeService = new ZeebeService(ZeebeService.fromAppConstants());
     return zeebeService.createInstance();
   }
 }

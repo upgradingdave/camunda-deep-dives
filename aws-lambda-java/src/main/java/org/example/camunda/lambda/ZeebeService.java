@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ZeebeService {
 
-  public String createInstance() {
+  public static ZeebeClient fromAppConstants() {
     CredentialsProvider cp =
         CredentialsProvider.newCredentialsProviderBuilder()
             .audience(
@@ -20,14 +20,22 @@ public class ZeebeService {
             .clientId(AppConstants.ZEEBE_CLIENT_ID)
             .clientSecret(AppConstants.ZEEBE_CLIENT_SECRET)
             .authorizationServerUrl(AppConstants.BASE_AUTH_URL)
-            .credentialsCachePath("/tmp/zeebeCache")
+            .credentialsCachePath("/tmp/zeebe/cache")
             .build();
 
-    ZeebeClient zeebeClient =
-        ZeebeClient.newClientBuilder()
-            .credentialsProvider(cp)
-            .gatewayAddress(AppConstants.ZEEBE_ADDRESS)
-            .build();
+    return ZeebeClient.newClientBuilder()
+        .credentialsProvider(cp)
+        .gatewayAddress(AppConstants.ZEEBE_ADDRESS)
+        .build();
+  }
+
+  ZeebeClient zeebeClient;
+
+  public ZeebeService(ZeebeClient zeebeClient) {
+    this.zeebeClient = zeebeClient;
+  }
+
+  public String createInstance() {
 
     String bpmnProcessId = "Process_tripBooking";
     Map<String, String> variables = new HashMap<>();

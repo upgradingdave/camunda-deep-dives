@@ -6,7 +6,8 @@ public class ZeebeServiceTest {
 
   @Test
   public void testCreateInstance() {
-    ZeebeService zeebeService = new ZeebeService();
+    ZeebeService zeebeService = new ZeebeService(ZeebeService.fromAppConstants());
+    // ZeebeService zeebeService = new ZeebeService();
     zeebeService.createInstance();
   }
 }
