@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="3bcc823" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" camunda:diagramRelationId="9d11982c-60f8-4d54-939e-39fc3d683b7d">
+  <bpmn:process id="Process_tripBooking" name="Trip Booking" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Trip requested">
+      <bpmn:outgoing>Flow_06xgseg</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_06xgseg" sourceRef="StartEvent_1" targetRef="Activity_1450ebz" />
+    <bpmn:exclusiveGateway id="Gateway_07k4ig0" name="Successful?" default="Flow_05nt00g">
+      <bpmn:incoming>Flow_1jcqrmh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hqxsz0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_05nt00g</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1jcqrmh" sourceRef="Activity_1450ebz" targetRef="Gateway_07k4ig0" />
+    <bpmn:sequenceFlow id="Flow_0hqxsz0" name="yes" sourceRef="Gateway_07k4ig0" targetRef="Activity_1dr84nw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=bookHotelPayload.bookHotelResult</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_05nt00g" name="no" sourceRef="Gateway_07k4ig0" targetRef="Activity_06p95za" />
+    <bpmn:manualTask id="Activity_1dr84nw" name="Book car">
+      <bpmn:incoming>Flow_0hqxsz0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0y2za1c</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_06p95za" name="Cancel hotel">
+      <bpmn:incoming>Flow_05nt00g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e9jacc</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_0a5k9d9">
+      <bpmn:incoming>Flow_1e9jacc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1e9jacc" sourceRef="Activity_06p95za" targetRef="Event_0a5k9d9" />
+    <bpmn:endEvent id="Event_0jzawua">
+      <bpmn:incoming>Flow_0y2za1c</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0y2za1c" sourceRef="Activity_1dr84nw" targetRef="Event_0jzawua" />
+    <bpmn:serviceTask id="Activity_1450ebz" name="Book hotel" zeebe:modelerTemplate="io.camunda.connectors.AWSLAMBDA.v1" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg width=&#39;18&#39; height=&#39;18&#39; viewBox=&#39;0 0 48 48&#39; version=&#39;1.1&#39; xmlns=&#39;http://www.w3.org/2000/svg&#39; xmlns:xlink=&#39;http://www.w3.org/1999/xlink&#39;%3E%3Ctitle%3EIcon-Resource/Compute/Res_Amazon-Lambda_Lambda-Function_48_Light%3C/title%3E%3Cg id=&#39;Icon-Resource/Compute/Res_Amazon-Lambda_Lambda-Function_48&#39; stroke=&#39;none&#39; stroke-width=&#39;1&#39; fill=&#39;none&#39; fill-rule=&#39;evenodd&#39;%3E%3Cpath d=&#39;M24,44 C12.972,44 4,35.028 4,24 C4,12.972 12.972,4 24,4 C35.028,4 44,12.972 44,24 C44,35.028 35.028,44 24,44 L24,44 Z M24,2 C11.869,2 2,11.869 2,24 C2,36.131 11.869,46 24,46 C36.131,46 46,36.131 46,24 C46,11.869 36.131,2 24,2 L24,2 Z M17.231,35.25 L11.876,35.25 L18.221,21.959 L20.902,27.492 L17.231,35.25 Z M19.114,19.215 C18.946,18.87 18.597,18.651 18.214,18.651 L18.211,18.651 C17.826,18.652 17.477,18.874 17.312,19.221 L9.389,35.819 C9.24,36.129 9.262,36.493 9.445,36.783 C9.628,37.074 9.947,37.25 10.291,37.25 L17.864,37.25 C18.251,37.25 18.603,37.027 18.769,36.678 L22.915,27.915 C23.044,27.642 23.043,27.323 22.911,27.051 L19.114,19.215 Z M36.125,35.25 L30.673,35.25 L20.761,13.953 C20.597,13.601 20.243,13.375 19.854,13.375 L16.251,13.375 L16.255,9.25 L23.475,9.25 L33.339,30.545 C33.503,30.898 33.856,31.125 34.246,31.125 L36.125,31.125 L36.125,35.25 Z M37.125,29.125 L34.885,29.125 L25.021,7.83 C24.856,7.477 24.503,7.25 24.113,7.25 L15.256,7.25 C14.704,7.25 14.257,7.697 14.256,8.249 L14.25,14.374 C14.25,14.64 14.355,14.894 14.543,15.082 C14.73,15.27 14.984,15.375 15.25,15.375 L19.217,15.375 L29.129,36.672 C29.293,37.024 29.646,37.25 30.035,37.25 L37.125,37.25 C37.678,37.25 38.125,36.803 38.125,36.25 L38.125,30.125 C38.125,29.572 37.678,29.125 37.125,29.125 L37.125,29.125 Z&#39; id=&#39;Amazon-Lambda-Lambda-Function_Resource-Icon_light-bg&#39; fill=&#39;%23D45B07&#39;%3E%3C/path%3E%3C/g%3E%3C/svg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:aws-lambda:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="sync" target="awsFunction.operationType" />
+          <zeebe:input source="us-east-1" target="awsFunction.region" />
+          <zeebe:input source="secrets.AWS_SECRET_ACCESS_KEY" target="authentication.secretKey" />
+          <zeebe:input source="secrets.AWS_ACCESS_KEY_ID" target="authentication.accessKey" />
+          <zeebe:input source="={&#34;event&#34;: &#34;bookHotel&#34;}" target="awsFunction.payload" />
+          <zeebe:input source="arn:aws:lambda:us-east-1:487945211782:function:DavePJavaLambdaFunction" target="awsFunction.functionName" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="bookHotelResponse" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;bookHotelStatusCode&#34;: response.statusCode,&#10;  &#34;bookHotelPayload&#34;: response.payload&#10;}" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06xgseg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jcqrmh</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_tripBooking">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="133" y="143" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_07k4ig0_di" bpmnElement="Gateway_07k4ig0" isMarkerVisible="true">
+        <dc:Bounds x="395" y="93" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="390" y="63" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0decohh_di" bpmnElement="Activity_1dr84nw">
+        <dc:Bounds x="500" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y1wgxr_di" bpmnElement="Activity_06p95za">
+        <dc:Bounds x="500" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a5k9d9_di" bpmnElement="Event_0a5k9d9">
+        <dc:Bounds x="532" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jzawua_di" bpmnElement="Event_0jzawua">
+        <dc:Bounds x="662" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0p18r1j_di" bpmnElement="Activity_1450ebz">
+        <dc:Bounds x="240" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_06xgseg_di" bpmnElement="Flow_06xgseg">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="240" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jcqrmh_di" bpmnElement="Flow_1jcqrmh">
+        <di:waypoint x="340" y="118" />
+        <di:waypoint x="395" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hqxsz0_di" bpmnElement="Flow_0hqxsz0">
+        <di:waypoint x="445" y="118" />
+        <di:waypoint x="500" y="118" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="464" y="100" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05nt00g_di" bpmnElement="Flow_05nt00g">
+        <di:waypoint x="420" y="143" />
+        <di:waypoint x="420" y="230" />
+        <di:waypoint x="500" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="429" y="184" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e9jacc_di" bpmnElement="Flow_1e9jacc">
+        <di:waypoint x="550" y="270" />
+        <di:waypoint x="550" y="332" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y2za1c_di" bpmnElement="Flow_0y2za1c">
+        <di:waypoint x="600" y="118" />
+        <di:waypoint x="662" y="118" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
