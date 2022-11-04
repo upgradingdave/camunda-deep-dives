@@ -8,9 +8,9 @@ Here are the steps to see this working:
 2. Edit `AppConstants.java` and add your cluster id, client id, and secret. Note that this code can be improved to use Environment variables, but for now, these values are hard coded. 
 3. Use the following command to compile and build a jar file: 
 ```shell
-mvn clean install`
+mvn clean install
 ```
-4. Create a new AWS Lambda function. For example, I named mine `DavePJavaLambdaFunction`. I chose to run on Java 8 on Amazon Linux 2. 
+4. Create a new AWS Lambda function. For example, I named mine `DavePJavaLambdaFunction`. I chose to run on `Java 8 on Amazon Linux 2`. 
 5. After the Lambda is created, go to `Code` in the Lambda config screen and click `Upload from`. Choose `.zip or .jar file` and upload the `target/camunda-lambda-example-1.0.0-SNAPSHOT.jar`
 6. Under `Runtime Settings` in the Lambda config screen, click edit. Configure the Handler to use `org.example.camunda.lambda.LambdaFunction::handleRequest`. 
 7. Upload the `src/main/resources/trip-booking.bpm` to your SaaS web modeler (or open in desktop modeler). 
@@ -30,3 +30,13 @@ AWS_SECRET_ACCESS_KEY
   "event": "createInstance"
 }
 ```
+
+The instance will move to the "Book Hotel" Lambda Connector Task which will call the Lambda function again, this time passing a payload like this: 
+
+```json
+{
+  "event": "bookHotel"
+}
+```
+
+The result is parsed and used as a condition in side a process instance gateway decision. 
