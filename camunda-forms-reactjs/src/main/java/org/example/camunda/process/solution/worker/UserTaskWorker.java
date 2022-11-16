@@ -24,7 +24,7 @@ public class UserTaskWorker {
 
   @Autowired ZeebeService zeebeService;
 
-  @ZeebeWorker(type = "io.camunda.zeebe:userTask")
+  @ZeebeWorker(type = "io.camunda.zeebe:userTask", timeout = 2592000000L) // set timeout to 30 days
   public void completeUserTask(
       final JobClient client,
       final ActivatedJob job,
@@ -32,6 +32,20 @@ public class UserTaskWorker {
       @ZeebeCustomHeaders Map<String, String> headers) {
 
     LOG.info("User Task Worker triggered with variables: " + variables);
+
+
+    // Note: Job Key != Task Id :-(
+    String jobKey = Long.toString(job.getKey());
+
+    // But good news, job.getElementInstanceKey() is the "taskId" that is expected by task list
+    // graphql
+    String taskId = Long.toString(job.getElementInstanceKey());
+
+    // BUT!!! It's possible to send request to task list graphql to complete a request before the
+    // graphql knows about the task (because the exporter still hasn't finished). So, it's better
+    // to
+    // use zeebe client to complete the tasks.
+    // And if we're using zeebe client, we need to use job key
 
     Map<String, Object> controlVariables = new HashMap<>();
     controlVariables.put("jobKey", job.getKey());
