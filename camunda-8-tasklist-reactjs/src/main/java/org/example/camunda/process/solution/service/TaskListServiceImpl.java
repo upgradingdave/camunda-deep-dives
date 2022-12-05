@@ -11,32 +11,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-@Profile("tasklist")
 @Service
 public class TaskListServiceImpl implements TaskListService {
 
   CamundaTaskListClient client;
 
-  @Value("${tasklist.client.sm.baseUrl}")
+  @Value("${tasklist.client.sm.baseUrl:undefined}")
   private String selfManagedBaseUrl;
-  @Value("${tasklist.client.sm.clientId}")
+
+  @Value("${tasklist.client.sm.clientId:undefined}")
   private String selfManagedClientId;
-  @Value("${tasklist.client.sm.clientSecret}")
+
+  @Value("${tasklist.client.sm.clientSecret:undefined}")
   private String selfManagedClientSecret;
-  @Value("${tasklist.client.sm.keyCloakRealm}")
+
+  @Value("${tasklist.client.sm.keyCloakRealm:undefined}")
   private String selfManagedKeyCloakRealm;
 
-  @Value("${tasklist.client.saas.clientId}")
+  @Value("${tasklist.client.saas.clientId:undefined}")
   private String saasClientId;
-  @Value("${tasklist.client.saas.clientSecret}")
+
+  @Value("${tasklist.client.saas.clientSecret:undefined}")
   private String saasClientSecret;
-  @Value("${tasklist.client.saas.taskListUrl}")
+
+  @Value("${tasklist.client.saas.taskListUrl:undefined}")
   private String saasTaskListUrl;
+
+  public TaskListServiceImpl() {
+  }
 
   public CamundaTaskListClient getClient() throws TaskListException {
 
@@ -45,7 +50,7 @@ public class TaskListServiceImpl implements TaskListService {
       // Determine if we should connect to Self Managed? Or to SaaS?
 
       // Connect to Self Managed
-      if(selfManagedBaseUrl != null && selfManagedBaseUrl.length() >= 0) {
+      if (selfManagedBaseUrl != null && !selfManagedBaseUrl.equals("undefined")) {
 
         SelfManagedAuthentication sma =
             new SelfManagedAuthentication()
@@ -62,12 +67,11 @@ public class TaskListServiceImpl implements TaskListService {
                 .build();
 
       } else {
+
         // Connect to SaaS
 
         SaasAuthentication sa =
-            new SaasAuthentication()
-                .clientId(saasClientId)
-                .clientSecret(saasClientSecret);
+            new SaasAuthentication().clientId(saasClientId).clientSecret(saasClientSecret);
 
         client =
             new CamundaTaskListClient.Builder()
@@ -75,7 +79,6 @@ public class TaskListServiceImpl implements TaskListService {
                 .taskListUrl(saasTaskListUrl)
                 .authentication(sa)
                 .build();
-
       }
     }
     return client;
