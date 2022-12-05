@@ -1,0 +1,46 @@
+{
+  "components": [
+    {
+      "label": "First Name",
+      "type": "textfield",
+      "id": "Field_0j0nzu2",
+      "key": "field_firstName",
+      "description": "firstName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Last Name",
+      "type": "textfield",
+      "id": "Field_1xs4zqc",
+      "key": "field_lastName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Subscribe?",
+      "type": "checkbox",
+      "id": "Field_12pd6ps",
+      "key": "field_subscribe",
+      "description": "Subscribe?"
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "id": "Field_0mg7tmh",
+      "key": "field_0wzl14r"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1jizmxd",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.1.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.5.1"
+  },
+  "schemaVersion": 5
+}
