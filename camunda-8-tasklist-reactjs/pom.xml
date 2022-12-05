@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>Simple C8 Custom Reactjs Tasklist </name>
+  <description>Simple Custom Camunda 8 Reactjs Task List</description>
+  <groupId>org.example.camunda.process.solution</groupId>
+  <artifactId>c8-simple-tasklist</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.3</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+    <java.version>8</java.version>
+    <spring-zeebe.version>8.1.0</spring-zeebe.version>
+    <zeebe.version>8.1.0</zeebe.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.camunda</groupId>
+      <artifactId>zeebe-client-java</artifactId>
+      <version>${zeebe.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.camunda</groupId>
+      <artifactId>spring-zeebe-starter</artifactId>
+      <version>${spring-zeebe.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.6.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Access Tasklist Graphql -->
+    <dependency>
+      <groupId>io.camunda</groupId>
+      <artifactId>camunda-tasklist-client-java</artifactId>
+      <version>1.5.1</version>
+    </dependency>
+
+    <!-- This is required for Tasklist Graphql -->
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>4.9.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-rest</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>4.1.2</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- Google code format plugin -->
+      <plugin>
+        <groupId>com.spotify.fmt</groupId>
+        <artifactId>fmt-maven-plugin</artifactId>
+        <version>2.19</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <!-- use Java 17 dependencies if available -->
+      <id>jdk17+</id>
+      <activation>
+          <jdk>[17,)</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <!-- see: https://docs.camunda.io/docs/components/best-practices/development/testing-process-definitions/#writing-process-tests-in-java -->
+          <groupId>io.camunda</groupId>
+          <artifactId>zeebe-process-test-extension</artifactId>
+          <version>${zeebe.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <!-- see: https://github.com/camunda-community-hub/spring-zeebe#writing-test-cases -->
+          <groupId>io.camunda</groupId>
+          <artifactId>spring-zeebe-test</artifactId>
+          <version>${spring-zeebe.version}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <!-- use alternative dependencies if Java 17 is not available -->
+      <id>jdk8-16</id>
+      <activation>
+          <jdk>[8,17)</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <!-- see: https://github.com/camunda/zeebe-process-test#testcontainers-jdk-8 -->
+          <groupId>io.camunda</groupId>
+          <artifactId>zeebe-process-test-extension-testcontainer</artifactId>
+          <version>${zeebe.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <!-- see: https://github.com/camunda-community-hub/spring-zeebe#writing-test-cases -->
+          <groupId>io.camunda</groupId>
+          <artifactId>spring-zeebe-test-testcontainer</artifactId>
+          <version>${spring-zeebe.version}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+</project>
