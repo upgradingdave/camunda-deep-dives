@@ -22,17 +22,20 @@ The `OAuth2 Client Id` must be passed to start a process instance, for example:
 {
   "gcpClientId": "<YOUR GCP OAUTH2 CLIENT ID>",
   "gcpAccessToken": null, // This is optional, if passed, the process returns immediately
-  "gcpRefreshToken": null // This is optional, if passed, the refersh token is traded for an access token
+  "gcpRefreshToken": null // If you've already used this process to generate a refresh token, pass it here
 }
 ```
 
 The `OAuth2 Client Secret` must be set inside a Connector Secret named `secrets.GCP_OAUTH2_CLIENT_SECRET`.
 
-If neither refresh token nor access token are present at the start of the process, then a person will need to sign into 
-Task List and follow the directions on the form to manually sign in with Google, allow access, and copy the authorization code. 
+The first time this process is run, just pass `gcpClientId`. Sign into TaskList and follow the directions on the form to manually sign in with Google, allow access, and copy the authorization code. 
 
-If you already have done that step and saved the refresh token, then you can pass that at process start as well. This will 
-skip the need to have a user manually sign in. 
+After running the process once, you will have a refresh token. You can pass an existing refresh token when creating an instance as well. This will skip the need to have a user manually sign in. 
+
+# TODO
+
+- If an access token is passed when the process is started, we should check if it's valid, if not, then try to refresh
+- GCP Scope is currently hard coded. This should be chaged to be an process instance variable. 
 
 
 
