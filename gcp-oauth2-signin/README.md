@@ -7,14 +7,16 @@ This is a sample Camunda 8 Platform BPM Process that does the OAuth2 handshake t
 
 The purpose of this process is to produce a valid OAuth2 Bearer Access Token that can then be used to make GCP API Calls on behalf of a person.  
 
+![](screenshot.png)
+
 # Usage
 
 This process requires 2 things to be defined beforehand: 
 
-1. Google Cloud OAuth2 Client Id
-2. Google Cloud OAuth2 Client Secret
+1. Google Cloud OAuth2 Client Id passed as a process instance variable
+2. Google Cloud OAuth2 Client Secret, defined as `secrets.GCP_OAUTH2_CLIENT_SECRET`
 
-The `Client Id` must be passed to start a process instance, for example: 
+The `OAuth2 Client Id` must be passed to start a process instance, for example: 
 
 ```json
 {
@@ -24,10 +26,10 @@ The `Client Id` must be passed to start a process instance, for example:
 }
 ```
 
-The `Client Secret` must be set as a Connector Secret. 
+The `OAuth2 Client Secret` must be set inside a Connector Secret named `secrets.GCP_OAUTH2_CLIENT_SECRET`.
 
-If neither refresh token or access token are present at the start of the process, then a person must go to Task List and
-follow the directions on the form to manually sign into google, allow the access, and copy the authorization code. 
+If neither refresh token nor access token are present at the start of the process, then a person will need to sign into 
+Task List and follow the directions on the form to manually sign in with Google, allow access, and copy the authorization code. 
 
 If you already have done that step and saved the refresh token, then you can pass that at process start as well. This will 
 skip the need to have a user manually sign in. 

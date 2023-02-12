@@ -76,7 +76,7 @@
           <zeebe:input source="20" target="connectionTimeoutInSeconds" />
           <zeebe:input source="post" target="method" />
           <zeebe:input source="https://accounts.google.com/o/oauth2/token" target="url" />
-          <zeebe:input source="={&#10;  &#34;code&#34;: gcpAuthorizationToken,&#10;  &#34;client_id&#34;: gcpClientId,&#10;  &#34;client_secret&#34;: gcpClientSecret,&#10;  &#34;redirect_uri&#34;: &#34;urn:ietf:wg:oauth:2.0:oob&#34;,&#10;  &#34;grant_type&#34;: &#34;authorization_code&#34;&#10;}" target="body" />
+          <zeebe:input source="={&#10;  &#34;code&#34;: gcpAuthorizationToken,&#10;  &#34;client_id&#34;: gcpClientId,&#10;  &#34;client_secret&#34;: &#34;secrets.GCP_OAUTH2_CLIENT_SECRET&#34;,&#10;  &#34;redirect_uri&#34;: &#34;urn:ietf:wg:oauth:2.0:oob&#34;,&#10;  &#34;grant_type&#34;: &#34;authorization_code&#34;&#10;}" target="body" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="gcpAccessTokenResponse" />
@@ -105,7 +105,7 @@
           <zeebe:input source="20" target="connectionTimeoutInSeconds" />
           <zeebe:input source="https://accounts.google.com/o/oauth2/token" target="url" />
           <zeebe:input source="post" target="method" />
-          <zeebe:input source="={&#10;  &#34;refresh_token&#34;: gcpRefreshToken,&#10;  &#34;client_id&#34;: gcpClientId,&#10;  &#34;client_secret&#34;: gcpClientSecret,&#10;  &#34;redirect_uri&#34;: &#34;urn:ietf:wg:oauth:2.0:oob&#34;,&#10;  &#34;grant_type&#34;: &#34;refresh_token&#34;&#10;}" target="body" />
+          <zeebe:input source="={&#10;  &#34;refresh_token&#34;: gcpRefreshToken,&#10;  &#34;client_id&#34;: gcpClientId,&#10;  &#34;client_secret&#34;: &#34;secrets.GCP_OAUTH2_CLIENT_SECRET&#34;,&#10;  &#34;redirect_uri&#34;: &#34;urn:ietf:wg:oauth:2.0:oob&#34;,&#10;  &#34;grant_type&#34;: &#34;refresh_token&#34;&#10;}" target="body" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="gcpAccessTokenResponse" />
