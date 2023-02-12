@@ -1,0 +1,35 @@
+{
+  "components": [
+    {
+      "text": "## Sign into Google\n\nThis app will make API requests to Google Cloud on your behalf. Copy and paste the link below in your browser. \n\nSign into Google and click **Allow**.  Then copy and paste your **Authorization Code** below. \n\n",
+      "type": "text",
+      "id": "Field_1sc8kbb",
+      "properties": {}
+    },
+    {
+      "type": "textfield",
+      "id": "Field_0tfl5pn",
+      "key": "field_oauthUrl",
+      "disabled": true
+    },
+    {
+      "label": "Authorization Code",
+      "type": "textfield",
+      "id": "Field_165uco1",
+      "key": "field_authorizationCode",
+      "description": "Copy and paste Authorization Code Here",
+      "validate": {
+        "minLength": 5
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_signinWithGoogle",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.1.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.7.0"
+  },
+  "schemaVersion": 6
+}
