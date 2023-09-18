@@ -10,22 +10,32 @@ import io.camunda.tasklist.json.JsonUtils;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-public class SaasAuthentication implements Authentication {
+public class JWTAuthentication implements Authentication {
+
+  final public static String CLIENT_CREDENTIALS = "client_credentials";
 
   String authorizationServerUrl;
   String audience = "tasklist.camunda.io";
   String clientId;
   String clientSecret;
 
-  public SaasAuthentication(String authorizationServerUrl, String clientId, String clientSecret) {
+  String contentType;
+
+  public JWTAuthentication(String authorizationServerUrl, String clientId, String clientSecret, String contentType) {
     this.authorizationServerUrl = authorizationServerUrl;
     this.clientId = clientId;
     this.clientSecret = clientSecret;
+    this.contentType = contentType;
   }
 
   @Override
@@ -37,11 +47,34 @@ public class SaasAuthentication implements Authentication {
         .build();
 
     try {
-      AccessTokenRequest accessTokenRequest = new AccessTokenRequest(clientId, clientSecret, audience, "client_credentials");
-      String body = JsonUtils.toJson(accessTokenRequest);
+
+      String body = null;
+      if(contentType.equals("application/json")) {
+
+        AccessTokenRequest accessTokenRequest =
+            new AccessTokenRequest(clientId, clientSecret, audience, CLIENT_CREDENTIALS);
+        body = JsonUtils.toJson(accessTokenRequest);
+
+      } else if(contentType.equals("application/x-www-form-urlencoded")) {
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("client_id", clientId);
+        parameters.put("client_secret", clientSecret);
+        parameters.put("audience", audience);
+        parameters.put("grant_type", CLIENT_CREDENTIALS);
+
+        body = parameters.entrySet()
+            .stream()
+            .map(e -> e.getKey() + "=" + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
+            .collect(Collectors.joining("&"));
+
+      } else {
+        throw new TaskListException("Content type must either be `json` or `x-www-form-urlencoded`");
+      }
+
       HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(authorizationServerUrl))
-          .header("content-type", "application/json")
+          .header("content-type", contentType)
           .timeout(Duration.ofSeconds(10))
           .POST(HttpRequest.BodyPublishers.ofString(body))
           .build();

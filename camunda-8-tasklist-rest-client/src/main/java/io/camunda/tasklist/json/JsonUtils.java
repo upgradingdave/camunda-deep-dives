@@ -1,6 +1,7 @@
 package io.camunda.tasklist.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,7 +13,9 @@ public class JsonUtils<T> {
   }
 
   public T fromJson(String json, Class clazz) throws JsonProcessingException {
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
     JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
     return objectMapper.readValue(json, javaType);
   }
