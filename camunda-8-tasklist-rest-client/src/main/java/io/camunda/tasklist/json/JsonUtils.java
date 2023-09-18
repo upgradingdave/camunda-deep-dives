@@ -7,15 +7,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtils<T> {
 
-  public static String toJson(Object object) throws JsonProcessingException {
-    ObjectMapper objectMapper = new ObjectMapper();
+  Class<T> clazz;
+  ObjectMapper objectMapper;
+
+  public JsonUtils(Class<T> clazz) {
+    this.clazz = clazz;
+    this.objectMapper = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+  }
+
+  public String toJson(T object) throws JsonProcessingException {
     return objectMapper.writeValueAsString(object);
   }
 
-  public T fromJson(String json, Class clazz) throws JsonProcessingException {
-    ObjectMapper objectMapper = new ObjectMapper()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
+  public T fromJson(String json) throws JsonProcessingException {
     JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
     return objectMapper.readValue(json, javaType);
   }

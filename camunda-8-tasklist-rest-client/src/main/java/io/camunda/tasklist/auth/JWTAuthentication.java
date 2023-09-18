@@ -48,12 +48,13 @@ public class JWTAuthentication implements Authentication {
 
     try {
 
-      String body = null;
+      String body;
       if(contentType.equals("application/json")) {
 
         AccessTokenRequest accessTokenRequest =
             new AccessTokenRequest(clientId, clientSecret, audience, CLIENT_CREDENTIALS);
-        body = JsonUtils.toJson(accessTokenRequest);
+        JsonUtils<AccessTokenRequest> jsonUtils = new JsonUtils<>(AccessTokenRequest.class);
+        body = jsonUtils.toJson(accessTokenRequest);
 
       } else if(contentType.equals("application/x-www-form-urlencoded")) {
 
@@ -80,8 +81,8 @@ public class JWTAuthentication implements Authentication {
           .build();
 
       HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-      JsonUtils<AccessTokenResponse> jsonUtils = new JsonUtils<>();
-      AccessTokenResponse accessTokenResponse = jsonUtils.fromJson(response.body(), AccessTokenResponse.class);
+      JsonUtils<AccessTokenResponse> jsonUtils = new JsonUtils<>(AccessTokenResponse.class);
+      AccessTokenResponse accessTokenResponse = jsonUtils.fromJson(response.body());
       taskListClient.setAccessTokenResponse(accessTokenResponse);
 
     } catch (URISyntaxException e) {
