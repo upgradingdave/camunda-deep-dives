@@ -1,11 +1,10 @@
 package io.camunda.tasklist;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.tasklist.auth.Authentication;
-import io.camunda.tasklist.dto.AccessTokenResponse;
-import io.camunda.tasklist.dto.ErrorResponse;
-import io.camunda.tasklist.dto.TaskSearchRequest;
-import io.camunda.tasklist.dto.TaskSearchResponse;
+import io.camunda.tasklist.dto.*;
 import io.camunda.tasklist.exception.TaskListException;
 import io.camunda.tasklist.exception.TaskListRestException;
 import io.camunda.tasklist.json.JsonUtils;
@@ -21,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskListRestClient {
-
-  final static String TASKS_SEARCH_ENDPOINT = "/v1/tasks/search";
 
   Authentication authentication;
   AccessTokenResponse accessTokenResponse;
@@ -61,17 +58,28 @@ public class TaskListRestClient {
     this.authentication.authenticate(this);
   }
 
-  public HttpResponse<String> post(String endPoint, String body, Class responseClass) throws TaskListException, TaskListRestException {
+  public HttpResponse<String> post(String endPoint, String body, Class responseClass)
+      throws TaskListException, TaskListRestException {
+    return postOrPatch("POST", endPoint, body, responseClass);
+  }
+
+  public HttpResponse<String> patch(String endPoint, String body, Class responseClass)
+      throws TaskListException, TaskListRestException {
+    return postOrPatch("PATCH", endPoint, body, responseClass);
+  }
+
+  private HttpResponse<String> postOrPatch(String method, String endPoint, String body, Class responseClass)
+  throws TaskListException, TaskListRestException {
 
       if(accessTokenResponse == null) {
         this.authentication.authenticate(this);
       }
 
-      HttpResponse<String> response = doPost(endPoint, body);
+      HttpResponse<String> response = doPostOrPatch(method, endPoint, body);
 
       if(response.statusCode() == 401) {
         this.authentication.authenticate(this);
-        response = doPost(endPoint, body);
+        response = doPostOrPatch(method, endPoint, body);
       }
 
       if(response.statusCode() == 200) {
@@ -91,15 +99,15 @@ public class TaskListRestClient {
       }
   }
 
-  private HttpResponse<String> doPost(String endPoint, String body) throws TaskListException {
+  private HttpResponse<String> doPostOrPatch(String method, String endPoint, String body) throws TaskListException {
     try {
 
       HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(endPoint))
           .header("content-type", "application/json")
-          .header("Authorization", "Bearer " + accessTokenResponse.getAccess_token() )
+          .header("Authorization", "Bearer " + accessTokenResponse.getAccess_token())
           .timeout(Duration.ofSeconds(10))
-          .POST(HttpRequest.BodyPublishers.ofString(body))
+          .method(method, HttpRequest.BodyPublishers.ofString(body))
           .build();
 
       return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -112,14 +120,35 @@ public class TaskListRestClient {
 
   }
 
-  public List<TaskSearchResponse> search(TaskSearchRequest request) throws TaskListException, TaskListRestException {
+  public List<TaskSearchResponse> searchTasks(TaskSearchRequest request) throws TaskListException, TaskListRestException {
     JsonUtils<TaskSearchRequest> jsonRequest = new JsonUtils<>(TaskSearchRequest.class);
     try {
 
       String body = jsonRequest.toJson(request);
-      String endpoint = taskListBaseUrl + TASKS_SEARCH_ENDPOINT;
+      String endpoint = taskListBaseUrl +  "/v1/tasks/search";
       HttpResponse<String> response = post(endpoint, body, TaskSearchResponse.class);
+
+      // TODO: update JsonUtils if this works
       JsonUtils<List> jsonResponse = new JsonUtils<>(List.class);
+      ObjectMapper objectMapper = jsonRequest.getObjectMapper();
+      JavaType javaType = objectMapper.getTypeFactory().constructParametricType(List.class, TaskSearchResponse.class);
+      return objectMapper.readValue(response.body(), javaType);
+
+      //return jsonResponse.fromJson(response.body());
+
+    } catch (JsonProcessingException e) {
+      throw new TaskListException("Unable to parse TaskSearchRequest to json", e);
+    }
+  }
+
+  public TaskResponse assignTask(String taskId, TaskAssignRequest request) throws TaskListException, TaskListRestException {
+    JsonUtils<TaskAssignRequest> jsonRequest = new JsonUtils<>(TaskAssignRequest.class);
+    try {
+
+      String body = jsonRequest.toJson(request);
+      String endpoint = taskListBaseUrl + "/v1/tasks/"+taskId+"/assign";
+      HttpResponse<String> response = patch(endpoint, body, TaskSearchResponse.class);
+      JsonUtils<TaskResponse> jsonResponse = new JsonUtils<>(TaskResponse.class);
       return jsonResponse.fromJson(response.body());
 
     } catch (JsonProcessingException e) {

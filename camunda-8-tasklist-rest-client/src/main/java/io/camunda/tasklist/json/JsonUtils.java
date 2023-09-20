@@ -12,8 +12,16 @@ public class JsonUtils<T> {
 
   public JsonUtils(Class<T> clazz) {
     this.clazz = clazz;
-    this.objectMapper = new ObjectMapper()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    this.objectMapper = getObjectMapper();
+  }
+
+  public ObjectMapper getObjectMapper() {
+    if (objectMapper == null) {
+      return new ObjectMapper()
+          .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    } else {
+      return objectMapper;
+    }
   }
 
   public String toJson(T object) throws JsonProcessingException {

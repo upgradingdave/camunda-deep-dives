@@ -1,8 +1,7 @@
 package io.camunda.tasklist;
 
 import io.camunda.tasklist.auth.JWTAuthentication;
-import io.camunda.tasklist.dto.TaskSearchRequest;
-import io.camunda.tasklist.dto.TaskSearchResponse;
+import io.camunda.tasklist.dto.*;
 import io.camunda.tasklist.exception.TaskListException;
 import io.camunda.tasklist.exception.TaskListRestException;
 
@@ -41,7 +40,7 @@ public class TestUtils {
     assertEquals(taskListRestClient.getAccessTokenResponse().getToken_type(), "Bearer");
   }
 
-  public void searchTest(Properties props) throws TaskListException, TaskListRestException {
+  public List<TaskSearchResponse> findCreatedUnAssignedTasks(Properties props) throws TaskListException, TaskListRestException {
     JWTAuthentication saasAuthentication = new JWTAuthentication(
         props.getProperty("authorizationUrl"),
         props.getProperty("clientId"),
@@ -52,8 +51,30 @@ public class TestUtils {
     TaskListRestClient taskListRestClient =
         new TaskListRestClient(saasAuthentication, props.getProperty("taskListBaseUrl"));
     TaskSearchRequest taskSearchRequest = new TaskSearchRequest();
-    List<TaskSearchResponse> response = taskListRestClient.search(taskSearchRequest);
+    taskSearchRequest.setState(Constants.TASK_STATE_CREATED);
+    taskSearchRequest.setAssigned(false);
+    taskSearchRequest.setProcessDefinitionKey(Constants.USER_TASK_UNIT_TEST_PROCESS_KEY);
+    List<TaskSearchResponse> response = taskListRestClient.searchTasks(taskSearchRequest);
     assertNotNull(response);
+    return response;
+  }
+
+  public TaskResponse assignTask(Properties props, String taskId, String assignee) throws TaskListException, TaskListRestException {
+    JWTAuthentication saasAuthentication = new JWTAuthentication(
+        props.getProperty("authorizationUrl"),
+        props.getProperty("clientId"),
+        props.getProperty("clientSecret"),
+        props.getProperty("contentType")
+    );
+
+    TaskListRestClient taskListRestClient =
+        new TaskListRestClient(saasAuthentication, props.getProperty("taskListBaseUrl"));
+    TaskAssignRequest taskAssignRequest = new TaskAssignRequest();
+    taskAssignRequest.setAssignee(assignee);
+    taskAssignRequest.setAllowOverrideAssignment(true);
+    TaskResponse response = taskListRestClient.assignTask(taskId, taskAssignRequest);
+    assertNotNull(response);
+    return response;
   }
 
 }

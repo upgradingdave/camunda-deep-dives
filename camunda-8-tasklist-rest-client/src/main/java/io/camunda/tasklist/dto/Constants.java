@@ -14,4 +14,6 @@ public class Constants {
   public static final String TASK_STATE_COMPLETED = "COMPLETED";
   public static final String TASK_STATE_CANCELED = "CANCELED";
 
+  public static final String USER_TASK_UNIT_TEST_PROCESS_KEY = "2251799813954673";
+
 }
