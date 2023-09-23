@@ -27,6 +27,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>io.camunda</groupId>
+      <artifactId>zeebe-client-java</artifactId>
+      <version>8.2.13</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Runtime Dependencies -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>

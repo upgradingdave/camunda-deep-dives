@@ -77,6 +77,7 @@ public class TaskListRestClient {
 
       HttpResponse<String> response = doPostOrPatch(method, endPoint, body);
 
+      //If we get a 401 that might mean the access token has expired. Try to refresh the token
       if(response.statusCode() == 401) {
         this.authentication.authenticate(this);
         response = doPostOrPatch(method, endPoint, body);
@@ -95,7 +96,7 @@ public class TaskListRestClient {
         }
 
       } else {
-        throw new TaskListException("Unexpected response from post");
+        throw new TaskListException("Unexpected response from post", new RuntimeException(response.statusCode() + " " + response.body()));
       }
   }
 
@@ -148,6 +149,18 @@ public class TaskListRestClient {
       String body = jsonRequest.toJson(request);
       String endpoint = taskListBaseUrl + "/v1/tasks/"+taskId+"/assign";
       HttpResponse<String> response = patch(endpoint, body, TaskSearchResponse.class);
+      JsonUtils<TaskResponse> jsonResponse = new JsonUtils<>(TaskResponse.class);
+      return jsonResponse.fromJson(response.body());
+
+    } catch (JsonProcessingException e) {
+      throw new TaskListException("Unable to parse TaskSearchRequest to json", e);
+    }
+  }
+
+  public TaskResponse unassignTask(String taskId) throws TaskListException, TaskListRestException {
+    try {
+      String endpoint = taskListBaseUrl + "/v1/tasks/"+taskId+"/unassign";
+      HttpResponse<String> response = patch(endpoint, "", TaskSearchResponse.class);
       JsonUtils<TaskResponse> jsonResponse = new JsonUtils<>(TaskResponse.class);
       return jsonResponse.fromJson(response.body());
 
