@@ -12,7 +12,6 @@ import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
 import org.example.camunda.process.solution.service.TaskListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

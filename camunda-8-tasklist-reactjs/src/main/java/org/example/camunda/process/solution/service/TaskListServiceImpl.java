@@ -40,8 +40,7 @@ public class TaskListServiceImpl implements TaskListService {
   @Value("${tasklist.client.saas.taskListUrl:undefined}")
   private String saasTaskListUrl;
 
-  public TaskListServiceImpl() {
-  }
+  public TaskListServiceImpl() {}
 
   public CamundaTaskListClient getClient() throws TaskListException {
 
