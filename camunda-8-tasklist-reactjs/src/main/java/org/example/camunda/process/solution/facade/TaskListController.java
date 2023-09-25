@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.tasklist.dto.FormResponse;
 import io.camunda.tasklist.dto.TaskResponse;
 import io.camunda.tasklist.dto.TaskSearchResponse;
+import io.camunda.tasklist.entities.TaskEntity;
 import io.camunda.tasklist.exception.TaskListException;
 import io.camunda.tasklist.exception.TaskListRestException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -59,6 +63,19 @@ public class TaskListController {
 
     FormResponse form = taskListService.getForm(formId, processDefinitionKey);
     return new ResponseEntity<>(form, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/tasklist/setDueDate", method = RequestMethod.POST)
+  public ResponseEntity<?> setDueDate(@RequestParam String taskId, @RequestParam String dueDate)
+      throws ParseException, TaskListException {
+
+    LOGGER.info("setDueDate");
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date dueDate1 = sdf.parse(dueDate);
+
+    TaskEntity taskEntity = taskListService.setDueDate(taskId, dueDate1);
+    return new ResponseEntity<>(taskEntity, HttpStatus.OK);
   }
 
   @RequestMapping(

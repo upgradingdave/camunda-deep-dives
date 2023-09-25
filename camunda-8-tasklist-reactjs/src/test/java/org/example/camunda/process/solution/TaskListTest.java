@@ -10,6 +10,7 @@ import java.util.List;
 import org.example.camunda.process.solution.service.TaskListService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -25,4 +26,10 @@ public class TaskListTest {
 
     assertNotNull(tasks);
   }
+
+  @Test
+  public void contextLoads() {}
+
+  @SpringBootApplication
+  static class TestConfiguration {}
 }

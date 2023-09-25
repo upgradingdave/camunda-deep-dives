@@ -3,10 +3,15 @@ package org.example.camunda.process.solution.service;
 import io.camunda.tasklist.TaskListRestClient;
 import io.camunda.tasklist.auth.JWTAuthentication;
 import io.camunda.tasklist.dto.*;
+import io.camunda.tasklist.entities.TaskEntity;
 import io.camunda.tasklist.exception.TaskListException;
 import io.camunda.tasklist.exception.TaskListRestException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class TaskListService {
 
   TaskListRestClient taskListRestClient;
+
+  @Autowired TasklistExtraService tasklistExtraService;
 
   @Value("${tasklist.client.authorizationUrl:undefined}")
   private String authorizationUrl;
@@ -67,5 +74,9 @@ public class TaskListService {
     return getClient().completeTask(taskId, variablesMap);
   }
 
+  public TaskEntity setDueDate(String taskId, Date dueDate) throws TaskListException {
 
+    OffsetDateTime offsetDateTime = dueDate.toInstant().atOffset(ZoneOffset.UTC);
+    return tasklistExtraService.setDueDate(taskId, offsetDateTime);
+  }
 }
