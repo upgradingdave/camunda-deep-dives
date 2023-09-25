@@ -1,15 +1,15 @@
 package org.example.camunda.process.solution.facade;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.camunda.tasklist.dto.Form;
-import io.camunda.tasklist.dto.Task;
+import io.camunda.tasklist.dto.FormResponse;
+import io.camunda.tasklist.dto.TaskResponse;
+import io.camunda.tasklist.dto.TaskSearchResponse;
 import io.camunda.tasklist.exception.TaskListException;
+import io.camunda.tasklist.exception.TaskListRestException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
 import org.example.camunda.process.solution.service.TaskListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,42 +31,33 @@ public class TaskListController {
   }
 
   @RequestMapping(value = "/tasklist/getAssigneeTasks", method = RequestMethod.GET)
-  public ResponseEntity<?> getAssigneeTasks(@RequestParam String userId) throws TaskListException {
+  public ResponseEntity<?> getAssigneeTasks(@RequestParam String userId)
+      throws TaskListException, TaskListRestException {
 
     LOGGER.info("getTasks");
 
-    List<Task> tasks = taskListService.getAssigneeTasks(userId);
+    List<TaskSearchResponse> tasks = taskListService.getAssigneeTasks(userId);
     return new ResponseEntity<>(tasks, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/tasklist/getTask", method = RequestMethod.GET)
-  public ResponseEntity<?> getTask(@RequestParam String taskId) throws TaskListException {
+  public ResponseEntity<?> getTask(@RequestParam String taskId)
+      throws TaskListException, TaskListRestException {
 
     LOGGER.info("getTask");
 
-    Task task = taskListService.getTask(taskId);
+    TaskResponse task = taskListService.getTask(taskId);
     return new ResponseEntity<>(task, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/tasklist/getFormByKey", method = RequestMethod.GET)
+  @RequestMapping(value = "/tasklist/getForm", method = RequestMethod.GET)
   public ResponseEntity<?> getFormByKey(
-      @RequestParam String formKey, @RequestParam String processDefinitionId)
-      throws TaskListException {
+      @RequestParam String formId, @RequestParam String processDefinitionKey)
+      throws TaskListException, TaskListRestException {
 
-    LOGGER.info("getFormByKey");
+    LOGGER.info("getForm");
 
-    Form form = taskListService.getFormByKey(formKey, processDefinitionId);
-    return new ResponseEntity<>(form, HttpStatus.OK);
-  }
-
-  @RequestMapping(value = "/tasklist/getFormById", method = RequestMethod.GET)
-  public ResponseEntity<?> getFormById(
-      @RequestParam String formId, @RequestParam String processDefinitionId)
-      throws TaskListException {
-
-    LOGGER.info("getFormById");
-
-    Form form = taskListService.getFormById(formId, processDefinitionId);
+    FormResponse form = taskListService.getForm(formId, processDefinitionKey);
     return new ResponseEntity<>(form, HttpStatus.OK);
   }
 
@@ -79,13 +70,19 @@ public class TaskListController {
 
     LOGGER.info("completeTask");
 
+    throw new IllegalStateException("Not implemented");
+
+    /*
     JSONObject obj = (JSONObject) JSONValue.parse(data);
     String taskId = obj.getAsString("taskId");
 
     JSONObject variables = (JSONObject) obj.get("variables");
 
     Task task = taskListService.completeTask(taskId, variables);
-    return new ResponseEntity<>(task, HttpStatus.OK);
+
+    return new ResponseEntity<>("", HttpStatus.OK);
+     */
+
   }
 
   public Map jsonToMap(String json) {
