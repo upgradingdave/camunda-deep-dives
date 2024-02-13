@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0uwmzbl" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0uwmzbl" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
   <bpmn:process id="Process_gcpOAuth2" name="Google Cloud OAuth2" isExecutable="true">
     <bpmn:extensionElements>
       <zeebe:userTaskForm id="userTaskForm_1tk6g28">{
@@ -78,10 +78,10 @@
         <zeebe:taskDefinition type="io.camunda:http-json:1" />
         <zeebe:ioMapping>
           <zeebe:input source="noAuth" target="authentication.type" />
-          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
           <zeebe:input source="post" target="method" />
+          <zeebe:input source="https://accounts.google.com/o/oauth2/token" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
           <zeebe:input source="={&#10;  &#34;code&#34;: gcpAuthorizationToken,&#10;  &#34;client_id&#34;: gcpClientId,&#10;  &#34;client_secret&#34;: &#34;secrets.GCP_OAUTH2_CLIENT_SECRET&#34;,&#10;  &#34;redirect_uri&#34;: &#34;urn:ietf:wg:oauth:2.0:oob&#34;,&#10;  &#34;grant_type&#34;: &#34;authorization_code&#34;&#10;}" target="body" />
-          <zeebe:input source="https://accounts.google.com/o/oauth2/tokenBroken" target="url" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="gcpAccessTokenResponse" />
@@ -109,10 +109,10 @@
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:input source="noAuth" target="authentication.type" />
-          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
           <zeebe:input source="post" target="method" />
+          <zeebe:input source="https://accounts.google.com/o/oauth2/token" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
           <zeebe:input source="={&#10;  &#34;refresh_token&#34;: gcpRefreshToken,&#10;  &#34;client_id&#34;: gcpClientId,&#10;  &#34;client_secret&#34;: &#34;secrets.GCP_OAUTH2_CLIENT_SECRET&#34;,&#10;  &#34;redirect_uri&#34;: &#34;urn:ietf:wg:oauth:2.0:oob&#34;,&#10;  &#34;grant_type&#34;: &#34;refresh_token&#34;&#10;}" target="body" />
-          <zeebe:input source="https://accounts.google.com/o/oauth2/tokenBroken" target="url" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="gcpAccessTokenResponse" />
@@ -193,28 +193,14 @@
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="129" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tw8lkr_di" bpmnElement="Event_0tw8lkr">
+        <dc:Bounds x="952" y="129" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1jfx6bj_di" bpmnElement="Gateway_1jfx6bj" isMarkerVisible="true">
         <dc:Bounds x="395" y="122" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="384" y="86" width="71" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0helzct_di" bpmnElement="Gateway_0helzct" isMarkerVisible="true">
-        <dc:Bounds x="265" y="122" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="254" y="86.5" width="71" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02ir7az_di" bpmnElement="Activity_0ksrt7v">
-        <dc:Bounds x="550" y="107" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1rfko62" bpmnElement="Activity_0myfujx" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="790" y="107" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0iem8z9_di" bpmnElement="Gateway_0iem8z9" isMarkerVisible="true" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="695" y="145" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q7r1ib_di" bpmnElement="Activity_1r2e7iz">
         <dc:Bounds x="370" y="310" width="100" height="80" />
@@ -224,12 +210,29 @@
         <dc:Bounds x="550" y="310" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0tw8lkr_di" bpmnElement="Event_0tw8lkr">
-        <dc:Bounds x="952" y="129" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_0helzct_di" bpmnElement="Gateway_0helzct" isMarkerVisible="true">
+        <dc:Bounds x="265" y="122" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="254" y="86.5" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rhrb80_di" bpmnElement="Event_0rhrb80">
+        <dc:Bounds x="272" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02ir7az_di" bpmnElement="Activity_0ksrt7v">
+        <dc:Bounds x="550" y="107" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tgyt9m_di" bpmnElement="Activity_098sqsv" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="790" y="310" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1rfko62" bpmnElement="Activity_0myfujx" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="790" y="107" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0iem8z9_di" bpmnElement="Gateway_0iem8z9" isMarkerVisible="true" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="695" y="145" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_08smii7_di" bpmnElement="Gateway_08smii7" isMarkerVisible="true" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="695" y="355" width="50" height="50" />
@@ -239,9 +242,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1f6ok8m_di" bpmnElement="Event_1f6ok8m">
         <dc:Bounds x="952" y="332" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0rhrb80_di" bpmnElement="Event_0rhrb80">
-        <dc:Bounds x="272" y="332" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1jl73tz_di" bpmnElement="Event_15xotav" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="632" y="112" width="36" height="36" />
@@ -323,6 +323,15 @@
           <dc:Bounds x="665" y="173" width="22" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fsxvwi_di" bpmnElement="Flow_1fsxvwi" bioc:stroke="#831311" color:border-color="#831311">
+        <di:waypoint x="720" y="195" />
+        <di:waypoint x="720" y="210" />
+        <di:waypoint x="970" y="210" />
+        <di:waypoint x="970" y="165" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="732" y="195" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0n5fl27_di" bpmnElement="Flow_0n5fl27" bioc:stroke="#0d4372" color:border-color="#0d4372">
         <di:waypoint x="695" y="380" />
         <di:waypoint x="650" y="380" />
@@ -346,15 +355,6 @@
         <di:waypoint x="970" y="330" />
         <bpmndi:BPMNLabel color:color="#205022">
           <dc:Bounds x="630" y="275" width="40" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1fsxvwi_di" bpmnElement="Flow_1fsxvwi" bioc:stroke="#831311" color:border-color="#831311">
-        <di:waypoint x="720" y="195" />
-        <di:waypoint x="720" y="210" />
-        <di:waypoint x="970" y="210" />
-        <di:waypoint x="970" y="165" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="732" y="195" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

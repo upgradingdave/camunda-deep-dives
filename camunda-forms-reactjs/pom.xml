@@ -12,14 +12,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.0</version>
+    <version>3.1.4</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <java.version>8</java.version>
-    <spring-zeebe.version>8.0.6</spring-zeebe.version>
-    <zeebe.version>8.0.4</zeebe.version>
+    <java.version>17</java.version>
+    <spring-zeebe.version>8.3.0-alpha6</spring-zeebe.version>
+    <zeebe.version>8.3.0-alpha6</zeebe.version>
   </properties>
 
   <dependencies>
@@ -35,12 +35,6 @@
     </dependency>
 
     <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>zeebe-client-java</artifactId>
-      <version>${zeebe.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-websocket</artifactId>
     </dependency>
@@ -49,6 +43,12 @@
       <groupId>io.camunda</groupId>
       <artifactId>spring-zeebe-starter</artifactId>
       <version>${spring-zeebe.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.camunda</groupId>
+      <artifactId>zeebe-client-java</artifactId>
+      <version>${zeebe.version}</version>
     </dependency>
 
     <dependency>
@@ -67,14 +67,6 @@
       <groupId>io.camunda</groupId>
       <artifactId>spring-zeebe-test-testcontainer</artifactId>
       <version>${spring-zeebe.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <!-- see: https://docs.camunda.io/docs/components/best-practices/development/testing-process-definitions/#writing-process-tests-in-java -->
-      <groupId>io.camunda</groupId>
-      <artifactId>zeebe-process-test-extension-testcontainer</artifactId>
-      <version>${zeebe.version}</version>
       <scope>test</scope>
     </dependency>
 

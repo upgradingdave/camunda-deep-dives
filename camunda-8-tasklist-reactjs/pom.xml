@@ -12,14 +12,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.3</version>
+    <version>3.1.4</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <java.version>8</java.version>
-    <spring-zeebe.version>8.1.0</spring-zeebe.version>
-    <zeebe.version>8.1.0</zeebe.version>
+    <java.version>17</java.version>
+    <spring-zeebe.version>8.3.0-alpha6</spring-zeebe.version>
+    <zeebe.version>8.3.0-alpha6</zeebe.version>
   </properties>
 
   <dependencies>
@@ -35,61 +35,21 @@
     </dependency>
 
     <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>zeebe-client-java</artifactId>
-      <version>${zeebe.version}</version>
+      <groupId>org.camunda.community</groupId>
+      <artifactId>camunda-8-tasklist-java-rest-client</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>io.camunda</groupId>
-      <artifactId>spring-zeebe-starter</artifactId>
-      <version>${spring-zeebe.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
-      <version>1.6.11</version>
+      <artifactId>tasklist-els-schema</artifactId>
+      <version>8.3.0-alpha6</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
-    </dependency>
-
-    <!-- Access Tasklist Graphql -->
-    <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>camunda-tasklist-client-java</artifactId>
-      <version>1.5.1</version>
-    </dependency>
-
-    <!-- This is required for Tasklist Graphql -->
-    <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>okhttp</artifactId>
-      <version>4.9.3</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-rest</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>4.1.2</version>
     </dependency>
 
   </dependencies>
@@ -99,6 +59,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>3.1.4</version>
       </plugin>
       <!-- Google code format plugin -->
       <plugin>

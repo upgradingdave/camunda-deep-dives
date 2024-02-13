@@ -33,7 +33,6 @@ public class UserTaskWorker {
 
     LOG.info("User Task Worker triggered with variables: " + variables);
 
-
     // Note: Job Key != Task Id :-(
     String jobKey = Long.toString(job.getKey());
 

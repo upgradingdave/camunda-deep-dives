@@ -1,18 +1,21 @@
 package org.example.camunda.process.solution.facade;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.camunda.tasklist.dto.Form;
-import io.camunda.tasklist.dto.Task;
+import io.camunda.tasklist.dto.FormResponse;
+import io.camunda.tasklist.dto.TaskResponse;
+import io.camunda.tasklist.dto.TaskSearchResponse;
+import io.camunda.tasklist.entities.TaskEntity;
 import io.camunda.tasklist.exception.TaskListException;
+import io.camunda.tasklist.exception.TaskListRestException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
 import org.example.camunda.process.solution.service.TaskListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,43 +35,47 @@ public class TaskListController {
   }
 
   @RequestMapping(value = "/tasklist/getAssigneeTasks", method = RequestMethod.GET)
-  public ResponseEntity<?> getAssigneeTasks(@RequestParam String userId) throws TaskListException {
+  public ResponseEntity<?> getAssigneeTasks(@RequestParam String userId)
+      throws TaskListException, TaskListRestException {
 
     LOGGER.info("getTasks");
 
-    List<Task> tasks = taskListService.getAssigneeTasks(userId);
+    List<TaskSearchResponse> tasks = taskListService.getAssigneeTasks(userId);
     return new ResponseEntity<>(tasks, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/tasklist/getTask", method = RequestMethod.GET)
-  public ResponseEntity<?> getTask(@RequestParam String taskId) throws TaskListException {
+  public ResponseEntity<?> getTask(@RequestParam String taskId)
+      throws TaskListException, TaskListRestException {
 
     LOGGER.info("getTask");
 
-    Task task = taskListService.getTask(taskId);
+    TaskResponse task = taskListService.getTask(taskId);
     return new ResponseEntity<>(task, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/tasklist/getFormByKey", method = RequestMethod.GET)
+  @RequestMapping(value = "/tasklist/getForm", method = RequestMethod.GET)
   public ResponseEntity<?> getFormByKey(
-      @RequestParam String formKey, @RequestParam String processDefinitionId)
-      throws TaskListException {
+      @RequestParam String formId, @RequestParam String processDefinitionKey)
+      throws TaskListException, TaskListRestException {
 
-    LOGGER.info("getFormByKey");
+    LOGGER.info("getForm");
 
-    Form form = taskListService.getFormByKey(formKey, processDefinitionId);
+    FormResponse form = taskListService.getForm(formId, processDefinitionKey);
     return new ResponseEntity<>(form, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/tasklist/getFormById", method = RequestMethod.GET)
-  public ResponseEntity<?> getFormById(
-      @RequestParam String formId, @RequestParam String processDefinitionId)
-      throws TaskListException {
+  @RequestMapping(value = "/tasklist/setDueDate", method = RequestMethod.POST)
+  public ResponseEntity<?> setDueDate(@RequestParam String taskId, @RequestParam String dueDate)
+      throws ParseException, TaskListException {
 
-    LOGGER.info("getFormById");
+    LOGGER.info("setDueDate");
 
-    Form form = taskListService.getFormById(formId, processDefinitionId);
-    return new ResponseEntity<>(form, HttpStatus.OK);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date dueDate1 = sdf.parse(dueDate);
+
+    TaskEntity taskEntity = taskListService.setDueDate(taskId, dueDate1);
+    return new ResponseEntity<>(taskEntity, HttpStatus.OK);
   }
 
   @RequestMapping(
@@ -80,13 +87,19 @@ public class TaskListController {
 
     LOGGER.info("completeTask");
 
+    throw new IllegalStateException("Not implemented");
+
+    /*
     JSONObject obj = (JSONObject) JSONValue.parse(data);
     String taskId = obj.getAsString("taskId");
 
     JSONObject variables = (JSONObject) obj.get("variables");
 
     Task task = taskListService.completeTask(taskId, variables);
-    return new ResponseEntity<>(task, HttpStatus.OK);
+
+    return new ResponseEntity<>("", HttpStatus.OK);
+     */
+
   }
 
   public Map jsonToMap(String json) {
