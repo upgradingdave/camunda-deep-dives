@@ -18,21 +18,11 @@
 
   <properties>
     <java.version>17</java.version>
-    <spring-zeebe.version>8.3.1</spring-zeebe.version>
+    <spring-zeebe.version>8.4.0</spring-zeebe.version>
     <zeebe.version>8.4.2</zeebe.version>
   </properties>
 
   <dependencies>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>io.camunda</groupId>
@@ -44,17 +34,6 @@
       <groupId>io.camunda</groupId>
       <artifactId>spring-zeebe-starter</artifactId>
       <version>${spring-zeebe.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>2.2.0</version>
-   </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
     </dependency>
 
     <dependency>
