@@ -1,0 +1,11 @@
+zeebe:
+  client:
+    broker:
+      gatewayAddress: your.domain.com:443
+    security:
+      plaintext: false
+    cloud:
+      client-id: "Entra App / Client Id"
+      client-secret: "Entra Client Secret"
+      auth-url: "https://login.microsoftonline.com/<Entra Tenant Id>/oauth2/v2.0/token"
+      scope: "Entra Client Id/.default"
