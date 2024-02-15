@@ -15,8 +15,7 @@ public class ZeebeService {
   }
 
   public void topologyRequest() {
-      Topology join = zeebeClient.newTopologyRequest().send().join();
-      System.out.println(join);
+    Topology join = zeebeClient.newTopologyRequest().send().join();
+    System.out.println(join);
   }
-
 }

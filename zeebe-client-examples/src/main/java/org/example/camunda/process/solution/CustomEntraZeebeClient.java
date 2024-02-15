@@ -28,14 +28,14 @@ public class CustomEntraZeebeClient {
             .clientSecret(clientSecret)
             .build();
 
-    this.zeebeClient = ZeebeClient.newClientBuilder()
-        .gatewayAddress(gatewayAddress)
-        .credentialsProvider(credentialsProvider)
-        .build();
+    this.zeebeClient =
+        ZeebeClient.newClientBuilder()
+            .gatewayAddress(gatewayAddress)
+            .credentialsProvider(credentialsProvider)
+            .build();
   }
 
   public ZeebeClient getZeebeClient() {
     return zeebeClient;
   }
-
 }

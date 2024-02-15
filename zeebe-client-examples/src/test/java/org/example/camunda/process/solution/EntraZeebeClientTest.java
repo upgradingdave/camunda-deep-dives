@@ -2,22 +2,16 @@ package org.example.camunda.process.solution;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @EnableConfigurationProperties
 public class EntraZeebeClientTest {
 
-  @Autowired
-  ZeebeService zeebeService;
+  @Autowired ZeebeService zeebeService;
 
-  @Autowired
-  CustomEntraZeebeClient customEntraZeebeClient;
+  @Autowired CustomEntraZeebeClient customEntraZeebeClient;
 
   @Test
   public void testZeebeClient() throws Exception {
