@@ -6,7 +6,9 @@
 
 Very simple example of connecting to a Self Managed environment via Azure Entra Id
 
-To test, changed the values in [EntraZeebeClient](src/main/java/org/example/camunda/process/solution/EntraZeebeClient.java) and then run unit test in [EntraZeebeClientTest](src/test/java/org/example/camunda/process/solution/EntraZeebeClientTest.java)
+To test, change the values in [application.yaml](src/main/resources/application.yaml) and then run the unit test in [EntraZeebeClientTest](src/test/java/org/example/camunda/process/solution/EntraZeebeClientTest.java)
+
+Or, run the [ProcessApplication](src/main/java/org/example/camunda/process/solution/ProcessApplication.java) spring boot app to auto deploy bpmn files located inside [src/main/resources/models](src/main/resources/models)
 
 
 
