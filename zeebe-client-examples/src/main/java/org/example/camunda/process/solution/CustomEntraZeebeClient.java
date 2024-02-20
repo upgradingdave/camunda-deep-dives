@@ -17,7 +17,8 @@ public class CustomEntraZeebeClient {
       @Value("${zeebe.client.cloud.auth-url:notProvided}") String authTokenUrl,
       @Value("${zeebe.client.cloud.client-id:notProvided}") String clientId,
       @Value("${zeebe.client.cloud.client-secret:notProvided}") String clientSecret,
-      @Value("${zeebe.client.cloud.scope:notProvided}") String scope) {
+      @Value("${zeebe.client.cloud.scope:notProvided}") String scope,
+      @Value("${zeebe.client.security.cert-path}") String caCertPath) {
 
     this.credentialsProvider =
         new OAuthCredentialsProviderBuilder()
@@ -30,6 +31,7 @@ public class CustomEntraZeebeClient {
 
     this.zeebeClient =
         ZeebeClient.newClientBuilder()
+            .caCertificatePath(caCertPath)
             .gatewayAddress(gatewayAddress)
             .credentialsProvider(credentialsProvider)
             .build();

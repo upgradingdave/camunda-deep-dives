@@ -4,6 +4,7 @@ zeebe:
       gatewayAddress: your.domain.com:443
     security:
       plaintext: false
+      cert-path: "path/to/your-ca-cert.pem"
     cloud:
       client-id: "Entra App / Client Id"
       client-secret: "Entra Client Secret"
