@@ -1,0 +1,12 @@
+zeebe:
+  client:
+    broker:
+      gatewayAddress: localhost:26500
+    security:
+      plaintext: true
+
+tasklist:
+  client:
+    url: "http://localhost:8082"
+    username: "demo"
+    password: "demo"
