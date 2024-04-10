@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1pqt1qk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.16.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0" camunda:diagramRelationId="13644463-c173-4591-ab55-860357257474">
+  <bpmn:process id="Process_1m2yap9" name="Hello World" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_04etmae" sourceRef="StartEvent_1" targetRef="Activity_03qdunh" />
+    <bpmn:scriptTask id="Activity_03qdunh" name="Hello World!">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=&#34;Hello World&#34;" resultVariable="result" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04etmae</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qc9l7g</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0ngzdxx" name="end">
+      <bpmn:incoming>Flow_1qc9l7g</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1qc9l7g" sourceRef="Activity_03qdunh" targetRef="Event_0ngzdxx" />
+    <bpmn:startEvent id="StartEvent_1" name="hello">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="inbound.type" value="io.camunda:webhook:1" />
+          <zeebe:property name="inbound.subtype" value="ConfigurableInboundWebhook" />
+          <zeebe:property name="inbound.method" value="any" />
+          <zeebe:property name="inbound.context" value="hello" />
+          <zeebe:property name="inbound.shouldValidateHmac" value="disabled" />
+          <zeebe:property name="inbound.auth.type" value="NONE" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_04etmae</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1m2yap9">
+      <bpmndi:BPMNShape id="Activity_0a7ok2r_di" bpmnElement="Activity_03qdunh">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ngzdxx_di" bpmnElement="Event_0ngzdxx">
+        <dc:Bounds x="432" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="441" y="142" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03znetv_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="185" y="142" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_04etmae_di" bpmnElement="Flow_04etmae">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qc9l7g_di" bpmnElement="Flow_1qc9l7g">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="432" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
