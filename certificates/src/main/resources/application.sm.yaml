@@ -8,3 +8,4 @@ zeebe:
       client-id: "zeebe"
       client-secret: "ZEEBE_CLIENT_SECRET"
       auth-url: "https://KEYCLOAK_HOST:443/auth/realms/camunda-platform/protocol/openid-connect/token"
+      audience: "zeebe-api"
