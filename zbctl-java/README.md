@@ -8,6 +8,15 @@ A very simple command line tool written in java for testing connections to zeebe
 
 # Usage Examples
 
-java -jar zbctl.jar --address my.domain.com:443 --authzUrl "https://my.domain.com:443/auth/realms/camunda-platform/protocol/openid-connect/token" --clientId zeebe --clientSecret MYSECRET
+```shell
+java -jar zbctl.jar \
+  --address my.domain.com:443 \
+  --authzUrl https://my.domain.com:443/auth/realms/camunda-platform/protocol/openid-connect/token \
+  --clientId zeebe \
+  --clientSecret MYSECRET \
+  --certPath ./certs/pretendpear.cer
+```
+
+
 
 
