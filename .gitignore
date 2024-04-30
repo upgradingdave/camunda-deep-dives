@@ -6,3 +6,4 @@ build/
 aws-lambda-js/function.zip
 .DS_Store
 certificates/src/main/resources/application.yaml
+zbctl.jks

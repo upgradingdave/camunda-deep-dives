@@ -4,6 +4,10 @@ import io.camunda.zeebe.client.CredentialsProvider;
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.ZeebeClientBuilder;
 import io.camunda.zeebe.client.impl.oauth.OAuthCredentialsProviderBuilder;
+import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import org.apache.commons.cli.*;
 
 public class Main {
@@ -115,7 +119,9 @@ public class Main {
 
         if (cmd.hasOption("certPath")) {
           String certPath = cmd.getOptionValue("certPath");
-          zeebeClientBuilder.caCertificatePath(certPath);
+          KeystoreManager keystoreManager = new KeystoreManager();
+          keystoreManager.createKeystore("zbctl.jks", "camunda", "camunda", certPath);
+          // zeebeClientBuilder.caCertificatePath(certPath);
         }
 
         ZeebeClient zeebeClient = zeebeClientBuilder.build();
@@ -123,6 +129,14 @@ public class Main {
       }
 
     } catch (ParseException e) {
+      throw new RuntimeException(e);
+    } catch (CertificateException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } catch (KeyStoreException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }
   }
