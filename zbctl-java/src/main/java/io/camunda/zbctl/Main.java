@@ -59,6 +59,12 @@ public class Main {
             .hasArg()
             .build();
 
+    Option plainTextOption =
+        Option.builder()
+            .longOpt("plainText")
+            .desc("By default, we'll use tls encrypted communication. Use this to connect using plain text (no tls encryption)")
+            .build();
+
     Option helpOption = Option.builder().longOpt("help").desc("display this help message").build();
 
     Options options = new Options();
@@ -70,6 +76,7 @@ public class Main {
     options.addOption(clientIdOption);
     options.addOption(clientSecretOption);
     options.addOption(helpOption);
+    options.addOption(plainTextOption);
 
     CommandLineParser parser = new DefaultParser();
     try {
@@ -106,7 +113,7 @@ public class Main {
         CredentialsProvider credentialsProvider =
             new OAuthCredentialsProviderBuilder()
                 .authorizationServerUrl(authzUrl)
-                .audience(clientId)
+                .audience(audience)
                 .scope(scope)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
@@ -117,11 +124,15 @@ public class Main {
                 .gatewayAddress(address)
                 .credentialsProvider(credentialsProvider);
 
+        if(cmd.hasOption("plainText")) {
+          zeebeClientBuilder.usePlaintext();
+        }
+
         if (cmd.hasOption("certPath")) {
           String certPath = cmd.getOptionValue("certPath");
           KeystoreManager keystoreManager = new KeystoreManager();
           keystoreManager.createKeystore("zbctl.jks", "camunda", "camunda", certPath);
-          // zeebeClientBuilder.caCertificatePath(certPath);
+          zeebeClientBuilder.caCertificatePath(certPath);
         }
 
         ZeebeClient zeebeClient = zeebeClientBuilder.build();
