@@ -13,6 +13,7 @@ public class ProcessApplication {
   public static void main(String[] args) {
     logger.info("Attempting to start Spring Boot Application");
     SpringApplication.run(ProcessApplication.class, args);
+    logger.info("Started Spring Boot Application");
   }
-  
+
 }
