@@ -1,0 +1,8 @@
+- [x] Able to get topology
+- [x] Able to start process instance
+- [ ] Able to get process instance details
+- [ ] Able to find task name
+- [ ] Implement Task Job Worker
+- [ ] Able to query Job Worker User Tasks
+- [ ] Able to query Zeebe user Tasks
+- [ ] Auto deploy bpmn
