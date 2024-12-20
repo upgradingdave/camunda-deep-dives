@@ -32,8 +32,7 @@ public class ProcessController {
   @GetMapping(value = "/instance/{instanceId}")
   public ProcessInstance getInstance(@PathVariable String instanceId) {
     LOGGER.info("getInstance");
-    return null;
-    //return bpmnService.getProcessInstance(instanceId).get(0);
+    return bpmnService.getProcessInstance(instanceId).get(0);
   }
 
   @PostMapping(value = "/start/{processId}")

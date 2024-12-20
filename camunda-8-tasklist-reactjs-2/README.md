@@ -10,7 +10,9 @@ Sample to demonstrate User Task Throughput possible in C8
 
 - As of December 2024, User Task Listeners are not planned to be available until 8.7, so, for this experiment, we'll use Job Workers and Execution Listeners
 - [How to migrate to Zeebe user tasks](https://docs.camunda.io/docs/apis-tools/migration-manuals/migrate-to-zeebe-user-tasks/)
-- Tried using Spring Zeebe SDK but got some strange errors when trying to get instance details
+- Tried using Spring Zeebe SDK but got ssl errors when trying to get instance details
+- Followed [this guide](https://docs.camunda.io/docs/apis-tools/java-client/) to create Zeebe Client. Had to use `grpcs://clusterId.region.camunda.io` instead of `clusterId.region.camunda.io:443`
+- I got the same error when using simple Zeebe Client: 
 ```
 2024-12-20T11:14:16.154-05:00  INFO 38851 --- [nio-8080-exec-3] o.apache.coyote.http11.Http11Processor   : Error parsing HTTP request header
  Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
@@ -27,6 +29,7 @@ javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
 	at java.base/sun.security.ssl.SSLEngineInputRecord.bytesInCompletePacket(SSLEngineInputRecord.java:64) ~[na:na]
 
 ```
+
 
 # Backend - Spring Boot Rest API
 
