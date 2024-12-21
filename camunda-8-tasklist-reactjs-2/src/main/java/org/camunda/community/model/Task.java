@@ -8,27 +8,35 @@ public class Task {
 
   private String id;
 
-  private String jobKey;
+  private Long jobKey;
 
   private String name;
+
+  private String processId;
 
   private String processInstanceKey;
 
   private String processName;
 
+  private String tenantId;
+
   private String assignee;
 
   private String creationDate;
+
+  private String completionDate;
 
   private String taskState;
 
   private List<String> candidateGroups;
 
+  private List<String> candidateUsers;
+
   private List<String> sortValues;
 
   private Boolean isFirst;
 
-  private Map<String, Object> variables;
+  private List<TaskVariable> variables;
 
   private String formKey;
 
@@ -43,6 +51,12 @@ public class Task {
   private String taskDefinitionId;
 
   private OffsetDateTime dueDate;
+
+  private OffsetDateTime followUpDate;
+
+  private String implementation;
+
+  private Integer priority;
 
   public String getId() {
     return id;
@@ -116,11 +130,11 @@ public class Task {
     this.isFirst = isFirst;
   }
 
-  public Map<String, Object> getVariables() {
+  public List<TaskVariable> getVariables() {
     return variables;
   }
 
-  public void setVariables(Map<String, Object> variables) {
+  public void setVariables(List<TaskVariable> variables) {
     this.variables = variables;
   }
 
@@ -172,11 +186,11 @@ public class Task {
     this.processDefinitionKey = processDefinitionKey;
   }
 
-  public String getJobKey() {
+  public Long getJobKey() {
     return jobKey;
   }
 
-  public void setJobKey(String jobKey) {
+  public void setJobKey(Long jobKey) {
     this.jobKey = jobKey;
   }
 
@@ -194,5 +208,77 @@ public class Task {
 
   public void setDueDate(OffsetDateTime dueDate) {
     this.dueDate = dueDate;
+  }
+
+  public String getTenantId() {
+    return tenantId;
+  }
+
+  public void setTenantId(String tenantId) {
+    this.tenantId = tenantId;
+  }
+
+  public String getCompletionDate() {
+    return completionDate;
+  }
+
+  public void setCompletionDate(String completionDate) {
+    this.completionDate = completionDate;
+  }
+
+  public List<String> getCandidateUsers() {
+    return candidateUsers;
+  }
+
+  public void setCandidateUsers(List<String> candidateUsers) {
+    this.candidateUsers = candidateUsers;
+  }
+
+  public Boolean getFirst() {
+    return isFirst;
+  }
+
+  public void setFirst(Boolean first) {
+    isFirst = first;
+  }
+
+  public Boolean getFormEmbedded() {
+    return isFormEmbedded;
+  }
+
+  public void setFormEmbedded(Boolean formEmbedded) {
+    isFormEmbedded = formEmbedded;
+  }
+
+  public OffsetDateTime getFollowUpDate() {
+    return followUpDate;
+  }
+
+  public void setFollowUpDate(OffsetDateTime followUpDate) {
+    this.followUpDate = followUpDate;
+  }
+
+  public String getImplementation() {
+    return implementation;
+  }
+
+  public void setImplementation(String implementation) {
+    this.implementation = implementation;
+  }
+
+  public Integer getPriority() {
+    return priority;
+  }
+
+  public void setPriority(Integer priority) {
+    this.priority = priority;
+  }
+
+  public String getProcessId() {
+    return processId;
+  }
+
+  public void setProcessId(String processId) {
+    this.processId = processId;
   }
 }

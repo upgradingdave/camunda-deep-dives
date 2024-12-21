@@ -7,7 +7,7 @@ import io.camunda.zeebe.client.api.search.response.ProcessInstance;
 import io.camunda.zeebe.client.api.search.response.SearchQueryResponse;
 import io.camunda.zeebe.client.impl.oauth.OAuthCredentialsProvider;
 import io.camunda.zeebe.client.impl.oauth.OAuthCredentialsProviderBuilder;
-import org.camunda.community.ZeebeClientConfig;
+import org.camunda.community.CamundaConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,29 +21,21 @@ public class BPMNService {
   private ZeebeClient zeebeClient;
 
   @Autowired
-  public BPMNService(ZeebeClientConfig zeebeClientConfig) {
+  public BPMNService(CamundaConfig camundaConfig) {
 
-    if(zeebeClientConfig.getMode().equals("saas")) {
-      String oAuthAPI = "https://login.cloud.camunda.io/oauth/token";
-      String zeebeGrpc = "grpcs://" + zeebeClientConfig.getClusterId() + "." + zeebeClientConfig.getRegion() + ".zeebe.camunda.io";
-      String zeebeRest = "https://" + zeebeClientConfig.getRegion() + ".zeebe.camunda.io/" + zeebeClientConfig.getClusterId() + ".zeebe.camunda.io:443";
-      String audience = "zeebe.camunda.io";
+    OAuthCredentialsProvider credentialsProvider =
+        new OAuthCredentialsProviderBuilder()
+            .authorizationServerUrl(camundaConfig.getOAuthApi())
+            .audience(camundaConfig.getZeebeAudience())
+            .clientId(camundaConfig.getClientId())
+            .clientSecret(camundaConfig.getClientSecret())
+            .build();
 
-      OAuthCredentialsProvider credentialsProvider =
-          new OAuthCredentialsProviderBuilder()
-              .authorizationServerUrl(oAuthAPI)
-              .audience(audience)
-              .clientId(zeebeClientConfig.getClientId())
-              .clientSecret(zeebeClientConfig.getClientSecret())
-              .build();
-
-      this.zeebeClient = ZeebeClient.newClientBuilder()
-          .grpcAddress(URI.create(zeebeGrpc))
-          .restAddress(URI.create(zeebeRest))
-          .credentialsProvider(credentialsProvider)
-          .build();
-
-    }
+    this.zeebeClient = ZeebeClient.newClientBuilder()
+        .grpcAddress(URI.create(camundaConfig.getZeebeGrpc()))
+        .restAddress(URI.create(camundaConfig.getZeebeRest()))
+        .credentialsProvider(credentialsProvider)
+        .build();
   }
 
   public ZeebeClient getZeebeClient() {

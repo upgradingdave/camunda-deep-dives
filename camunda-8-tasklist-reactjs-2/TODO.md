@@ -1,8 +1,8 @@
 - [x] Able to get topology
 - [x] Able to start process instance
-- [ ] Able to get process instance details
-- [ ] Able to find task name
-- [ ] Implement Task Job Worker
-- [ ] Able to query Job Worker User Tasks
-- [ ] Able to query Zeebe user Tasks
+- [x] Able to query tasks by businessKey
+- [x] Implement Task Job Worker
+- [ ] Implement task cache lookup
+- [ ] Implement metrics timer to show time in cache
 - [ ] Auto deploy bpmn
+- [ ] Implement config and auth for SM

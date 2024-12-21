@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
-@EnableConfigurationProperties(ZeebeClientConfig.class)
+@EnableConfigurationProperties(CamundaConfig.class)
 public class ProcessApplication {
 
   static Logger logger = LoggerFactory.getLogger("ProcessApplication.class");
