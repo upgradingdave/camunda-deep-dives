@@ -21,6 +21,8 @@ public class Task {
   @Id
   private String businessKey;
 
+  private Boolean cache;
+
   private String id;
 
   private Long jobKey;

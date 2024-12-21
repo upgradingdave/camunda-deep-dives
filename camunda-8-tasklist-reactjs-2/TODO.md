@@ -2,7 +2,10 @@
 - [x] Able to start process instance
 - [x] Able to query tasks by businessKey
 - [x] Implement Task Job Worker
-- [ ] Implement task cache lookup
+- [x] Implement task db cache lookup
+- [ ] Implement sample frontend
+- [ ] simulate load
+- [ ] Consider cache by businessKey + UserTask
 - [ ] Implement metrics timer to show time in cache
 - [ ] Auto deploy bpmn
 - [ ] Implement config and auth for SM

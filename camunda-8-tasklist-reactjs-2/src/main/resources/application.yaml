@@ -7,6 +7,9 @@ camunda:
     region: ont-1
 
 spring:
+  h2:
+    console:
+      enabled: true
   datasource:
     url: jdbc:h2:mem:tasks_db;NON_KEYWORDS=VALUE
     username: sa

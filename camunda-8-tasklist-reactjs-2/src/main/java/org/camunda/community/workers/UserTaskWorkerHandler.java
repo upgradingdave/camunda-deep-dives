@@ -7,6 +7,7 @@ import io.camunda.zeebe.client.api.worker.JobHandler;
 import org.camunda.community.model.Task;
 import org.camunda.community.model.TaskState;
 import org.camunda.community.model.TaskVariable;
+import org.camunda.community.services.TaskListService;
 import org.camunda.community.utils.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,12 @@ import java.util.Map;
 public class UserTaskWorkerHandler implements JobHandler {
 
   static Logger logger = LoggerFactory.getLogger(UserTaskWorker.class);
+
+  TaskListService taskListService;
+
+  public UserTaskWorkerHandler(TaskListService taskListService) {
+    this.taskListService = taskListService;
+  }
 
   @Override
   public void handle(JobClient client, ActivatedJob job) throws Exception {
@@ -77,6 +84,8 @@ public class UserTaskWorkerHandler implements JobHandler {
         variables.add(TaskVariable.builder().name(variable.getKey()).value(variable.getValue().toString()).build());
       }
     }
+
+    taskListService.saveTaskInDB(task);
 
     // !!! The name of the bpmn file in the "src/main/resources/models" directory must match the
     // process id in order for this to work!

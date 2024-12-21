@@ -24,12 +24,13 @@ public class TaskListService {
   private RestClient restClient;
   private TokenResponse tokenResponse;
 
-  private SimpleCache<String, Task> taskCache;
+  TaskRepository taskRepository;
 
   @Autowired
-  public TaskListService(CamundaConfig camundaConfig) {
+  public TaskListService(CamundaConfig camundaConfig, TaskRepository taskRepository) {
     this.camundaConfig = camundaConfig;
     this.restClient = RestClient.builder().build();
+    this.taskRepository = taskRepository;
   }
 
   public void refreshBearerTokenIfNeeded() {
@@ -57,6 +58,18 @@ public class TaskListService {
         .body(params)
         .retrieve()
         .toEntity(TokenResponse.class).getBody();
+  }
+
+  public Task saveTaskInDB(Task task) {
+    return taskRepository.save(task);
+  }
+
+  public void deleteTaskInDBByBusinessKey(String businessKey) {
+    taskRepository.deleteTaskByBusinessKey(businessKey);
+  }
+
+  public List<Task> findTasksInDBByBusinessKey(String businessKey) {
+    return taskRepository.getTasksByBusinessKey(businessKey);
   }
 
   public List<Task> findTasksByBusinessKey(String businessKey) {
@@ -92,7 +105,10 @@ public class TaskListService {
         .toEntity(typeRef).getBody();
 
     if(results == null || results.isEmpty()) {
-      // TODO try finding in cache
+      results = findTasksInDBByBusinessKey(businessKey);
+    } else {
+      // remove from cache if any exist
+      deleteTaskInDBByBusinessKey(businessKey);
     }
 
     return results;
