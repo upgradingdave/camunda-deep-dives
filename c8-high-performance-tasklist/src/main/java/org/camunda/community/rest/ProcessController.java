@@ -1,15 +1,14 @@
 package org.camunda.community.rest;
 
-import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
+import io.camunda.zeebe.client.api.response.PublishMessageResponse;
 import io.camunda.zeebe.client.api.response.Topology;
 import io.camunda.zeebe.client.api.search.response.ProcessInstance;
+import org.camunda.community.model.InitialPayload;
 import org.camunda.community.services.BPMNService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -35,11 +34,10 @@ public class ProcessController {
     return bpmnService.getProcessInstance(instanceId).get(0);
   }
 
-  @PostMapping(value = "/start/{processId}")
-  public ProcessInstanceEvent startInstance(@PathVariable String processId,
-                                            @RequestBody Map<Object, Object> variables) {
+  @PostMapping(value = "/start")
+  public InitialPayload startInstance(@RequestBody InitialPayload variables) {
     LOGGER.info("startInstance");
-    return bpmnService.startProcessInstance(processId, variables);
+    return bpmnService.startProcessInstance(variables);
   }
 
 }

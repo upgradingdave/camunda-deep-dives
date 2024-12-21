@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "camunda.client")
 public class CamundaConfig {
 
+  public static final String MESSAGE_START = "Message_HighPerfUserTaskProcessStart";
+
   private String clientId;
   private String clientSecret;
   private String clusterId;

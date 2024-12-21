@@ -3,7 +3,8 @@
 - [x] Able to query tasks by businessKey
 - [x] Implement Task Job Worker
 - [x] Implement task db cache lookup
-- [ ] Implement sample frontend
+- [x] Ensure one instance per user
+- [ ] frontend - able to authenticate
 - [ ] simulate load
 - [ ] Consider cache by businessKey + UserTask
 - [ ] Implement metrics timer to show time in cache

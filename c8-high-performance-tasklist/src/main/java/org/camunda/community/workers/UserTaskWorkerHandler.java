@@ -81,10 +81,14 @@ public class UserTaskWorkerHandler implements JobHandler {
     List<TaskVariable> variables = new ArrayList<>();
     for(Map.Entry<String, Object> variable : job.getVariablesAsMap().entrySet()) {
       if (variable.getValue() instanceof String) {
+        if(variable.getKey().equals("businessKey")) {
+          task.setBusinessKey(variable.getValue().toString());
+        }
         variables.add(TaskVariable.builder().name(variable.getKey()).value(variable.getValue().toString()).build());
       }
     }
 
+    task.setCache(true);
     taskListService.saveTaskInDB(task);
 
     // !!! The name of the bpmn file in the "src/main/resources/models" directory must match the

@@ -18,11 +18,11 @@ import java.util.List;
 @Builder
 public class Task {
 
-  @Id
   private String businessKey;
 
-  private Boolean cache;
+  private Boolean cache = false;
 
+  @Id
   private String id;
 
   private Long jobKey;
