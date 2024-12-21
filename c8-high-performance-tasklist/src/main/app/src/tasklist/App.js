@@ -52,7 +52,7 @@ class App extends Component {
     poll() {
         if(this.state.user.userId && this.state.screen === "waiting") {
             console.log("check for tasks ...");
-            client(`${taskListApi}/getAssigneeTasks?userId=${this.state.user.userId}`).then(this.handleTasks);
+            client(`${taskListApi}/findTasksByAssignee/${this.state.user.userId}`).then(this.handleTasks);
         }
         this.setState({history: {lastCheck: new Date()}});
     }
@@ -184,7 +184,7 @@ class App extends Component {
             if(this.state.screen === "waiting") {
 
                 return (
-                    <div>Processing ...</div>
+                    <div>Searching for tasks assigned to {this.state.user.userId} ...</div>
                 )
 
             } else if(this.state.screen === "loadForm" || this.state.screen === "form") {

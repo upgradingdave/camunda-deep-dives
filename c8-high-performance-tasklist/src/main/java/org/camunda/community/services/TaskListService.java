@@ -7,6 +7,8 @@ import org.camunda.community.model.TaskSearchFilter;
 import org.camunda.community.model.TaskState;
 import org.camunda.community.model.TokenResponse;
 import org.camunda.community.utils.SimpleCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -19,6 +21,8 @@ import java.util.List;
 
 @Service
 public class TaskListService {
+
+  static Logger logger = LoggerFactory.getLogger(TaskListService.class);
 
   private CamundaConfig camundaConfig;
   private RestClient restClient;
@@ -72,6 +76,10 @@ public class TaskListService {
     return taskRepository.getTasksByBusinessKey(businessKey);
   }
 
+  public List<Task> findTasksInDBByAssignee(String userName) {
+    return taskRepository.findTasksByAssignee(userName);
+  }
+
   public List<Task> findTasksByBusinessKey(String businessKey) {
 
     refreshBearerTokenIfNeeded();
@@ -79,7 +87,10 @@ public class TaskListService {
 /*    TaskSearchFilter taskSearch = new TaskSearchFilter()
         .state(TaskState.TASK_CREATED)
         .taskVariableFilter("businessKey", "\\\""+businessKey+"\\\"");
-    HttpEntity<TaskSearchFilter> taskSearchEntity = new HttpEntity<>(taskSearch);*/
+    HttpEntity<TaskSearchFilter> body = new HttpEntity<>(taskSearch);
+    */
+
+    ParameterizedTypeReference<List<Task>> typeRef = new ParameterizedTypeReference<List<Task>>(){};
 
     //TODO: clean this up
     String body = "{\n" +
@@ -87,13 +98,11 @@ public class TaskListService {
         "    \"taskVariables\": [\n" +
         "        {\n" +
         "            \"name\": \"businessKey\",\n" +
-        "            \"value\": \"\\\"123\\\"\",\n" +
+        "            \"value\": \"\\\""+businessKey+"\\\"\",\n" +
         "            \"operator\": \"eq\"\n" +
         "        }\n" +
         "    ]\n" +
         "}";
-
-    ParameterizedTypeReference<List<Task>> typeRef = new ParameterizedTypeReference<List<Task>>(){};
 
     List<Task> results = restClient.post()
         .uri(camundaConfig.getTasklistUrl() + "/v1/tasks/search")
@@ -109,6 +118,47 @@ public class TaskListService {
     } else {
       // remove from cache if any exist
       deleteTaskInDBByBusinessKey(businessKey);
+    }
+
+    return results;
+  }
+
+  public List<Task> findTasksByAssignee(String userName) {
+
+    refreshBearerTokenIfNeeded();
+
+    /*TaskSearchFilter taskSearch = TaskSearchFilter.builder()
+        .state(TaskState.TASK_CREATED)
+        .assignee(userName)
+        .build();
+
+    HttpEntity<TaskSearchFilter> body = new HttpEntity<>(taskSearch);*/
+
+    ParameterizedTypeReference<List<Task>> typeRef = new ParameterizedTypeReference<List<Task>>(){};
+
+    //TODO: clean this up
+    String body = "{\n" +
+        "    \"state\": \"CREATED\",\n" +
+        "    \"assignee\": \""+userName+"\"\n" +
+        "}";
+
+    List<Task> results = restClient.post()
+        .uri(camundaConfig.getTasklistUrl() + "/v1/tasks/search")
+        .header("Content-Type", MediaType.APPLICATION_JSON.toString())
+        .header("Accept", MediaType.APPLICATION_JSON.toString())
+        .header("Authorization", String.format("Bearer %s", tokenResponse.getAccessToken()))
+        .body(body)
+        .retrieve()
+        .toEntity(typeRef).getBody();
+
+    // Look inside the DB Cache of tasks and add those if we didn't find them from tasklist
+    List<Task> cachedTasks = findTasksInDBByAssignee(userName);
+
+    for(Task task : cachedTasks) {
+      if(!results.contains(task)) {
+        logger.warn(String.format("Task %s not found", task.getId()));
+        results.add(task);
+      }
     }
 
     return results;

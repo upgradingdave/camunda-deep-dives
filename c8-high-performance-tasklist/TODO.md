@@ -5,7 +5,8 @@
 - [x] Implement task db cache lookup
 - [x] Ensure one instance per user
 - [x] frontend - able to authenticate
-- [ ] frontend - able to query for tasks by createdByUsername
+- [x] frontend - able to query for tasks by assignee
+- [ ] frontend - able to display form for a given task
 - [ ] simulate load
 - [ ] Consider cache by businessKey + UserTask
 - [ ] Implement metrics timer to show time in cache

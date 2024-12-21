@@ -33,10 +33,16 @@ public class TaskListController {
     return tasklist.getBearerToken();
   }
 
-  @PostMapping(value = "/findTasksByBusinessKey/{businessKey}")
+  @GetMapping(value = "/findTasksByBusinessKey/{businessKey}")
   public List<Task> findTasksByBusinessKey(@PathVariable String businessKey) {
     LOGGER.info("findTasksByBusinessKey");
     return tasklist.findTasksByBusinessKey(businessKey);
+  }
+
+  @GetMapping(value = "/findTasksByAssignee/{assignee}")
+  public List<Task> findTasksByAssignee(@PathVariable String assignee) {
+    LOGGER.info("findTasksByAssignee");
+    return tasklist.findTasksByAssignee(assignee);
   }
 
 }

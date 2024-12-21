@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class UserTaskWorkerHandler implements JobHandler {
 
-  static Logger logger = LoggerFactory.getLogger(UserTaskWorker.class);
+  static Logger logger = LoggerFactory.getLogger(UserTaskWorkerHandler.class);
 
   TaskListService taskListService;
 
@@ -89,6 +89,7 @@ public class UserTaskWorkerHandler implements JobHandler {
     }
 
     task.setCache(true);
+
     taskListService.saveTaskInDB(task);
 
     // !!! The name of the bpmn file in the "src/main/resources/models" directory must match the

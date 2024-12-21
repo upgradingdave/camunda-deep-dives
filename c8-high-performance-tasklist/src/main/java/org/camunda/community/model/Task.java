@@ -3,10 +3,7 @@ package org.camunda.community.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class Task {
 
   private String businessKey;
@@ -23,6 +21,7 @@ public class Task {
   private Boolean cache = false;
 
   @Id
+  @EqualsAndHashCode.Include
   private String id;
 
   private Long jobKey;
