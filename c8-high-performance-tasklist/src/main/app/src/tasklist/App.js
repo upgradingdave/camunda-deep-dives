@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Form } from '@bpmn-io/form-js-viewer';
-import Login from './Login';
+import BPMNForm from './BPMNForm';
+
+const loginFormSchema = require('../forms/login.form.json');
 
 var rest = require('rest');
 var mime = require('rest/interceptor/mime');
 var client = rest.wrap(mime);
 
+const authApi = "http://localhost:8080/auth";
 const taskListApi = "http://localhost:8080/tasklist";
+
 const initial = {
     bpmnForm: null,
     schema: null,
@@ -46,8 +50,8 @@ class App extends Component {
     }
 
     poll() {
-        //console.log("check for new tasks ...");
         if(this.state.user.userId && this.state.screen === "waiting") {
+            console.log("check for tasks ...");
             client(`${taskListApi}/getAssigneeTasks?userId=${this.state.user.userId}`).then(this.handleTasks);
         }
         this.setState({history: {lastCheck: new Date()}});
@@ -150,7 +154,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.timerId = setInterval(() => this.poll(), 300);
+        this.timerId = setInterval(() => this.poll(), 900);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -235,8 +239,9 @@ class App extends Component {
 
             // User is not Authenticated
             return (
-                <Login
+                <BPMNForm
                     data={this.state.data}
+                    schema={loginFormSchema}
                     onSubmit={this.onLogin}
                 />
             )

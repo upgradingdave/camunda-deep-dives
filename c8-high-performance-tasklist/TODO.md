@@ -4,7 +4,8 @@
 - [x] Implement Task Job Worker
 - [x] Implement task db cache lookup
 - [x] Ensure one instance per user
-- [ ] frontend - able to authenticate
+- [x] frontend - able to authenticate
+- [ ] frontend - able to query for tasks by createdByUsername
 - [ ] simulate load
 - [ ] Consider cache by businessKey + UserTask
 - [ ] Implement metrics timer to show time in cache

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Form } from '@bpmn-io/form-js-viewer';
-const schema = require('./forms/login.form.json');
+import { Form } from '@bpmn-io/form-js';
 
-class Login extends Component {
+
+class BPMNForm extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class Login extends Component {
         const container = document.querySelector('#form');
         const bpmnForm = new Form({container: container});
         bpmnForm.on('submit', this.onSubmit);
-        bpmnForm.importSchema(schema, this.props.data);
+        bpmnForm.importSchema(this.props.schema, this.props.data);
     }
 
     render() {
@@ -27,4 +27,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default BPMNForm;

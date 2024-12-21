@@ -69,9 +69,9 @@ npm start
 ```
 The reactjs webapp should start on port `3000`. You should be able to access this app by browsing to https://localhost:3000
 
-Most of the custom javascript code can be found in [App.js](src/main/app/src/App.js).
+Most of the custom javascript code can be found in [App.js](src/main/app/src/tasklist/App.js).
 
-When you browse to http://localhost:3000, the [Login.js](src/main/app/src/Login.js) component will load. This is a very simple sign in form. It just stores whatever is entered into the username field as the `userId`.
+When you browse to http://localhost:3000, the [Login.js](src/main/app/src/tasklist/Login.js) component will load. This is a very simple sign in form. It just stores whatever is entered into the username field as the `userId`.
 
 Then, the `userId` is used to query tasks from Task List.
 
@@ -81,7 +81,7 @@ This ReactJs App supports 2 types of forms: Camunda Forms, or custom react forms
 
 If a `UserTask` uses a Camunda Form, the [Camunda bpmio Form Js](https://bpmn.io/toolkit/form-js/) library is used to render that form inside a react component.
 
-Otherwise, if the User Task is configured to us a Custom Form Key, then the ReactJs code renders the html found near line 206 in [App.js](src/main/app/src/App.js).
+Otherwise, if the User Task is configured to us a Custom Form Key, then the ReactJs code renders the html found near line 206 in [App.js](src/main/app/src/tasklist/App.js).
 
 This html can be easily modified to display a custom form. And, of course, you could implement more complicated mechanism for looking up, and rendering forms.
 
