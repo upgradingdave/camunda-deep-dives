@@ -3,8 +3,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <name>High Performance User Tasks</name>
-  <description>A customer reactjs tasklist to demonstrate User Task throughput</description>
+  <name>High Performance TaskList</name>
+  <description>A custom reactjs tasklist to demonstrate User Task throughput</description>
   <groupId>org.camunda.community</groupId>
   <artifactId>c8-high-performance-tasks</artifactId>
   <version>1.0.0-SNAPSHOT</version>
