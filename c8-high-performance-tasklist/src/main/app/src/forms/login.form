@@ -1,0 +1,37 @@
+{
+  "components": [
+    {
+      "text": "# Sign In",
+      "type": "text",
+      "id": "Field_1j24wwz",
+      "properties": {
+        "key1": "value"
+      }
+    },
+    {
+      "label": "User Id",
+      "type": "textfield",
+      "id": "Field_1kf29yv",
+      "key": "field_userId",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "action": "submit",
+      "label": "Sign In",
+      "type": "button",
+      "id": "Field_1kc793e",
+      "key": "field_056v5xm"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1g2olql",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.4.1"
+  },
+  "schemaVersion": 5
+}
