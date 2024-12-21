@@ -74,7 +74,7 @@ public class UserTaskWorkerHandler implements JobHandler {
     List<TaskVariable> variables = new ArrayList<>();
     for(Map.Entry<String, Object> variable : job.getVariablesAsMap().entrySet()) {
       if (variable.getValue() instanceof String) {
-        variables.add(new TaskVariable().name(variable.getKey()).value(variable.getValue().toString()));
+        variables.add(TaskVariable.builder().name(variable.getKey()).value(variable.getValue().toString()).build());
       }
     }
 

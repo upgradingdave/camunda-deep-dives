@@ -94,6 +94,8 @@ public class TaskListService {
     if(results == null || results.isEmpty()) {
       // TODO try finding in cache
     }
+
+    return results;
   }
 
 }
