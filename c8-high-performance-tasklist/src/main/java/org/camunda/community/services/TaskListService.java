@@ -80,6 +80,10 @@ public class TaskListService {
     return taskRepository.findTasksByAssignee(userName);
   }
 
+  public Task findTaskInDBById(String taskId) {
+    return taskRepository.findTaskById(taskId);
+  }
+
   public List<Task> findTasksByBusinessKey(String businessKey) {
 
     refreshBearerTokenIfNeeded();
@@ -100,6 +104,12 @@ public class TaskListService {
         "            \"name\": \"businessKey\",\n" +
         "            \"value\": \"\\\""+businessKey+"\\\"\",\n" +
         "            \"operator\": \"eq\"\n" +
+        "        }\n" +
+        "    ],\n" +
+        "    \"includeVariables\": [\n" +
+        "        {\n" +
+        "            \"name\": \"businessKey\", \n" +
+        "            \"alwaysReturnFullValue\": true\n" +
         "        }\n" +
         "    ]\n" +
         "}";
@@ -139,7 +149,13 @@ public class TaskListService {
     //TODO: clean this up
     String body = "{\n" +
         "    \"state\": \"CREATED\",\n" +
-        "    \"assignee\": \""+userName+"\"\n" +
+        "    \"assignee\": \""+userName+"\",\n" +
+        "    \"includeVariables\": [\n" +
+        "        {\n" +
+        "            \"name\": \"businessKey\", \n" +
+        "            \"alwaysReturnFullValue\": true\n" +
+        "        }\n" +
+        "    ]\n" +
         "}";
 
     List<Task> results = restClient.post()
@@ -162,6 +178,29 @@ public class TaskListService {
     }
 
     return results;
+  }
+
+  public Task findTaskById(String taskId) {
+
+    refreshBearerTokenIfNeeded();
+
+    ParameterizedTypeReference<Task> typeRef = new ParameterizedTypeReference<Task>(){};
+
+    Task result = restClient.get()
+        .uri(camundaConfig.getTasklistUrl() + "/v1/tasks/" + taskId)
+        .header("Content-Type", MediaType.APPLICATION_JSON.toString())
+        .header("Accept", MediaType.APPLICATION_JSON.toString())
+        .header("Authorization", String.format("Bearer %s", tokenResponse.getAccessToken()))
+        .retrieve()
+        .toEntity(typeRef).getBody();
+
+    if(result == null) {
+      result = findTaskInDBById(taskId);
+    } else {
+      //TODO: remove from cache?
+    }
+
+    return result;
   }
 
 }

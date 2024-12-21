@@ -23,11 +23,15 @@ const initial = {
 };
 
 function arrToObj(arr, keyName) {
-  return arr.reduce(function (acc, currVal) {
-    let k = currVal[keyName];
-    acc[k] = currVal;
-    return acc;
-  }, {});
+  if(arr) {
+      return arr.reduce(function (acc, currVal) {
+          let k = currVal[keyName];
+          acc[k] = currVal;
+          return acc;
+      }, {});
+  } else {
+      return {}
+  }
 }
 
 class App extends Component {
@@ -86,7 +90,7 @@ class App extends Component {
 
     loadTask(taskId) {
         console.log("loading task...");
-        client(`${taskListApi}/getTask?taskId=${taskId}`).then(this.handleTask);
+        client(`${taskListApi}/findTaskById/${taskId}`).then(this.handleTask);
     }
 
     handleTask(response) {
@@ -94,7 +98,11 @@ class App extends Component {
         console.log(task);
         this.setState({task: task});
 
-      if(task.formKey.startsWith("camunda-forms")) {
+        let varMap = arrToObj(this.state.task.variables, "name");
+        this.setState({variablesMap: varMap})
+        this.setState({screen: 'variablesOnlyForm'});
+
+      /*if(task.formKey.startsWith("camunda-forms")) {
         this.loadForm(task);
       } else {
         // convert variables into a map structure for convenience:
@@ -102,7 +110,7 @@ class App extends Component {
         this.setState({variablesMap: varMap})
         // manually display custom form
         this.setState({screen: 'customForm'});
-      }
+      }*/
 
     }
 
@@ -202,10 +210,27 @@ class App extends Component {
             } else if (this.state.screen === "task") {
 
                 return (
-                    <div>
-                        <div>Loading Task ...</div>
-                    </div>
+                  <div>
+                      <div>Attempting to load Task ... </div>
+                  </div>
                 );
+
+            } else if (this.state.screen === "variablesOnlyForm") {
+
+                /*let listItems = [];
+                if(this.state.variablesMap) {
+                    listItems = this.state.variablesMap.map((variable) =>
+                      <li key={variable.name}>{variable.name}</li>
+                    );
+                }*/
+
+                return (
+                  <div>
+                      <h3>Process: {this.state.task.processName}</h3>
+                      <h3>Task: {this.state.task.name}</h3>
+                  </div>
+                );
+
 
             } else if (this.state.screen === "customForm") {
 

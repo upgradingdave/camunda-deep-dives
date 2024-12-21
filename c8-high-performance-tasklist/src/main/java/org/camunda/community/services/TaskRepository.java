@@ -10,7 +10,12 @@ import java.util.List;
 @Repository
 public interface TaskRepository
     extends CrudRepository<Task, Long> {
+
   List<Task> getTasksByBusinessKey(String businessKey);
+
   void deleteTaskByBusinessKey(String businessKey);
+
   List<Task> findTasksByAssignee(String assignee);
+
+  Task findTaskById(String id);
 }

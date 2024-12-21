@@ -45,4 +45,10 @@ public class TaskListController {
     return tasklist.findTasksByAssignee(assignee);
   }
 
+  @GetMapping(value = "/findTaskById/{taskId}")
+  public Task findTaskById(@PathVariable String taskId) {
+    LOGGER.info("findTaskById");
+    return tasklist.findTaskById(taskId);
+  }
+
 }

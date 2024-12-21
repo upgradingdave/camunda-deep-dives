@@ -6,6 +6,8 @@
 - [x] Ensure one instance per user
 - [x] frontend - able to authenticate
 - [x] frontend - able to query for tasks by assignee
+- [x] able to query for details about single task
+- [ ] able to query variables for single task
 - [ ] frontend - able to display form for a given task
 - [ ] simulate load
 - [ ] Consider cache by businessKey + UserTask
