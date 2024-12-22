@@ -60,7 +60,7 @@ public class UserTaskWorkerHandler implements JobHandler {
       if (job.getCustomHeaders().containsKey("io.camunda.zeebe:candidateGroups")) {
         String groups = job.getCustomHeaders().get("io.camunda.zeebe:candidateGroups");
         task.setCandidateGroups(
-            JSONUtils.toParameterizedObject(groups, new TypeReference<List<String>>() {}));
+            JSONUtils.toParameterizedObject(groups, new TypeReference<>() {}));
       }
 
       if(job.getCustomHeaders().containsKey("io.camunda.zeebe:formKey")) {
@@ -89,9 +89,10 @@ public class UserTaskWorkerHandler implements JobHandler {
       }
     }
 
+    task.setVariables(variables);
     task.setCache(true);
 
-    taskListService.saveTaskInDB(task);
+    taskListService.saveTask(task);
 
     // !!! The name of the bpmn file in the "src/main/resources/models" directory must match the
     // process id in order for this to work!

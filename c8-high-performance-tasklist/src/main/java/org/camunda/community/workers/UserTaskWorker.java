@@ -1,7 +1,7 @@
 package org.camunda.community.workers;
 
 import io.camunda.zeebe.client.api.worker.JobWorker;
-import org.camunda.community.services.BPMNService;
+import org.camunda.community.services.ZeebeService;
 import org.camunda.community.services.TaskListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +15,12 @@ public class UserTaskWorker {
 
   static Logger logger = LoggerFactory.getLogger(UserTaskWorker.class);
 
-  private BPMNService bpmnService;
+  private ZeebeService zeebeService;
   private TaskListService taskListService;
 
   @Autowired
-  public UserTaskWorker(BPMNService bpmnService, TaskListService taskListService) {
-    this.bpmnService = bpmnService;
+  public UserTaskWorker(ZeebeService zeebeService, TaskListService taskListService) {
+    this.zeebeService = zeebeService;
     this.taskListService = taskListService;
     createUserTaskWorker();
   }
@@ -28,7 +28,7 @@ public class UserTaskWorker {
   private void createUserTaskWorker() {
     String userTaskJobType = "io.camunda.zeebe:userTask";
     final JobWorker workerRegistration =
-        bpmnService.getZeebeClient()
+        zeebeService.getZeebeClient()
             .newWorker()
             .jobType(userTaskJobType)
             .handler(new UserTaskWorkerHandler(taskListService))

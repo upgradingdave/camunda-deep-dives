@@ -22,18 +22,6 @@ public class TaskListTest {
   }
 
   @Test
-  public void testTaskList() throws Exception {
-    TokenResponse tokenResponse = taskListService.getBearerToken();
-    assertNotNull(tokenResponse);
-
-    String token = tokenResponse.getAccessToken();
-    assertNotNull(token);
-
-    assertFalse(tokenResponse.isExpired());
-
-  }
-
-  @Test
   public void testTaskSearch() throws Exception {
     List<Task> results = taskListService.findTasksByBusinessKey("123");
     assertTrue(results.size() > 0);

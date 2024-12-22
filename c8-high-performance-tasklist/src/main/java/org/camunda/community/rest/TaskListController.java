@@ -1,10 +1,6 @@
 package org.camunda.community.rest;
 
-import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
-import io.camunda.zeebe.client.api.response.Topology;
-import io.camunda.zeebe.client.api.search.response.ProcessInstance;
 import org.camunda.community.model.*;
-import org.camunda.community.services.BPMNService;
 import org.camunda.community.services.TaskListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,16 +16,10 @@ import java.util.Map;
 public class TaskListController {
 
   private final Logger LOGGER = LoggerFactory.getLogger(TaskListController.class);
-  private TaskListService tasklist;
+  private final TaskListService tasklist;
 
   public TaskListController(@Autowired TaskListService tasklist) {
     this.tasklist = tasklist;
-  }
-
-  @PostMapping(value = "/auth")
-  public TokenResponse getBearerToken() {
-    LOGGER.info("getBearerToken");
-    return tasklist.getBearerToken();
   }
 
   @GetMapping(value = "/findTasksByBusinessKey/{businessKey}")
@@ -53,7 +43,7 @@ public class TaskListController {
   @GetMapping(value = "/findTaskVariablesById/{taskId}")
   public List<TaskVariable> findTaskVariablesById(@PathVariable String taskId) {
     LOGGER.info("findTaskVariablesById");
-    return tasklist.findTaskVariablesById(taskId);
+    return tasklist.findTaskVariablesByTaskId(taskId);
   }
 
   @GetMapping(value = "/findFormById/{formId}")
@@ -62,9 +52,10 @@ public class TaskListController {
     return tasklist.findFormById(formId);
   }
 
-  // Task Id 6755399461539604
-  // Job Key 6755399461539604
-  // Instance key 6755399461511782
-  // Instance key 6755399461511782
+  @PostMapping(value = "/complete/{taskId}")
+  public Boolean completeTask(@PathVariable String taskId, @RequestBody Map<String, Object> variables) {
+    LOGGER.info("completeTask");
+    return tasklist.completeTask(taskId, variables);
+  }
 
 }
