@@ -51,6 +51,8 @@ class App extends Component {
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.doTaskComplete = this.doTaskComplete.bind(this);
         this.handleTaskComplete = this.handleTaskComplete.bind(this);
+        this.loadVariables = this.loadVariables.bind(this);
+        this.handleVariables = this.handleVariables.bind(this);
     }
 
     poll() {
@@ -89,29 +91,44 @@ class App extends Component {
     }
 
     loadTask(taskId) {
-        console.log("loading task...");
+        console.log("loadTask");
         client(`${taskListApi}/findTaskById/${taskId}`).then(this.handleTask);
     }
 
     handleTask(response) {
+        console.log("handleTask");
         let task = response.entity;
         console.log(task);
         this.setState({task: task});
+        this.loadVariables(task.id);
+    }
 
-        let varMap = arrToObj(this.state.task.variables, "name");
+    loadVariables(taskId) {
+        console.log("loadVariables");
+        client(`${taskListApi}/findTaskVariablesById/${taskId}`).then(this.handleVariables);
+    }
+
+    handleVariables(response) {
+        let variables = response.entity;
+        console.log("handleVariables")
+        console.log(variables);
+        let varMap = arrToObj(variables, "name");
         this.setState({variablesMap: varMap})
         this.setState({screen: 'variablesOnlyForm'});
 
-      /*if(task.formKey.startsWith("camunda-forms")) {
-        this.loadForm(task);
-      } else {
-        // convert variables into a map structure for convenience:
-        let varMap = arrToObj(this.state.task.variables, "name");
-        this.setState({variablesMap: varMap})
-        // manually display custom form
-        this.setState({screen: 'customForm'});
-      }*/
-
+        /*
+                if(task.formId) {
+                    this.loadForm(task);
+                }
+                if(task.formKey.startsWith("camunda-forms")) {
+                  this.loadForm(task);
+                } else {
+                  // convert variables into a map structure for convenience:
+                  let varMap = arrToObj(this.state.task.variables, "name");
+                  this.setState({variablesMap: varMap})
+                  // manually display custom form
+                  this.setState({screen: 'customForm'});
+                }*/
     }
 
     loadForm(task) {

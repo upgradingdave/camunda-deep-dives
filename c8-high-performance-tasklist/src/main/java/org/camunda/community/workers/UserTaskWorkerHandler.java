@@ -78,6 +78,7 @@ public class UserTaskWorkerHandler implements JobHandler {
     String creationTime = sdf.format(new Date());
     task.setCreationDate(creationTime);
 
+    //TODO: needs some work for more complicated variable structures
     List<TaskVariable> variables = new ArrayList<>();
     for(Map.Entry<String, Object> variable : job.getVariablesAsMap().entrySet()) {
       if (variable.getValue() instanceof String) {
@@ -102,4 +103,5 @@ public class UserTaskWorkerHandler implements JobHandler {
     logger.info("User Task Worker Handler complete");
 
   }
+
 }

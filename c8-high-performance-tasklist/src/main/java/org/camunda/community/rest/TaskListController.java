@@ -3,8 +3,7 @@ package org.camunda.community.rest;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.Topology;
 import io.camunda.zeebe.client.api.search.response.ProcessInstance;
-import org.camunda.community.model.Task;
-import org.camunda.community.model.TokenResponse;
+import org.camunda.community.model.*;
 import org.camunda.community.services.BPMNService;
 import org.camunda.community.services.TaskListService;
 import org.slf4j.Logger;
@@ -50,5 +49,22 @@ public class TaskListController {
     LOGGER.info("findTaskById");
     return tasklist.findTaskById(taskId);
   }
+
+  @GetMapping(value = "/findTaskVariablesById/{taskId}")
+  public List<TaskVariable> findTaskVariablesById(@PathVariable String taskId) {
+    LOGGER.info("findTaskVariablesById");
+    return tasklist.findTaskVariablesById(taskId);
+  }
+
+  @GetMapping(value = "/findFormById/{formId}")
+  public Form findFormById(@PathVariable String formId) {
+    LOGGER.info("findFormById");
+    return tasklist.findFormById(formId);
+  }
+
+  // Task Id 6755399461539604
+  // Job Key 6755399461539604
+  // Instance key 6755399461511782
+  // Instance key 6755399461511782
 
 }
