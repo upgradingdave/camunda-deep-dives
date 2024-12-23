@@ -7,6 +7,8 @@ camunda:
     region: ont-1
 
 spring:
+  application:
+    name: c8-high-perf-tasklist
   h2:
     console:
       enabled: true
@@ -18,3 +20,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+
+managment:
+  metrics.tags.application: ${spring.application.name}
+  endpoints.web.exposure.include: prometheus

@@ -56,4 +56,19 @@ public class TaskListTest {
 
   }
 
+  @Test
+  public void syncTest() {
+
+    List<Task> tasks1 = new ArrayList<>();
+    List<Task> tasks2 = new ArrayList<>();
+
+    tasks1.add(Task.builder().id("1").businessKey("1").build());
+    tasks2.add(Task.builder().id("1").businessKey("2").build());
+
+    for(Task task : tasks1) {
+      assert(tasks2.contains(task));
+    }
+
+  }
+
 }

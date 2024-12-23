@@ -1,6 +1,8 @@
 package org.camunda.community.services;
 
 
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.camunda.community.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,17 @@ public class TaskListService {
       TaskListRestClient taskListRestClient,
       ZeebeRestClient zeebeRestClient,
       TaskRepository taskRepository,
-      TaskVariableRepository taskVariableRepository) {
+      TaskVariableRepository taskVariableRepository,
+      MeterRegistry meterRegistry) {
     this.taskRepository = taskRepository;
     this.taskListRestClient = taskListRestClient;
     this.zeebeRestClient = zeebeRestClient;
     this.taskVariableRepository = taskVariableRepository;
+
+    Gauge.builder("tasks_cache_count", taskRepository::count)
+        .description("Number of cached tasks")
+        .register(meterRegistry);
+
   }
 
   public List<Task> findTasksByBusinessKey(String businessKey) {

@@ -126,6 +126,29 @@ public class TaskListRestClient {
     return results;
   }
 
+  public List<Task> findCreatedTasks() {
+
+    refreshBearerTokenIfNeeded();
+
+    ParameterizedTypeReference<List<Task>> typeRef = new ParameterizedTypeReference<>(){};
+
+    //TODO: clean this up
+    String body = "{\n" +
+        "    \"state\": \"CREATED\"\n" +
+        "}";
+
+    List<Task> results = restClient.post()
+        .uri(camundaConfig.getTasklistUrl() + "/v1/tasks/search")
+        .header("Content-Type", MediaType.APPLICATION_JSON.toString())
+        .header("Accept", MediaType.APPLICATION_JSON.toString())
+        .header("Authorization", String.format("Bearer %s", tokenResponse.getAccessToken()))
+        .body(body)
+        .retrieve()
+        .toEntity(typeRef).getBody();
+
+    return results;
+  }
+
   public Task findTaskById(String taskId) {
 
     refreshBearerTokenIfNeeded();

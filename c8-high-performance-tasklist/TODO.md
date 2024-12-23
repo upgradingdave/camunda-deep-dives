@@ -9,13 +9,14 @@
 - [x] able to query for details about single task
 - [x] able to query variables for single task
 - [x] refactor to separate rest clients
-- [ ] fix merge task lists by id
-- [ ] periodically invalidate cache
+- [x] fix merge task lists by id
+- [x] periodically invalidate cache
+- [x] able to query for form
+- [ ] Implement metric to show number of tasks in cache
+- [ ] Implement metrics timer to show time in cache
 - [ ] able to complete task
-- [ ] able to query for form
 - [ ] frontend - able to display form for a given task
 - [ ] simulate load
 - [ ] Consider cache by businessKey + UserTask
-- [ ] Implement metrics timer to show time in cache
 - [ ] Auto deploy bpmn
 - [ ] Implement config and auth for SM
