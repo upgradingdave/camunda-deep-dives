@@ -41,6 +41,7 @@ public class ZeebeRestClient {
         camundaConfig.getClientId(), camundaConfig.getClientSecret(), camundaConfig.getZeebeAudience());
   }
 
+  //TODO: I think enabling the Resource Authorizations is necessary for this to work?
   public Boolean completeJob(String jobKey, Map<String, Object> variables) {
 
     refreshBearerTokenIfNeeded();

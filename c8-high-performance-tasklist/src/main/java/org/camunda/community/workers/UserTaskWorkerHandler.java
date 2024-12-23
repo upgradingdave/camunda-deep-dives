@@ -8,15 +8,14 @@ import org.camunda.community.model.Task;
 import org.camunda.community.model.TaskState;
 import org.camunda.community.model.TaskVariable;
 import org.camunda.community.services.TaskListService;
+import org.camunda.community.utils.DateUtils;
 import org.camunda.community.utils.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public class UserTaskWorkerHandler implements JobHandler {
   @Override
   public void handle(JobClient client, ActivatedJob job) throws Exception {
 
-    logger.info("User Task Worker Handler started");
+    logger.debug("User Task Worker Handler started");
 
     Task task = new Task();
     task.setJobKey(job.getKey());
@@ -74,9 +73,7 @@ public class UserTaskWorkerHandler implements JobHandler {
       }
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-    String creationTime = sdf.format(new Date());
-    task.setCreationDate(creationTime);
+    task.setCreationDate(DateUtils.stringFromDate());
 
     //TODO: needs some work for more complicated variable structures
     List<TaskVariable> variables = new ArrayList<>();
@@ -106,7 +103,7 @@ public class UserTaskWorkerHandler implements JobHandler {
 
     //SseEmitterManager.broadcast(task);
 
-    logger.info("User Task Worker Handler complete");
+    logger.debug("User Task Worker Handler complete");
 
   }
 

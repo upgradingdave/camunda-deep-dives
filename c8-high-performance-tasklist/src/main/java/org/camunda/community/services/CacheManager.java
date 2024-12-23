@@ -22,7 +22,8 @@ public class CacheManager {
     this.taskListRestClient = taskListRestClient;
   }
 
-  @Async
+  //TODO: implement cache invalidation
+  /*@Async
   @Scheduled(fixedDelay = 30000, initialDelay = 30000)
   public void clearCache() {
 
@@ -31,6 +32,6 @@ public class CacheManager {
       taskRepository.deleteById(task.getId());
     }
 
-  }
+  }*/
 
 }

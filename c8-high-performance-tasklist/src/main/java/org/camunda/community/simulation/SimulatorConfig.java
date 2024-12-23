@@ -13,17 +13,26 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class SimulatorConfig {
 
-  // How fast to start PI's
+  // Number of instances to start during time defined in piStartRateInSeconds
   private Long piStartBatchSize;
 
-  // Start rate in seconds
+  // Simulator will attempt to start piStartBatchSize instances in this amount of time
   private Long piStartRateInSeconds;
 
-  // How many active PI's at any given time
+  // Start instances until we reach this goal. As instances complete, more instances will be created
   private Long activePiGoal;
 
-  // How long to start instances
+  // After this time, no new instances will be created, but instances will still be completed
   private Long piStartDurationInSeconds;
+
+  // How often to run complete user task logic
+  private long completeTaskRateInMillis;
+
+  //Min time a simulated user would complete a user task
+  private Integer minCompleteTaskMillis;
+
+  //Max time a simulated user completes a user task
+  private Integer maxCompleteTaskMillis;
 
 
 }

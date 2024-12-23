@@ -1,6 +1,7 @@
 package org.camunda.community.services;
 
 import io.camunda.zeebe.client.ZeebeClient;
+import io.camunda.zeebe.client.api.response.CompleteJobResponse;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.Topology;
 import io.camunda.zeebe.client.api.search.response.ProcessInstance;
@@ -83,7 +84,9 @@ public class ZeebeService {
   }
 
   public Boolean completeJob(String jobId, Map<String, Object> variables) {
-    return zeebeRestClient.completeJob(jobId, variables);
+    CompleteJobResponse response = zeebeClient.newCompleteCommand(Long.parseLong(jobId)).variables(variables).send().join();
+    return true;
+    //return zeebeRestClient.completeJob(jobId, variables);
   }
 
 }

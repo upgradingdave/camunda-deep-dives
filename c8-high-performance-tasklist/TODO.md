@@ -10,15 +10,16 @@
 - [x] able to query variables for single task
 - [x] refactor to separate rest clients
 - [x] fix merge task lists by id
-- [x] periodically invalidate cache
+- [ ] periodically invalidate cache
 - [x] able to query for form
 - [x] able to count active instances via operate rest api
 - [ ] Implement metric to show number of tasks in cache
 - [ ] Implement metrics timer to show time in cache
-- [ ] able to complete task
+- [x] able to complete task
 - [ ] frontend - able to display form for a given task
 - [x] simulate users starting instances
-- [ ] simulate users completing tasks
+- [x] simulate users completing tasks
+- [x] communicate back to simulator that instance has been completed (implemented hacky technique)
 - [ ] Consider cache by businessKey + UserTask
 - [ ] Auto deploy bpmn
 - [ ] Implement config and auth for SM

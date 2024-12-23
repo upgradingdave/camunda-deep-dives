@@ -8,28 +8,10 @@ Sample to demonstrate User Task Throughput possible in C8
 
 # Notes
 
-- As of December 2024, User Task Listeners are not planned to be available until 8.7, so, for this experiment, we'll use Job Workers and Execution Listeners
+- As of December 2024, User Task Listeners are not planned to be available until 8.7, so, for this experiment, we'll use Job Workers. 
 - [How to migrate to Zeebe user tasks](https://docs.camunda.io/docs/apis-tools/migration-manuals/migrate-to-zeebe-user-tasks/)
-- Tried using Spring Zeebe SDK but got ssl errors when trying to get instance details
 - Followed [this guide](https://docs.camunda.io/docs/apis-tools/java-client/) to create Zeebe Client. Had to use `grpcs://clusterId.region.camunda.io` instead of `clusterId.region.camunda.io:443`
-- I got the same error when using simple Zeebe Client: 
-```
-2024-12-20T11:14:16.154-05:00  INFO 38851 --- [nio-8080-exec-3] o.apache.coyote.http11.Http11Processor   : Error parsing HTTP request header
- Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
-
-java.lang.IllegalArgumentException: Invalid character found in method name [0x160x030x030x010xdd0x010x000x010xd90x030x03|0x1c40x1dY30xee0xe7)C0x9e0x930xfb[0xe50x0b30x9aR0xed0x000xe4o0x100xdd0x950xd3^0xc40xed0x08[ ]. HTTP method names must be tokens
-	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:406) ~[tomcat-embed-core-10.1.34.jar:10.1.34]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:270) ~[tomcat-embed-core-10.1.34.jar:10.1.34]
-
-
-2024-12-20T11:14:18.725-05:00 ERROR 38851 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: io.camunda.zeebe.client.api.command.ClientException: io.camunda.zeebe.client.api.command.ClientException: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?] with root cause
-
-javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
-	at java.base/sun.security.ssl.SSLEngineInputRecord.bytesInCompletePacket(SSLEngineInputRecord.java:145) ~[na:na]
-	at java.base/sun.security.ssl.SSLEngineInputRecord.bytesInCompletePacket(SSLEngineInputRecord.java:64) ~[na:na]
-
-```
-
+- Some of the v2 rest api calls are still alpha and aren't complete so I stuck with v1 as much as possible
 
 # Backend - Spring Boot Rest API
 
@@ -56,7 +38,7 @@ curl 'http://localhost:8080/tasklist/getAssigneeTasks?userId=dave'
 
 Behind the scenes, this REST API is using the [Camunda Tasklist Java Client](https://github.com/camunda-community-hub/camunda-tasklist-client-java) to connect and query the [TaskList GraphQL API](https://docs.camunda.io/docs/apis-clients/tasklist-api/tasklist-api-overview/).
 
-# ReactJs Frontend
+# ReactJs Frontend (Still WIP!)
 
 There is a sample ReactJs Applation inside [src/main/app](src/main/app).
 

@@ -13,5 +13,6 @@ public class InitialPayload {
 
   private String createdByUserName;
   private String businessKey;
+  private Boolean simulated = false;
 
 }

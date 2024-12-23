@@ -18,4 +18,6 @@ public interface TaskRepository
   List<Task> findTasksByAssignee(String assignee);
 
   Task findTaskById(String id);
+
+  List<Task> findTasksByTaskState(String taskState);
 }
