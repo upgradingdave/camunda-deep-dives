@@ -1,8 +1,6 @@
 package org.camunda.community.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -52,7 +50,7 @@ public class Task {
 
   private Boolean isFirst;
 
-  @OneToMany
+  @ManyToMany
   private List<TaskVariable> variables;
 
   private String formKey;

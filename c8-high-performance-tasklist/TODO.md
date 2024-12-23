@@ -8,9 +8,9 @@
 - [x] frontend - able to query for tasks by assignee
 - [x] able to query for details about single task
 - [x] able to query variables for single task
-- [ ] periodically invalidate cache
 - [x] refactor to separate rest clients
 - [ ] fix merge task lists by id
+- [ ] periodically invalidate cache
 - [ ] able to complete task
 - [ ] able to query for form
 - [ ] frontend - able to display form for a given task

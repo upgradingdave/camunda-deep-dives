@@ -85,7 +85,12 @@ public class UserTaskWorkerHandler implements JobHandler {
         if(variable.getKey().equals("businessKey")) {
           task.setBusinessKey(variable.getValue().toString());
         }
-        variables.add(TaskVariable.builder().name(variable.getKey()).value(variable.getValue().toString()).build());
+        variables.add(
+            TaskVariable.builder()
+                .id(job.getProcessInstanceKey() + "-" + variable.getKey())
+                .name(variable.getKey())
+                .value(variable.getValue().toString())
+                .build());
       }
     }
 

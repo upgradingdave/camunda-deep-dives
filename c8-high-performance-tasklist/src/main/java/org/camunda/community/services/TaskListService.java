@@ -18,13 +18,18 @@ public class TaskListService {
   private final ZeebeRestClient zeebeRestClient;
   private final TaskListRestClient taskListRestClient;
   private final TaskRepository taskRepository;
+  private final TaskVariableRepository taskVariableRepository;
 
   @Autowired
   public TaskListService(
-      TaskListRestClient taskListRestClient, ZeebeRestClient zeebeRestClient, TaskRepository taskRepository) {
+      TaskListRestClient taskListRestClient,
+      ZeebeRestClient zeebeRestClient,
+      TaskRepository taskRepository,
+      TaskVariableRepository taskVariableRepository) {
     this.taskRepository = taskRepository;
     this.taskListRestClient = taskListRestClient;
     this.zeebeRestClient = zeebeRestClient;
+    this.taskVariableRepository = taskVariableRepository;
   }
 
   public List<Task> findTasksByBusinessKey(String businessKey) {
@@ -87,6 +92,7 @@ public class TaskListService {
   }
 
   public Task saveTask(Task task) {
+    taskVariableRepository.saveAll(task.getVariables());
     return taskRepository.save(task);
   }
 

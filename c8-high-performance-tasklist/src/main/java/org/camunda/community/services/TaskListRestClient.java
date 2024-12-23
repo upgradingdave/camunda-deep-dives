@@ -132,13 +132,18 @@ public class TaskListRestClient {
 
     ParameterizedTypeReference<Task> typeRef = new ParameterizedTypeReference<>(){};
 
-    Task result = restClient.get()
-        .uri(camundaConfig.getTasklistUrl() + "/v1/tasks/" + taskId)
-        .header("Content-Type", MediaType.APPLICATION_JSON.toString())
-        .header("Accept", MediaType.APPLICATION_JSON.toString())
-        .header("Authorization", String.format("Bearer %s", tokenResponse.getAccessToken()))
-        .retrieve()
-        .toEntity(typeRef).getBody();
+    Task result = null;
+    try {
+      result = restClient.get()
+          .uri(camundaConfig.getTasklistUrl() + "/v1/tasks/" + taskId)
+          .header("Content-Type", MediaType.APPLICATION_JSON.toString())
+          .header("Accept", MediaType.APPLICATION_JSON.toString())
+          .header("Authorization", String.format("Bearer %s", tokenResponse.getAccessToken()))
+          .retrieve()
+          .toEntity(typeRef).getBody();
+    } catch (Exception e) {
+      logger.warn("Could not find task from rest call by taskId {}", taskId, e);
+    }
 
     return result;
   }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository
-    extends CrudRepository<Task, Long> {
+    extends CrudRepository<Task, String> {
 
   List<Task> findTasksByBusinessKey(String businessKey);
 
