@@ -3,6 +3,7 @@ package org.camunda.community.services;
 import org.camunda.community.model.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class CacheManager {
     this.taskListRestClient = taskListRestClient;
   }
 
+  @Async
   @Scheduled(fixedDelay = 30000, initialDelay = 30000)
   public void clearCache() {
 

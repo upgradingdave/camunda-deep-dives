@@ -1,8 +1,8 @@
 camunda:
   client:
     mode: saas
-    client-id: B7A1cqrXmKE-MnsVwGK5U.4UTF~L.bsN
-    client-secret: g7x~Y79lCN4V5yxs7sljHX~IBANXbJgearMuvXX.IyClslTkRVvRbMsnwDnM7ufy
+    client-id: jgqOS0s9niN61urDlp0_mOd24UT6Gs4U
+    client-secret: aOu3CmBEhyVbOu5kQVi7InkHT-0..YRsp5Ijxg3KzRORthRAoWOCB3TXWO9yYHd4
     cluster-id: 5bc4132a-01e6-4ddb-92fa-426392f3f39f
     region: ont-1
 

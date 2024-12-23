@@ -12,6 +12,7 @@
 - [x] fix merge task lists by id
 - [x] periodically invalidate cache
 - [x] able to query for form
+- [x] able to count active instances via operate rest api
 - [ ] Implement metric to show number of tasks in cache
 - [ ] Implement metrics timer to show time in cache
 - [ ] able to complete task

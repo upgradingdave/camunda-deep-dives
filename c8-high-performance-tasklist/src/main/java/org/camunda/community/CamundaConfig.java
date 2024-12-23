@@ -87,12 +87,24 @@ public class CamundaConfig {
     }
   }
 
+  public String getOperateUrl() {
+    if(mode.equals("saas")) {
+      return "https://" + getRegion() + ".operate.camunda.io/" + getClusterId();
+    } else {
+      throw new RuntimeException("Unsupported mode: " + mode);
+    }
+  }
+
   public String getZeebeAudience() {
     return "zeebe.camunda.io";
   }
 
   public String getTaskListAudience() {
     return "tasklist.camunda.io";
+  }
+
+  public String getOperateAudience() {
+    return "operate.camunda.io";
   }
 
   public String getProcessId() {
