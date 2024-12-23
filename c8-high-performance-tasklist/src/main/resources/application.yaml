@@ -5,6 +5,11 @@ camunda:
     client-secret: aOu3CmBEhyVbOu5kQVi7InkHT-0..YRsp5Ijxg3KzRORthRAoWOCB3TXWO9yYHd4
     cluster-id: 5bc4132a-01e6-4ddb-92fa-426392f3f39f
     region: ont-1
+  simulator:
+    piStartBatchSize: 2             # Number of instances to start during time defined in piStartRateInSeconds
+    piStartRateInSeconds: 5         # Simulator will attempt to start piStartBatchSize instances in this amount of time
+    activePiGoal: 10                # Start instances until we reach this goal. As instances complete, more instances will be created
+    piStartDurationInSeconds: 300   # After this time, no new instances will be created, but instances will still be completed
 
 spring:
   application:

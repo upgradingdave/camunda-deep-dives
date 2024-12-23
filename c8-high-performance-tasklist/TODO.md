@@ -17,7 +17,8 @@
 - [ ] Implement metrics timer to show time in cache
 - [ ] able to complete task
 - [ ] frontend - able to display form for a given task
-- [ ] simulate load
+- [x] simulate users starting instances
+- [ ] simulate users completing tasks
 - [ ] Consider cache by businessKey + UserTask
 - [ ] Auto deploy bpmn
 - [ ] Implement config and auth for SM

@@ -1,7 +1,7 @@
 package org.camunda.community.services;
 
 import io.camunda.zeebe.client.ZeebeClient;
-import io.camunda.zeebe.client.api.response.PublishMessageResponse;
+import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.Topology;
 import io.camunda.zeebe.client.api.search.response.ProcessInstance;
 import io.camunda.zeebe.client.api.search.response.SearchQueryResponse;
@@ -10,10 +10,8 @@ import io.camunda.zeebe.client.impl.oauth.OAuthCredentialsProviderBuilder;
 import lombok.Getter;
 import org.camunda.community.CamundaConfig;
 import org.camunda.community.model.InitialPayload;
-import org.camunda.community.model.TokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClient;
 
 import java.net.URI;
 import java.util.List;
@@ -25,7 +23,9 @@ public class ZeebeService {
 
   @Getter
   private final ZeebeClient zeebeClient;
+
   private final ZeebeRestClient zeebeRestClient;
+  private final CamundaConfig camundaConfig;
 
   @Autowired
   public ZeebeService(CamundaConfig camundaConfig, ZeebeRestClient zeebeRestClient) {
@@ -44,6 +44,7 @@ public class ZeebeService {
         .credentialsProvider(credentialsProvider)
         .build();
     this.zeebeRestClient = zeebeRestClient;
+    this.camundaConfig = camundaConfig;
   }
 
   public Topology getTopology() {
@@ -60,9 +61,15 @@ public class ZeebeService {
       throw new RuntimeException("CreatedByUserName is required to start the process");
     }
 
-    PublishMessageResponse result = zeebeClient.newPublishMessageCommand()
+/*    PublishMessageResponse result = zeebeClient.newPublishMessageCommand()
         .messageName(CamundaConfig.MESSAGE_START)
         .correlationKey(initialPayload.getCreatedByUserName())
+        .variables(initialPayload)
+        .send().join();*/
+
+    ProcessInstanceEvent result = zeebeClient.newCreateInstanceCommand()
+        .bpmnProcessId(camundaConfig.getProcessId())
+        .latestVersion()
         .variables(initialPayload)
         .send().join();
 
