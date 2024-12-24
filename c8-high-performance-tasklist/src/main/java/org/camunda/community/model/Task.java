@@ -73,4 +73,6 @@ public class Task {
 
   private Integer priority;
 
+  private long simulatedCompletionDateTime;
+
 }

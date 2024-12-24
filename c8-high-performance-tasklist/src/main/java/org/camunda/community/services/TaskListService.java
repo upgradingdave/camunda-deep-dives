@@ -4,6 +4,7 @@ package org.camunda.community.services;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.camunda.community.model.*;
+import org.camunda.community.simulation.SimulatorConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,38 @@ public class TaskListService {
   private final TaskRepository taskRepository;
   private final TaskVariableRepository taskVariableRepository;
 
+  // Used by simulation
+  private final Integer minCompleteTaskMillis;
+  private final Integer maxCompleteTaskMillis;
+
   @Autowired
   public TaskListService(
       TaskListRestClient taskListRestClient,
       ZeebeRestClient zeebeRestClient,
       TaskRepository taskRepository,
       TaskVariableRepository taskVariableRepository,
-      MeterRegistry meterRegistry) {
+      MeterRegistry meterRegistry,
+      SimulatorConfig simulatorConfig) {
     this.taskRepository = taskRepository;
     this.taskListRestClient = taskListRestClient;
     this.zeebeRestClient = zeebeRestClient;
     this.taskVariableRepository = taskVariableRepository;
 
+    minCompleteTaskMillis = simulatorConfig.getMinCompleteTaskMillis();
+    maxCompleteTaskMillis = simulatorConfig.getMaxCompleteTaskMillis();
+
     Gauge.builder("tasks_cache_count", taskRepository::count)
         .description("Number of cached tasks")
         .register(meterRegistry);
 
+  }
+
+  public Integer getMinCompleteTaskMillis() {
+    return minCompleteTaskMillis;
+  }
+
+  public Integer getMaxCompleteTaskMillis() {
+    return maxCompleteTaskMillis;
   }
 
   public List<Task> findTasksByBusinessKey(String businessKey) {

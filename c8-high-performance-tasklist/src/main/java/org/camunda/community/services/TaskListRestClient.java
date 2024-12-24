@@ -134,7 +134,8 @@ public class TaskListRestClient {
 
     //TODO: clean this up
     String body = "{\n" +
-        "    \"state\": \"CREATED\"\n" +
+        "    \"state\": \"CREATED\",\n" +
+        "    \"pageSize\": 10000\n" +
         "}";
 
     List<Task> results = restClient.post()

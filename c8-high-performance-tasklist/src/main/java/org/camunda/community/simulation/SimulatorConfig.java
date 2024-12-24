@@ -34,5 +34,8 @@ public class SimulatorConfig {
   //Max time a simulated user completes a user task
   private Integer maxCompleteTaskMillis;
 
+  //Should the simulator complete before the task is indexed by TaskList?
+  private Boolean completeTaskBeforeIndexed;
+
 
 }

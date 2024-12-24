@@ -10,12 +10,14 @@ import org.camunda.community.model.TaskVariable;
 import org.camunda.community.services.TaskListService;
 import org.camunda.community.utils.DateUtils;
 import org.camunda.community.utils.JSONUtils;
+import org.camunda.community.utils.RandomNumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class UserTaskWorkerHandler implements JobHandler {
 
   static Logger logger = LoggerFactory.getLogger(UserTaskWorkerHandler.class);
 
-  TaskListService taskListService;
+  private final TaskListService taskListService;
 
   public UserTaskWorkerHandler(TaskListService taskListService) {
     this.taskListService = taskListService;
@@ -73,7 +75,10 @@ public class UserTaskWorkerHandler implements JobHandler {
       }
     }
 
-    task.setCreationDate(DateUtils.stringFromDate());
+    Date now = new Date();
+    long creationDateMillies = now.getTime();
+    String creationDate = DateUtils.sdf.format(now);
+    task.setCreationDate(creationDate);
 
     //TODO: needs some work for more complicated variable structures
     List<TaskVariable> variables = new ArrayList<>();
@@ -93,6 +98,12 @@ public class UserTaskWorkerHandler implements JobHandler {
 
     task.setVariables(variables);
     task.setCache(true);
+
+    Integer completeTaskMillis = RandomNumberUtils.getRandom(
+        taskListService.getMinCompleteTaskMillis(),
+        taskListService.getMaxCompleteTaskMillis()
+    );
+    task.setSimulatedCompletionDateTime(completeTaskMillis+creationDateMillies);
 
     taskListService.saveTask(task);
 

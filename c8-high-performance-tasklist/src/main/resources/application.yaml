@@ -4,15 +4,16 @@ camunda:
     client-id: xxx
     client-secret: xxx
     cluster-id: xxx
-    region: ont-1
+    region: xxx
   simulator:
-    piStartBatchSize: 4             # Number of instances to start during time defined in piStartRateInSeconds
-    piStartRateInSeconds: 1         # Simulator will attempt to start piStartBatchSize instances in this amount of time
-    activePiGoal: 0                # Start instances until we reach this goal. As instances complete, more instances will be created
-    piStartDurationInSeconds: 300   # After this time, no new instances will be created, but instances will still be completed
-    completeTaskRateInMillis: 1000  # How often to run complete user task logic
-    minCompleteTaskMillis: 3000     # Min time a simulated user would complete a user task
-    maxCompleteTaskMillis: 10000    # Max time a simulated user completes a user task
+    piStartBatchSize: 4              # Number of instances to start during time defined in piStartRateInSeconds
+    piStartRateInSeconds: 1          # Simulator will attempt to start piStartBatchSize instances in this amount of time
+    activePiGoal: 50                 # Start instances until we reach this goal. As instances complete, more instances will be created
+    piStartDurationInSeconds: 180    # After this time, no new instances will be created, but instances will still be completed
+    completeTaskRateInMillis: 1000   # How often to run complete user task logic
+    minCompleteTaskMillis: 3000      # Min time a simulated user would complete a user task
+    maxCompleteTaskMillis: 10000     # Max time a simulated user completes a user task
+    completeTaskBeforeIndexed: false  # Should the simulator complete before the task is indexed by TaskList?
 
 spring:
   application:

@@ -32,6 +32,7 @@ public class Simulator {
   // TODO implement these as micrometer timers
   private long totalIndexed;
   private Long avgMillisBeforeIndexed;
+  Map<String, Map<String, String>> statsMap;
 
   private final ZeebeService zeebeService;
   private final TaskListRestClient taskListRestClient;
@@ -59,6 +60,7 @@ public class Simulator {
     activePis = new HashMap<>();
     totalIndexed = 0;
     avgMillisBeforeIndexed = 0L;
+    statsMap = new HashMap<>();
 
     init();
 
@@ -157,7 +159,7 @@ public class Simulator {
 
   private void updateAvgMillisBeforeIndexed(long millisBeforeIndexed) {
     // Reset average every 50 tasks
-    if(totalIndexed >= 30) {
+    if(totalIndexed >= 100) {
       totalIndexed = 0;
       avgMillisBeforeIndexed = 0L;
     }
@@ -184,45 +186,34 @@ public class Simulator {
 
         for (Task dbTask : dbTasks) {
 
-          Integer completeTaskMillis = RandomNumberUtils.getRandom(
-              simulatorConfig.getMinCompleteTaskMillis(),
-              simulatorConfig.getMaxCompleteTaskMillis()
-          );
-
           long createDateMillis = DateUtils.toMillis(dbTask.getCreationDate());
-          if (createDateMillis + completeTaskMillis < currentTime) {
+          long simulatedCompletionDateTime = dbTask.getSimulatedCompletionDateTime();
+          boolean indexed = statsMap.containsKey(dbTask.getId());
 
-            // Simulate a user completing this task
-
-            // Can we find the corresponding task in the rest results?
-            if(restTasks.contains(dbTask)) {
-
-              // Found it, complete the task via Zeebe
-              log.debug("Completing task {}", dbTask.getId());
-              Boolean success = zeebeService.completeJob(dbTask.getId(), new HashMap<>());
-
-              long millisBeforeIndexed = currentTime - completeTaskMillis - createDateMillis;
+          // Calculate stats
+          // Can we find the corresponding task in the rest results?
+          if(restTasks.contains(dbTask)) {
+            // Found it
+            // Have we found it previously?
+            if(!indexed) {
+              long millisBeforeIndexed = currentTime - createDateMillis;
               updateAvgMillisBeforeIndexed(millisBeforeIndexed);
 
-              // Update the db
-              dbTask.setCompletionDate(DateUtils.stringFromDate());
-              dbTask.setTaskState(TaskState.TASK_COMPLETED);
-              taskRepository.save(dbTask);
-
-              // If this is the last User task, remove it from the activeInstances
-              log.debug("Task Definition Id {} just completed", dbTask.getTaskDefinitionId());
-              if(dbTask.getTaskDefinitionId().equals("Activity_lastUserTask")) {
-                activePis.remove(dbTask.getBusinessKey());
-                log.debug("Instance complete {}", dbTask.getBusinessKey());
-                log.debug("Total Active PIs: {}", activePis.size());
-              }
-
-            } else {
-
-              log.debug("Unable to find task {} in TaskList", dbTask.getId());
-
+              Map<String, String> stats = new HashMap<>();
+              statsMap.put(dbTask.getId(), stats);
+              indexed = true;
             }
+          }
 
+          if (simulatedCompletionDateTime < currentTime) {
+            // Simulate a user completing this task
+            if(indexed) {
+              completeTask(dbTask);
+            } else {
+              if(simulatorConfig.getCompleteTaskBeforeIndexed()) {
+                completeTask(dbTask);
+              }
+            }
           }
         }
       }
@@ -234,6 +225,28 @@ public class Simulator {
       lastCompleteTaskTimeInMillis = System.currentTimeMillis();
       tasksCompletedThisFrame = false;
     }
+  }
+
+  private void completeTask(Task dbTask) {
+    //complete the task via Zeebe
+    log.debug("Completing task {}", dbTask.getId());
+    Boolean success = zeebeService.completeJob(dbTask.getId(), new HashMap<>());
+
+    if(success) {
+      // Update the db
+      dbTask.setCompletionDate(DateUtils.stringFromDate());
+      dbTask.setTaskState(TaskState.TASK_COMPLETED);
+      taskRepository.save(dbTask);
+
+      // If this is the last User task, remove it from the activeInstances
+      log.debug("Task Definition Id {} just completed", dbTask.getTaskDefinitionId());
+      if(dbTask.getTaskDefinitionId().equals("Activity_lastUserTask")) {
+        activePis.remove(dbTask.getBusinessKey());
+        log.debug("Instance complete {}", dbTask.getBusinessKey());
+        log.debug("Total Active PIs: {}", activePis.size());
+      }
+    }
+
   }
 
 }

@@ -12,23 +12,16 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class SimulatorTest {
-
-  private SimulatorConfig simulatorConfig;
-
-  @Autowired
-  public SimulatorTest(SimulatorConfig simulatorConfig) {
-    this.simulatorConfig = simulatorConfig;
-  }
 
   @Test
   public void testRandomCompletTaskMillis() {
-
+    int min = 3000;
+    int max = 10000;
     for (int i = 0; i < 100; i++) {
       assertTrue(
-          RandomNumberUtils.getRandom(simulatorConfig.getMinCompleteTaskMillis(), simulatorConfig.getMaxCompleteTaskMillis()) > simulatorConfig.getMinCompleteTaskMillis()
-              && RandomNumberUtils.getRandom(simulatorConfig.getMinCompleteTaskMillis(), simulatorConfig.getMaxCompleteTaskMillis()) < simulatorConfig.getMaxCompleteTaskMillis());
+          RandomNumberUtils.getRandom(min, max) > min
+              && RandomNumberUtils.getRandom(min, max) < max);
     }
   }
 

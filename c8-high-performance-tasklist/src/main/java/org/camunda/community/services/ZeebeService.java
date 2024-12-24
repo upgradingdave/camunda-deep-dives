@@ -1,6 +1,7 @@
 package org.camunda.community.services;
 
 import io.camunda.zeebe.client.ZeebeClient;
+import io.camunda.zeebe.client.api.command.ClientStatusException;
 import io.camunda.zeebe.client.api.response.CompleteJobResponse;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.Topology;
@@ -11,6 +12,10 @@ import io.camunda.zeebe.client.impl.oauth.OAuthCredentialsProviderBuilder;
 import lombok.Getter;
 import org.camunda.community.CamundaConfig;
 import org.camunda.community.model.InitialPayload;
+import org.camunda.community.model.Task;
+import org.camunda.community.model.TaskState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +27,18 @@ import java.util.UUID;
 @Component
 public class ZeebeService {
 
+  protected final Logger logger = LoggerFactory.getLogger(ZeebeService.class);
+
   @Getter
   private final ZeebeClient zeebeClient;
 
   private final ZeebeRestClient zeebeRestClient;
   private final CamundaConfig camundaConfig;
+  private final TaskRepository taskRepository;
 
   @Autowired
-  public ZeebeService(CamundaConfig camundaConfig, ZeebeRestClient zeebeRestClient) {
+  public ZeebeService(CamundaConfig camundaConfig, ZeebeRestClient zeebeRestClient, TaskRepository taskRepository) {
+
 
     OAuthCredentialsProvider credentialsProvider =
         new OAuthCredentialsProviderBuilder()
@@ -46,6 +55,7 @@ public class ZeebeService {
         .build();
     this.zeebeRestClient = zeebeRestClient;
     this.camundaConfig = camundaConfig;
+    this.taskRepository = taskRepository;
   }
 
   public Topology getTopology() {
@@ -84,9 +94,18 @@ public class ZeebeService {
   }
 
   public Boolean completeJob(String jobId, Map<String, Object> variables) {
-    CompleteJobResponse response = zeebeClient.newCompleteCommand(Long.parseLong(jobId)).variables(variables).send().join();
+    try {
+      CompleteJobResponse response = zeebeClient.newCompleteCommand(Long.parseLong(jobId)).variables(variables).send().join();
+    } catch (ClientStatusException e) {
+
+      //TODO: it seems somehow the h2 db and tasklist state can get out of sync, this is a temp work around
+      logger.warn("Unable to find job {} to complete", jobId, e);
+      Task dbTask = taskRepository.findTaskById(jobId);
+      dbTask.setTaskState(TaskState.TASK_COMPLETED);
+      taskRepository.save(dbTask);
+      return false;
+    }
     return true;
-    //return zeebeRestClient.completeJob(jobId, variables);
   }
 
 }
