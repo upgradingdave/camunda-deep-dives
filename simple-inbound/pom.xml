@@ -57,10 +57,15 @@
       <version>8.7.0-alpha5</version>
     </dependency>
     <dependency>
+      <groupId>io.camunda.connector</groupId>
+      <artifactId>element-template-generator-core</artifactId>
+      <version>8.7.0-alpha5</version>
+    </dependency>
+<!--    <dependency>
       <groupId>io.camunda.spring</groupId>
       <artifactId>java-client-operate</artifactId>
       <version>8.6.5</version>
-    </dependency>
+    </dependency>-->
   </dependencies>
 
   <build>
