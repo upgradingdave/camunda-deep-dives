@@ -2,18 +2,18 @@ camunda:
   client:
     mode: selfmanaged
     zeebe:
-      base-url: "https://dave01.gke.c8sm.com"
-      rest-address: "https://dave01.gke.c8sm.com/rest"
-      grpc-address: "https://dave01.gke.c8sm.com"
+      base-url: "https://my.domain.com"
+      rest-address: "https://my.domain.com/rest"
+      grpc-address: "https://my.domain.com"
     auth:
       client-id: "simpleinbound"
-      client-secret: "wd3rtCL5RmxDSOQqVJ5gAheLJXHM6K2S"
-      issuer: "https://dave01.gke.c8sm.com/auth/realms/camunda-platform/protocol/openid-connect/token"
+      client-secret: "xxx"
+      issuer: "https://my.domain.com/auth/realms/camunda-platform/protocol/openid-connect/token"
 
 operate:
   client:
     profile: oidc
-    auth-url: "https://dave01.gke.c8sm.com/auth/realms/camunda-platform/protocol/openid-connect/token"
-    base-url: "https://dave01.gke.c8sm.com/operate"
+    auth-url: "https://my.domain.com/auth/realms/camunda-platform/protocol/openid-connect/token"
+    base-url: "https://my.domain.com/operate"
     client-id: "simpleinbound"
-    client-secret: "wd3rtCL5RmxDSOQqVJ5gAheLJXHM6K2S"
+    client-secret: "xxx"
