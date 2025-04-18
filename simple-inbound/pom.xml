@@ -41,16 +41,6 @@
       <scope>test</scope>
     </dependency>
 
-<!--    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.18.3</version>
-    </dependency>-->
-<!--    <dependency>
-      <groupId>io.camunda.connector</groupId>
-      <artifactId>connector-runtime-core</artifactId>
-      <version>8.7.0-alpha5</version>
-    </dependency>-->
     <dependency>
       <groupId>io.camunda.connector</groupId>
       <artifactId>spring-boot-starter-camunda-connectors</artifactId>
@@ -61,11 +51,6 @@
       <artifactId>element-template-generator-core</artifactId>
       <version>8.7.0-alpha5</version>
     </dependency>
-<!--    <dependency>
-      <groupId>io.camunda.spring</groupId>
-      <artifactId>java-client-operate</artifactId>
-      <version>8.6.5</version>
-    </dependency>-->
   </dependencies>
 
   <build>
@@ -73,6 +58,25 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>io.camunda.connector</groupId>
+        <artifactId>element-template-generator-maven-plugin</artifactId>
+        <version>8.7.0-alpha5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-templates</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <connectors>
+            <connector>
+              <connectorClass>io.camunda.inbound.SimpleInboundExecutable</connectorClass>
+            </connector>
+          </connectors>
+        </configuration>
       </plugin>
     </plugins>
   </build>

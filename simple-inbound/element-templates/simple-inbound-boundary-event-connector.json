@@ -1,0 +1,175 @@
+{
+  "$schema" : "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name" : "Simple Inbound Boundary Event Connector",
+  "id" : "io.camunda.connectors.simpleInboundBoundary.v1",
+  "description" : "Demonstrate Inbound Connector",
+  "metadata" : {
+    "keywords" : [ ]
+  },
+  "documentationRef" : "https://docs.camunda.io/docs/components/connectors",
+  "version" : 6,
+  "category" : {
+    "id" : "connectors",
+    "name" : "Connectors"
+  },
+  "appliesTo" : [ "bpmn:BoundaryEvent" ],
+  "elementType" : {
+    "value" : "bpmn:BoundaryEvent",
+    "eventDefinition" : "bpmn:MessageEventDefinition"
+  },
+  "groups" : [ {
+    "id" : "settings",
+    "label" : "Settings"
+  }, {
+    "id" : "activation",
+    "label" : "Activation"
+  }, {
+    "id" : "correlation",
+    "label" : "Correlation",
+    "tooltip" : "Learn more about message correlation in the <a href=\"https://docs.camunda.io/docs/components/concepts/messages/#message-correlation-overview\">documentation</a>."
+  }, {
+    "id" : "output",
+    "label" : "Output mapping"
+  } ],
+  "properties" : [ {
+    "value" : "io.camunda:simple-inbound:1",
+    "binding" : {
+      "name" : "inbound.type",
+      "type" : "zeebe:property"
+    },
+    "type" : "Hidden"
+  }, {
+    "id" : "colors",
+    "label" : "Colors",
+    "description" : "This is a sample dropdown",
+    "optional" : false,
+    "constraints" : {
+      "notEmpty" : true
+    },
+    "group" : "settings",
+    "binding" : {
+      "name" : "colors",
+      "type" : "zeebe:property"
+    },
+    "type" : "Dropdown",
+    "choices" : [ {
+      "name" : "Orange",
+      "value" : "orange"
+    }, {
+      "name" : "Blue",
+      "value" : "blue"
+    }, {
+      "name" : "red",
+      "value" : "red"
+    }, {
+      "name" : "purple",
+      "value" : "purple"
+    } ]
+  }, {
+    "id" : "activationCondition",
+    "label" : "Activation condition",
+    "description" : "Condition under which the Connector triggers. Leave empty to catch all events",
+    "optional" : true,
+    "feel" : "required",
+    "group" : "activation",
+    "binding" : {
+      "name" : "activationCondition",
+      "type" : "zeebe:property"
+    },
+    "type" : "String"
+  }, {
+    "id" : "correlationKeyProcess",
+    "label" : "Correlation key (process)",
+    "description" : "Sets up the correlation key from process variables",
+    "constraints" : {
+      "notEmpty" : true
+    },
+    "feel" : "required",
+    "group" : "correlation",
+    "binding" : {
+      "name" : "correlationKey",
+      "type" : "bpmn:Message#zeebe:subscription#property"
+    },
+    "type" : "String"
+  }, {
+    "id" : "correlationKeyPayload",
+    "label" : "Correlation key (payload)",
+    "description" : "Extracts the correlation key from the incoming message payload",
+    "constraints" : {
+      "notEmpty" : true
+    },
+    "feel" : "required",
+    "group" : "correlation",
+    "binding" : {
+      "name" : "correlationKeyExpression",
+      "type" : "zeebe:property"
+    },
+    "type" : "String"
+  }, {
+    "id" : "messageIdExpression",
+    "label" : "Message ID expression",
+    "description" : "Expression to extract unique identifier of a message",
+    "optional" : true,
+    "feel" : "required",
+    "group" : "correlation",
+    "binding" : {
+      "name" : "messageIdExpression",
+      "type" : "zeebe:property"
+    },
+    "type" : "String"
+  }, {
+    "id" : "messageTtl",
+    "label" : "Message TTL",
+    "description" : "Time-to-live for the message in the broker (ISO-8601 duration)",
+    "optional" : true,
+    "constraints" : {
+      "notEmpty" : false,
+      "pattern" : {
+        "value" : "^(PT.*|)$",
+        "message" : "must be an ISO-8601 duration"
+      }
+    },
+    "feel" : "optional",
+    "group" : "correlation",
+    "binding" : {
+      "name" : "messageTtl",
+      "type" : "zeebe:property"
+    },
+    "type" : "String"
+  }, {
+    "id" : "messageNameUuid",
+    "generatedValue" : {
+      "type" : "uuid"
+    },
+    "group" : "correlation",
+    "binding" : {
+      "name" : "name",
+      "type" : "bpmn:Message#property"
+    },
+    "type" : "Hidden"
+  }, {
+    "id" : "resultVariable",
+    "label" : "Result variable",
+    "description" : "Name of variable to store the response in",
+    "group" : "output",
+    "binding" : {
+      "name" : "resultVariable",
+      "type" : "zeebe:property"
+    },
+    "type" : "String"
+  }, {
+    "id" : "resultExpression",
+    "label" : "Result expression",
+    "description" : "Expression to map the response into process variables",
+    "feel" : "required",
+    "group" : "output",
+    "binding" : {
+      "name" : "resultExpression",
+      "type" : "zeebe:property"
+    },
+    "type" : "Text"
+  } ],
+  "icon" : {
+    "contents" : "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJ1dWlkLTIzNWU2ODcyLTdkYmUtNDk0OC1iOWU1LTE4MTI4MjQyOTUyZSIKICAgICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDM5NS4yIDk1LjkiCiAgICAgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzk1LjIgOTUuOTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8cGF0aCBkPSJNMzU4LjgsMTEuNWMtMTUuNywwLTI5LjEsMTAtMzQuMiwyMy45aC04MC43QzIzOC40LDE1LDIxOS43LDAsMTk3LjYsMHMtNDAuOCwxNS00Ni4zLDM1LjRINzAuNwoJYy01LjEtMTQtMTguNS0yMy45LTM0LjItMjMuOUMxNi4zLDExLjUsMCwyNy44LDAsNDcuOXMxNi4zLDM2LjQsMzYuNCwzNi40YzE1LjcsMCwyOS4xLTEwLDM0LjItMjMuOWg4MC43CgljNS41LDIwLjQsMjQuMiwzNS40LDQ2LjMsMzUuNHM0MC44LTE1LDQ2LjMtMzUuNGg4MC43YzUuMSwxNCwxOC41LDIzLjksMzQuMiwyMy45YzIwLjEsMCwzNi40LTE2LjMsMzYuNC0zNi40CglTMzc4LjksMTEuNSwzNTguOCwxMS41TDM1OC44LDExLjV6IE0xOTcuNiw3Mi45Yy0xMy44LDAtMjQuOS0xMS4yLTI0LjktMjQuOVMxODMuOSwyMywxOTcuNiwyM3MyNC45LDExLjIsMjQuOSwyNC45CglDMjIyLjYsNjEuNywyMTEuNCw3Mi45LDE5Ny42LDcyLjlMMTk3LjYsNzIuOXoiLz4KPC9zdmc+"
+  }
+}
