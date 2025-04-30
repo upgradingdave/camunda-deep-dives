@@ -25,9 +25,22 @@ Start the RPA worker (Change the following command appropriately for your OS):
 
 Open [greenscreen.rpa](rpaScripts/greenscreen.rpa) in Desktop Modeler. Check to ensure you see a green status indicuating the RPA Worker is connected. Edit the script to update the url for your local environment. For example, change `file:///Users/dave/code/camunda-deep-dives/rpa/index.html` to point to the [index.html](index.html) in this directory.
 
+Click the test tube icon. Enter the following payload: 
 
-Click the test tube icon to run the script. You should see a green screen pop up in your browser and the test should pass successfully.
+```
+{
+  "name": "Dave",
+  "employment": "freelancer",
+  "package": "mortgage",
+  "dob":  "1980-01-01"
+}
+```
 
+Run the script. You should see a green screen pop up in your browser and the test should pass successfully.
+
+## Troubleshooting tips
+
+The rpa-worker executable will create a `python` directory. In my environment, it was complaining that it couldn't find `pip`. I deleted the `python` directory and re-run the executable to get it to work. 
 
 
 
