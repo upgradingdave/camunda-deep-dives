@@ -1,0 +1,77 @@
+<html>
+<body style="background-color:black;">
+
+<style>
+table {
+  font-family: courier;
+  font-size: 40px;
+  border-collapse: collapse;
+  width: 45%;
+}
+
+td, th {
+  color: powderblue;
+  text-align: left;
+}
+
+td:nth-child(even) {
+  color: green;
+}
+
+input[type=text] {
+  border: none;
+  font-family: Courier;
+  font-size: 40px;
+  background-color: black;
+  color: powderblue;
+  text-align: left;
+  border-bottom: 2px solid green;
+}
+
+@keyframes blinker {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+input[type=label] {
+  animation: blinker 1s linear infinite;
+  border: none;
+  font-family: Courier;
+  font-size: 40px;
+  background-color: black;
+  color: orange;
+  text-align: left;
+}
+</style>
+
+<h2 style="color:white;font-family:Courier;font-size:50px;text-align:left">APPLICANT CREDIT SCORE LOOKUP</h2>
+
+<table>
+  <tr>
+    <td>APPLICANT NAME:</td>
+    <td><input type="text" name="Name" id="name" /></td>
+  </tr>
+  <tr>
+    <td>APPLICANT DATE OF BIRTH:</td>
+    <td><input type="text" name="DOB" id="dob"/></td>
+  </tr>
+  <tr>
+    <td>EMPLOYMENT STATUS:</td>
+    <td><input type="text" name="Employment" id="employment"/></td>
+  </tr>
+  <tr>
+    <td>SELECTED PACKAGE:</td>
+    <td><input type="text" name="Package" id="package"/></td>
+  </tr>
+  <tr>
+    <td style="text-align:left;color:orange;font-family:Courier;font-size:40px">CREDIT SCORE:</td>
+    <td><input type="label" name="Score" id="score"/></td>
+  </tr>
+</table>
+
+
+<p style="text-align:left;color:red;font-family:Courier;font-size:40px">ERROR MESSAGES:</p>
+<p style="text-align:left;color:yellow;font-family:Courier;font-size:40px">PF KEYS: PF1=HELP    PF3=EXIT PF5=UPDATE</p>
+
+</body>
+</html>

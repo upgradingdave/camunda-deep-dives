@@ -1,0 +1,7 @@
+{
+  "id": "RPA_1n8ihhh",
+  "name": "",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "script": "*** Settings ***\nDocumentation       Robot to enter data on a web page and return credit score\n\nLibrary             Camunda.Browser.Selenium\nLibrary             Camunda\nLibrary             RequestsLibrary\nLibrary             Collections\n\n*** Tasks ***\nComplete the task\n    Start the task\n    Enter data  ${name}     ${dob}      ${employment}   ${package}\n\n\n*** Keywords ***\nStart the task\n    Open Available Browser   http://localhost:8080/greenscreen\n\n\nEnter data\n    [Arguments]    ${name}  ${dob}  ${employment}   ${package}\n\n    Press Keys  id:name     ${name}\n    Sleep    0.5s\n    Press Keys    id:dob    ${dob}\n    Sleep    0.5s\n    Press Keys    id:employment   ${employment}\n    Sleep    0.5s\n    Press Keys    id:package   ${package}\n    Sleep    2s\n    Create Session      random          http://www.randomnumberapi.com\n    ${response}=        GET On Session      random          url=/api/v1.0/random?min=400&max=850\n    ${rawScore}=        Get From List       ${response.json()}      0    \n    Input Text    xpath://table[1]/tbody/tr[5]/td[2]/input      ${rawScore}  \n    Sleep    5s\n\n    ${creditScore}=     Set Variable        ${rawScore}\n\n    Set Output Variable    creditScore    ${creditScore}\n    Close Browser\n    "
+}

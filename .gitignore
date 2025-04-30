@@ -9,3 +9,5 @@ certificates/src/main/resources/application.yaml
 zbctl.jks
 
 rpa/python
+rpa/rpa-worker_1.0.1_darwin_aarch64
+.envrc
