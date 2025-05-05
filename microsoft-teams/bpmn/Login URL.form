@@ -1,0 +1,22 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "b05b990"
+  },
+  "schemaVersion": 18,
+  "id": "show-form-with-url-04h3xhw",
+  "components": [
+    {
+      "content": "<a target=\"MicrosoftSignIn\" href=\"{{authorizeUrl}}\">Click Here to open a separate browser and to sign in</a>",
+      "type": "html",
+      "layout": {
+        "row": "Row_1pg0zcw",
+        "columns": null
+      },
+      "id": "Field_0s1460e"
+    }
+  ],
+  "type": "default"
+}

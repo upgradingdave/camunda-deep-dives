@@ -1,0 +1,76 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "b05b990"
+  },
+  "schemaVersion": 18,
+  "id": "get-authorization-code-0yv592x",
+  "components": [
+    {
+      "text": "#### Configure Microsoft Delegated Authentication",
+      "type": "text",
+      "layout": {
+        "row": "Row_1i46het",
+        "columns": null
+      },
+      "id": "Field_12frhi2"
+    },
+    {
+      "label": "Azure App Registration Details",
+      "components": [
+        {
+          "label": "Tenant Id",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0i9rym1",
+            "columns": null
+          },
+          "id": "Field_01mp8qk",
+          "key": "tenantId",
+          "defaultValue": "8ebe249d-8312-4ffb-9b6b-08e56669d578",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "Client Id",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_1amh2i1",
+            "columns": null
+          },
+          "id": "Field_1hv5i8q",
+          "key": "clientId",
+          "defaultValue": "eb7bd6fa-ecbc-4004-912e-588e6baaa14e",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "Client Secret",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0b92ob0",
+            "columns": null
+          },
+          "id": "Field_05gxyxc",
+          "key": "clientSecret",
+          "validate": {
+            "required": false
+          }
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_0u545is",
+        "columns": null
+      },
+      "id": "Field_0orr9fv",
+      "path": "azure"
+    }
+  ],
+  "type": "default"
+}

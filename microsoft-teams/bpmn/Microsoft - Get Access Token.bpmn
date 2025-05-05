@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="b05b990" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="Process_getMicrosoftAccessToken" name="Microsoft - Get Access Token" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0e2ns3g</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0e2ns3g" sourceRef="StartEvent_1" targetRef="Activity_0macbl8" />
+    <bpmn:endEvent id="Event_0b5agyp">
+      <bpmn:incoming>Flow_0dkr3fy</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_090picp" name="Set Access Token URL">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=&#34;https://login.microsoftonline.com/&#34;+azure.tenantId+&#34;/oauth2/v2.0/token&#34;" resultVariable="feelResult" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=feelResult" target="azure.accessTokenUrl" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0z89xdm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0db7ks4</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0dkr3fy" sourceRef="Activity_1iuqezc" targetRef="Event_0b5agyp" />
+    <bpmn:serviceTask id="Activity_1iuqezc" name="Exchange Authorization Code for Access Token" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="10" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE3LjAzMzUgOC45OTk5N0MxNy4wMzM1IDEzLjQ0NzUgMTMuNDI4MSAxNy4wNTI5IDguOTgwNjUgMTcuMDUyOUM0LjUzMzE2IDE3LjA1MjkgMC45Mjc3NjUgMTMuNDQ3NSAwLjkyNzc2NSA4Ljk5OTk3QzAuOTI3NzY1IDQuNTUyNDggNC41MzMxNiAwLjk0NzA4MyA4Ljk4MDY1IDAuOTQ3MDgzQzEzLjQyODEgMC45NDcwODMgMTcuMDMzNSA0LjU1MjQ4IDE3LjAzMzUgOC45OTk5N1oiIGZpbGw9IiM1MDU1NjIiLz4KPHBhdGggZD0iTTQuOTMxMjYgMTQuMTU3MUw2Ljc4MTA2IDMuNzE0NzFIMTAuMTM3NUMxMS4xOTE3IDMuNzE0NzEgMTEuOTgyNCAzLjk4MzIzIDEyLjUwOTUgNC41MjAyN0MxMy4wNDY1IDUuMDQ3MzYgMTMuMzE1IDUuNzMzNTggMTMuMzE1IDYuNTc4OTJDMTMuMzE1IDcuNDQ0MTQgMTMuMDcxNCA4LjE1NTIyIDEyLjU4NDEgOC43MTIxNUMxMi4xMDY3IDkuMjU5MTMgMTEuNDU1MyA5LjYzNzA1IDEwLjYyOTggOS44NDU5TDEyLjA2MTkgMTQuMTU3MUgxMC4zMzE1TDkuMDMzNjQgMTAuMDI0OUg3LjI0MzUxTDYuNTEyNTQgMTQuMTU3MUg0LjkzMTI2Wk03LjQ5NzExIDguNTkyODFIOS4yNDI0OEM5Ljk5ODMyIDguNTkyODEgMTAuNTkwMSA4LjQyMzc0IDExLjAxNzcgOC4wODU2MUMxMS40NTUzIDcuNzM3NTMgMTEuNjc0MSA3LjI2NTEzIDExLjY3NDEgNi42Njg0MkMxMS42NzQxIDYuMTkxMDYgMTEuNTI0OSA1LjgxODExIDExLjIyNjUgNS41NDk1OUMxMC45MjgyIDUuMjcxMTMgMTAuNDU1OCA1LjEzMTkgOS44MDkzNiA1LjEzMTlIOC4xMDg3NEw3LjQ5NzExIDguNTkyODFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="POST" target="method" />
+          <zeebe:input source="=azure.accessTokenUrl" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/x-www-form-urlencoded&#34;&#10;}" target="headers" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="=20" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="=20" target="readTimeoutInSeconds" />
+          <zeebe:input source="={&#10;  &#34;grant_type&#34;: &#34;authorization_code&#34;,&#10;  &#34;code&#34;: authorizationCode,&#10;  &#34;client_id&#34;: azure.clientId,&#10;  &#34;client_secret&#34;: azure.clientSecret,&#10;  &#34;redirect_uri&#34;: azure.authCodeCallbackUrl&#10;}" target="body" />
+          <zeebe:input source="=false" target="ignoreNullValues" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;result&#34;: response.body&#10;}" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0db7ks4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dkr3fy</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0z89xdm" sourceRef="Activity_0macbl8" targetRef="Activity_090picp" />
+    <bpmn:callActivity id="Activity_0macbl8" name="Get Authorization Code">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="Process_getMicrosoftAuthCode" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0e2ns3g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z89xdm</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0db7ks4" sourceRef="Activity_090picp" targetRef="Activity_1iuqezc" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_getMicrosoftAccessToken">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="312" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n58bvq_di" bpmnElement="Activity_090picp">
+        <dc:Bounds x="580" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10qxvhk_di" bpmnElement="Activity_0macbl8">
+        <dc:Bounds x="430" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0b5agyp_di" bpmnElement="Event_0b5agyp">
+        <dc:Bounds x="902" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vucr0j_di" bpmnElement="Activity_1iuqezc">
+        <dc:Bounds x="740" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0e2ns3g_di" bpmnElement="Flow_0e2ns3g">
+        <di:waypoint x="348" y="120" />
+        <di:waypoint x="430" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dkr3fy_di" bpmnElement="Flow_0dkr3fy">
+        <di:waypoint x="840" y="118" />
+        <di:waypoint x="902" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z89xdm_di" bpmnElement="Flow_0z89xdm">
+        <di:waypoint x="530" y="118" />
+        <di:waypoint x="580" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0db7ks4_di" bpmnElement="Flow_0db7ks4">
+        <di:waypoint x="680" y="118" />
+        <di:waypoint x="740" y="118" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

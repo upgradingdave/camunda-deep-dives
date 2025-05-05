@@ -1,0 +1,43 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "b05b990"
+  },
+  "schemaVersion": 18,
+  "id": "enter-message-to-send-to-channel-1lk1n0f",
+  "components": [
+    {
+      "label": "Group Id",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_01lwtlb",
+        "columns": null
+      },
+      "id": "Field_18i7dnz",
+      "key": "teams.groupId"
+    },
+    {
+      "label": "Channel Id",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_10jzie6",
+        "columns": null
+      },
+      "id": "Field_1tc36qe",
+      "key": "teams.channelId"
+    },
+    {
+      "label": "Message",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0spdu70",
+        "columns": null
+      },
+      "id": "Field_19pi6me",
+      "key": "teams.message"
+    }
+  ],
+  "type": "default"
+}

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="b05b990" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="Process_microsoftTeamsSample" name="Microsoft Teams Sample" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start Teams Sample">
+      <bpmn:outgoing>Flow_0pdp2ya</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_07w1ctn" name="Send Message to Channel" zeebe:modelerTemplate="io.camunda.connectors.MSTeams.v1" zeebe:modelerTemplateVersion="4" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIGhlaWdodD0nMTgnIHdpZHRoPScxOCcgdmlld0JveD0nLTMzNC4zMjQ5NSAtNTE4LjMzMzUgMjg5Ny40ODI5IDMxMTAuMDAxJz4KICAgIDxwYXRoIGQ9J00xNTU0LjYzNyA3NzcuNWg1NzUuNzEzYzU0LjM5MSAwIDk4LjQ4MyA0NC4wOTIgOTguNDgzIDk4LjQ4M3Y1MjQuMzk4YzAgMTk5LjkwMS0xNjIuMDUxIDM2MS45NTItMzYxLjk1MiAzNjEuOTUyaC0xLjcxMWMtMTk5LjkwMS4wMjgtMzYxLjk3NS0xNjItMzYyLjAwNC0zNjEuOTAxVjgyOC45NzFjLjAwMS0yOC40MjcgMjMuMDQ1LTUxLjQ3MSA1MS40NzEtNTEuNDcxeicKICAgICAgICAgIGZpbGw9JyM1MDU5QzknLz4KICAgIDxjaXJjbGUgcj0nMjMzLjI1JyBjeT0nNDQwLjU4MycgY3g9JzE5NDMuNzUnIGZpbGw9JyM1MDU5QzknLz4KICAgIDxjaXJjbGUgcj0nMzM2LjkxNycgY3k9JzMzNi45MTcnIGN4PScxMjE4LjA4MycgZmlsbD0nIzdCODNFQicvPgogICAgPHBhdGggZD0nTTE2NjcuMzIzIDc3Ny41SDcxNy4wMWMtNTMuNzQzIDEuMzMtOTYuMjU3IDQ1LjkzMS05NS4wMSA5OS42NzZ2NTk4LjEwNWMtNy41MDUgMzIyLjUxOSAyNDcuNjU3IDU5MC4xNiA1NzAuMTY3IDU5OC4wNTMgMzIyLjUxLTcuODkzIDU3Ny42NzEtMjc1LjUzNCA1NzAuMTY3LTU5OC4wNTNWODc3LjE3NmMxLjI0NS01My43NDUtNDEuMjY4LTk4LjM0Ni05NS4wMTEtOTkuNjc2eicKICAgICAgICAgIGZpbGw9JyM3QjgzRUInLz4KICAgIDxwYXRoIGQ9J00xMjQ0IDc3Ny41djgzOC4xNDVjLS4yNTggMzguNDM1LTIzLjU0OSA3Mi45NjQtNTkuMDkgODcuNTk4YTkxLjg1NiA5MS44NTYgMCAwMS0zNS43NjUgNy4yNTdINjY3LjYxM2MtNi43MzgtMTcuMTA1LTEyLjk1OC0zNC4yMS0xOC4xNDItNTEuODMzYTYzMS4yODcgNjMxLjI4NyAwIDAxLTI3LjQ3Mi0xODMuNDlWODc3LjAyYy0xLjI0Ni01My42NTkgNDEuMTk4LTk4LjE5IDk0Ljg1NS05OS41MnonCiAgICAgICAgICBvcGFjaXR5PScuMScvPgogICAgPHBhdGggZD0nTTExOTIuMTY3IDc3Ny41djg4OS45NzhhOTEuODAyIDkxLjgwMiAwIDAxLTcuMjU3IDM1Ljc2NWMtMTQuNjM0IDM1LjU0MS00OS4xNjMgNTguODMzLTg3LjU5OCA1OS4wOUg2OTEuOTc1Yy04LjgxMi0xNy4xMDUtMTcuMTA1LTM0LjIxLTI0LjM2Mi01MS44MzMtNy4yNTctMTcuNjIzLTEyLjk1OC0zNC4yMS0xOC4xNDItNTEuODMzYTYzMS4yODIgNjMxLjI4MiAwIDAxLTI3LjQ3Mi0xODMuNDlWODc3LjAyYy0xLjI0Ni01My42NTkgNDEuMTk4LTk4LjE5IDk0Ljg1NS05OS41MnonCiAgICAgICAgICBvcGFjaXR5PScuMicvPgogICAgPHBhdGggZD0nTTExOTIuMTY3IDc3Ny41djc4Ni4zMTJjLS4zOTUgNTIuMjIzLTQyLjYzMiA5NC40Ni05NC44NTUgOTQuODU1aC00NDcuODRBNjMxLjI4MiA2MzEuMjgyIDAgMDE2MjIgMTQ3NS4xNzdWODc3LjAyYy0xLjI0Ni01My42NTkgNDEuMTk4LTk4LjE5IDk0Ljg1NS05OS41MnonCiAgICAgICAgICBvcGFjaXR5PScuMicvPgogICAgPHBhdGggZD0nTTExNDAuMzMzIDc3Ny41djc4Ni4zMTJjLS4zOTUgNTIuMjIzLTQyLjYzMiA5NC40Ni05NC44NTUgOTQuODU1SDY0OS40NzJBNjMxLjI4MiA2MzEuMjgyIDAgMDE2MjIgMTQ3NS4xNzdWODc3LjAyYy0xLjI0Ni01My42NTkgNDEuMTk4LTk4LjE5IDk0Ljg1NS05OS41MnonCiAgICAgICAgICBvcGFjaXR5PScuMicvPgogICAgPHBhdGggZD0nTTEyNDQgNTA5LjUyMnYxNjMuMjc1Yy04LjgxMi41MTgtMTcuMTA1IDEuMDM3LTI1LjkxNyAxLjAzNy04LjgxMiAwLTE3LjEwNS0uNTE4LTI1LjkxNy0xLjAzN2EyODQuNDcyIDI4NC40NzIgMCAwMS01MS44MzMtOC4yOTNjLTEwNC45NjMtMjQuODU3LTE5MS42NzktOTguNDY5LTIzMy4yNS0xOTguMDAzYTI4OC4wMiAyODguMDIgMCAwMS0xNi41ODctNTEuODMzaDI1OC42NDhjNTIuMzA1LjE5OCA5NC42NTcgNDIuNTQ5IDk0Ljg1NiA5NC44NTR6JwogICAgICAgICAgb3BhY2l0eT0nLjEnLz4KICAgIDxwYXRoIGQ9J00xMTkyLjE2NyA1NjEuMzU1djExMS40NDJhMjg0LjQ3MiAyODQuNDcyIDAgMDEtNTEuODMzLTguMjkzYy0xMDQuOTYzLTI0Ljg1Ny0xOTEuNjc5LTk4LjQ2OS0yMzMuMjUtMTk4LjAwM2gxOTAuMjI4YzUyLjMwNC4xOTggOTQuNjU2IDQyLjU1IDk0Ljg1NSA5NC44NTR6JwogICAgICAgICAgb3BhY2l0eT0nLjInLz4KICAgIDxwYXRoIGQ9J00xMTkyLjE2NyA1NjEuMzU1djExMS40NDJhMjg0LjQ3MiAyODQuNDcyIDAgMDEtNTEuODMzLTguMjkzYy0xMDQuOTYzLTI0Ljg1Ny0xOTEuNjc5LTk4LjQ2OS0yMzMuMjUtMTk4LjAwM2gxOTAuMjI4YzUyLjMwNC4xOTggOTQuNjU2IDQyLjU1IDk0Ljg1NSA5NC44NTR6JwogICAgICAgICAgb3BhY2l0eT0nLjInLz4KICAgIDxwYXRoIGQ9J00xMTQwLjMzMyA1NjEuMzU1djEwMy4xNDhjLTEwNC45NjMtMjQuODU3LTE5MS42NzktOTguNDY5LTIzMy4yNS0xOTguMDAzaDEzOC4zOTVjNTIuMzA1LjE5OSA5NC42NTYgNDIuNTUxIDk0Ljg1NSA5NC44NTV6JwogICAgICAgICAgb3BhY2l0eT0nLjInLz4KICAgIDxsaW5lYXJHcmFkaWVudCBncmFkaWVudFRyYW5zZm9ybT0nbWF0cml4KDEgMCAwIC0xIDAgMjA3NS4zMzMpJyB5Mj0nMzk0LjI2MScgeDI9Jzk0Mi4yMzQnIHkxPScxNjgzLjA3MycgeDE9JzE5OC4wOTknCiAgICAgICAgICAgICAgICAgICAgZ3JhZGllbnRVbml0cz0ndXNlclNwYWNlT25Vc2UnIGlkPSdhJz4KICAgICAgICA8c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyM1YTYyYzMnLz4KICAgICAgICA8c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjNGQ1NWJkJy8+CiAgICAgICAgPHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjMzk0MGFiJy8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPHBhdGggZD0nTTk1LjAxIDQ2Ni41aDk1MC4zMTJjNTIuNDczIDAgOTUuMDEgNDIuNTM4IDk1LjAxIDk1LjAxdjk1MC4zMTJjMCA1Mi40NzMtNDIuNTM4IDk1LjAxLTk1LjAxIDk1LjAxSDk1LjAxYy01Mi40NzMgMC05NS4wMS00Mi41MzgtOTUuMDEtOTUuMDFWNTYxLjUxYzAtNTIuNDcyIDQyLjUzOC05NS4wMSA5NS4wMS05NS4wMXonCiAgICAgICAgICBmaWxsPSd1cmwoI2EpJy8+CiAgICA8cGF0aCBkPSdNODIwLjIxMSA4MjguMTkzaC0xODkuOTd2NTE3LjI5N2gtMTIxLjAzVjgyOC4xOTNIMzIwLjEyM1Y3MjcuODQ0aDUwMC4wODh6JyBmaWxsPScjRkZGJy8+Cjwvc3ZnPg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:connector-microsoft-teams:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="token" target="authentication.type" />
+          <zeebe:input source="=azure.accessToken" target="authentication.token" />
+          <zeebe:input source="channel" target="data.type" />
+          <zeebe:input source="sendMessageToChannel" target="data.method" />
+          <zeebe:input source="=teams.groupId" target="data.groupId" />
+          <zeebe:input source="=teams.channelId" target="data.channelId" />
+          <zeebe:input source="=teams.message" target="data.content" />
+          <zeebe:input source="TEXT" target="data.bodyType" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="postMessageResult" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1c0xe3j</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zya7as</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0pdp2ya" sourceRef="StartEvent_1" targetRef="Gateway_1bh3l8p" />
+    <bpmn:endEvent id="Event_0gqkfzp" name="End Teams Sample">
+      <bpmn:incoming>Flow_0zya7as</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0zya7as" sourceRef="Activity_07w1ctn" targetRef="Event_0gqkfzp" />
+    <bpmn:exclusiveGateway id="Gateway_1bh3l8p" name="Bearer Token?" default="Flow_0k88ffs">
+      <bpmn:incoming>Flow_0pdp2ya</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hes90a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0k88ffs</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0hes90a" name="Yes" sourceRef="Gateway_1bh3l8p" targetRef="Gateway_166kw9s">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=is defined(azure.accessToken)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0k88ffs" name="No" sourceRef="Gateway_1bh3l8p" targetRef="Activity_0kz93b4" />
+    <bpmn:callActivity id="Activity_0kz93b4" name="Get Access Token">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="Process_getMicrosoftAccessToken" propagateAllChildVariables="false" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=result.access_token" target="azure.accessToken" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0k88ffs</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ghvag8</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1ghvag8" sourceRef="Activity_0kz93b4" targetRef="Gateway_166kw9s" />
+    <bpmn:sequenceFlow id="Flow_1hv0we0" sourceRef="Gateway_166kw9s" targetRef="Gateway_0ju1pj0" />
+    <bpmn:exclusiveGateway id="Gateway_166kw9s">
+      <bpmn:incoming>Flow_0hes90a</bpmn:incoming>
+      <bpmn:incoming>Flow_1ghvag8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hv0we0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_0ju1pj0" name="Have message and channel details?" default="Flow_0rgssww">
+      <bpmn:incoming>Flow_1hv0we0</bpmn:incoming>
+      <bpmn:outgoing>Flow_07bk4wd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0rgssww</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_07bk4wd" name="Yes" sourceRef="Gateway_0ju1pj0" targetRef="Gateway_08thqin">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=is defined(teams.groupId)
+and is defined(teams.channelId)
+and is defined(teams.message)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0rgssww" name="No" sourceRef="Gateway_0ju1pj0" targetRef="Activity_0yw1hho" />
+    <bpmn:exclusiveGateway id="Gateway_08thqin">
+      <bpmn:incoming>Flow_07bk4wd</bpmn:incoming>
+      <bpmn:incoming>Flow_0qc20n0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c0xe3j</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1c0xe3j" sourceRef="Gateway_08thqin" targetRef="Activity_07w1ctn" />
+    <bpmn:sequenceFlow id="Flow_0qc20n0" sourceRef="Activity_0yw1hho" targetRef="Gateway_08thqin" />
+    <bpmn:userTask id="Activity_0yw1hho" name="Enter Channel and Message Details">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="enter-message-to-send-to-channel-1lk1n0f" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rgssww</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qc20n0</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_microsoftTeamsSample">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="112" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="101" y="143" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1bh3l8p_di" bpmnElement="Gateway_1bh3l8p" isMarkerVisible="true">
+        <dc:Bounds x="205" y="93" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="194" y="69" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s6jsjr_di" bpmnElement="Activity_0kz93b4">
+        <dc:Bounds x="270" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0llrlet_di" bpmnElement="Gateway_166kw9s" isMarkerVisible="true">
+        <dc:Bounds x="385" y="93" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ju1pj0_di" bpmnElement="Gateway_0ju1pj0" isMarkerVisible="true">
+        <dc:Bounds x="475" y="93" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="463" y="50" width="74" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_08thqin_di" bpmnElement="Gateway_08thqin" isMarkerVisible="true">
+        <dc:Bounds x="685" y="93" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_002u3ni_di" bpmnElement="Activity_0yw1hho">
+        <dc:Bounds x="560" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_004970u_di" bpmnElement="Activity_07w1ctn">
+        <dc:Bounds x="810" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0gqkfzp_di" bpmnElement="Event_0gqkfzp">
+        <dc:Bounds x="962" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="953" y="143" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0pdp2ya_di" bpmnElement="Flow_0pdp2ya">
+        <di:waypoint x="148" y="118" />
+        <di:waypoint x="205" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zya7as_di" bpmnElement="Flow_0zya7as">
+        <di:waypoint x="910" y="118" />
+        <di:waypoint x="962" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hes90a_di" bpmnElement="Flow_0hes90a">
+        <di:waypoint x="255" y="118" />
+        <di:waypoint x="385" y="118" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="311" y="100" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k88ffs_di" bpmnElement="Flow_0k88ffs">
+        <di:waypoint x="230" y="143" />
+        <di:waypoint x="230" y="210" />
+        <di:waypoint x="270" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="238" y="173" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ghvag8_di" bpmnElement="Flow_1ghvag8">
+        <di:waypoint x="370" y="210" />
+        <di:waypoint x="410" y="210" />
+        <di:waypoint x="410" y="143" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hv0we0_di" bpmnElement="Flow_1hv0we0">
+        <di:waypoint x="435" y="118" />
+        <di:waypoint x="475" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07bk4wd_di" bpmnElement="Flow_07bk4wd">
+        <di:waypoint x="525" y="118" />
+        <di:waypoint x="685" y="118" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="596" y="100" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rgssww_di" bpmnElement="Flow_0rgssww">
+        <di:waypoint x="500" y="143" />
+        <di:waypoint x="500" y="210" />
+        <di:waypoint x="560" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="508" y="174" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c0xe3j_di" bpmnElement="Flow_1c0xe3j">
+        <di:waypoint x="735" y="118" />
+        <di:waypoint x="810" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qc20n0_di" bpmnElement="Flow_0qc20n0">
+        <di:waypoint x="660" y="210" />
+        <di:waypoint x="710" y="210" />
+        <di:waypoint x="710" y="143" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

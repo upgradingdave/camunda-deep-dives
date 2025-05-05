@@ -11,3 +11,5 @@ zbctl.jks
 rpa/python
 rpa/rpa-worker_1.0.1_darwin_aarch64
 .envrc
+microsoft-teams/payload.json
+microsoft-teams/testing

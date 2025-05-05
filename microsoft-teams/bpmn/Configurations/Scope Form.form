@@ -1,0 +1,43 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "b05b990"
+  },
+  "schemaVersion": 18,
+  "id": "Form_ygal1ad",
+  "components": [
+    {
+      "text": "#### Configure Scope",
+      "type": "text",
+      "layout": {
+        "row": "Row_1i46het",
+        "columns": null
+      },
+      "id": "Field_12frhi2"
+    },
+    {
+      "label": "Add Scope",
+      "values": [
+        {
+          "label": "ChannelMessage.Send",
+          "value": "https%3A%2F%2Fgraph.microsoft.com%2FChannelMessage.Send"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_0gzpegl",
+        "columns": null
+      },
+      "id": "Field_0q75n9a",
+      "key": "azure.scopes",
+      "validate": {
+        "required": true
+      },
+      "defaultValue": "https%3A%2F%2Fgraph.microsoft.com%2FChannelMessage.Send",
+      "readonly": "on"
+    }
+  ],
+  "type": "default"
+}
