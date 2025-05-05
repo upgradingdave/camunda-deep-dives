@@ -1,4 +1,4 @@
-# How to use Microsoft Teams Connectors (Spring 2025)
+# How to use Microsoft Teams Connectors (Spring 2025, Camunda 8.7)
 
 ## Create a Microsoft Entra App Registration
 
@@ -32,11 +32,12 @@ Deploy the [Microsoft - Get Access Token.bpmn](bpmn/Microsoft%20-%20Get%20Access
 
 ```json
 {
+  "sendMessage": true, 
   "azure": {
     "tenantId": "(tenant id from App Registration)",
     "clientId": "(App Registration client id)",
     "clientSecret": "{{secrets.AZURE_CLIENT_SECRET}}",
-    "scopes": "https://graph.microsoft.com/ChannelMessage.Send",
+    "scopes": "https://graph.microsoft.com/ChannelMessage.Send https://graph.microsoft.com/Channel.ReadBasic.All",
     "authCodeCallbackUrl": "https://(your-region).connectors.camunda.io/(your-cluster-id)/inbound/microsoftAuthCodeCallback"
   },
   "teams": {
@@ -96,11 +97,4 @@ https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
 https://login.microsoftonline.com/(your-tenant-id)/oauth2/v2.0/token
 
 https://login.microsoftonline.com/common/oauth2/v2.0/token
-
-
-
-
-
-
-
 

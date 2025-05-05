@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="b05b990" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="9262912" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
   <bpmn:process id="Process_getMicrosoftAccessToken" name="Microsoft - Get Access Token" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0e2ns3g</bpmn:outgoing>
@@ -10,10 +10,7 @@
     </bpmn:endEvent>
     <bpmn:scriptTask id="Activity_090picp" name="Set Access Token URL">
       <bpmn:extensionElements>
-        <zeebe:script expression="=&#34;https://login.microsoftonline.com/&#34;+azure.tenantId+&#34;/oauth2/v2.0/token&#34;" resultVariable="feelResult" />
-        <zeebe:ioMapping>
-          <zeebe:output source="=feelResult" target="azure.accessTokenUrl" />
-        </zeebe:ioMapping>
+        <zeebe:script expression="=&#34;https://login.microsoftonline.com/&#34;+azure.tenantId+&#34;/oauth2/v2.0/token&#34;" resultVariable="microsoftAccessTokenUrl" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0z89xdm</bpmn:incoming>
       <bpmn:outgoing>Flow_0db7ks4</bpmn:outgoing>
@@ -25,7 +22,7 @@
         <zeebe:ioMapping>
           <zeebe:input source="noAuth" target="authentication.type" />
           <zeebe:input source="POST" target="method" />
-          <zeebe:input source="=azure.accessTokenUrl" target="url" />
+          <zeebe:input source="=microsoftAccessTokenUrl" target="url" />
           <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/x-www-form-urlencoded&#34;&#10;}" target="headers" />
           <zeebe:input source="=false" target="storeResponse" />
           <zeebe:input source="=20" target="connectionTimeoutInSeconds" />
@@ -56,18 +53,18 @@
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="312" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1n58bvq_di" bpmnElement="Activity_090picp">
-        <dc:Bounds x="580" y="78" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_10qxvhk_di" bpmnElement="Activity_0macbl8">
-        <dc:Bounds x="430" y="78" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0b5agyp_di" bpmnElement="Event_0b5agyp">
         <dc:Bounds x="902" y="100" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n58bvq_di" bpmnElement="Activity_090picp">
+        <dc:Bounds x="580" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vucr0j_di" bpmnElement="Activity_1iuqezc">
         <dc:Bounds x="740" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10qxvhk_di" bpmnElement="Activity_0macbl8">
+        <dc:Bounds x="430" y="78" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0e2ns3g_di" bpmnElement="Flow_0e2ns3g">
