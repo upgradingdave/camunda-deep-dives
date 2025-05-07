@@ -62,7 +62,8 @@ public class Main {
     Option plainTextOption =
         Option.builder()
             .longOpt("plainText")
-            .desc("By default, we'll use tls encrypted communication. Use this to connect using plain text (no tls encryption)")
+            .desc(
+                "By default, we'll use tls encrypted communication. Use this to connect using plain text (no tls encryption)")
             .build();
 
     Option helpOption = Option.builder().longOpt("help").desc("display this help message").build();
@@ -124,7 +125,7 @@ public class Main {
                 .gatewayAddress(address)
                 .credentialsProvider(credentialsProvider);
 
-        if(cmd.hasOption("plainText")) {
+        if (cmd.hasOption("plainText")) {
           zeebeClientBuilder.usePlaintext();
         }
 
