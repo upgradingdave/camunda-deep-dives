@@ -4,9 +4,11 @@
 
 # A Java Zeebe Client
 
-A very simple command line tool written in java for testing connections to zeebe
+A basic command line tool written in java for testing connections to zeebe
 
 # Usage Examples
+
+TLS:
 
 ```shell
 java -jar zbctl.jar \
@@ -16,6 +18,26 @@ java -jar zbctl.jar \
   --clientSecret MYSECRET \
   --certPath ./certs/pretendpear.cer
 ```
+
+No TLS: 
+
+```shell
+java -jar zbctl.jar \
+  --address my.domain.com:443 \
+  --authzUrl https://my.domain.com:443/auth/realms/camunda-platform/protocol/openid-connect/token \
+  --clientId zeebe \
+  --clientSecret MYSECRET \
+  --plainText
+```
+
+## Build
+
+```shell
+docker buildx create --use
+docker buildx build --platform linux/amd64,linux/arm64 --push -t upgradingdave/zbctl-java:latest .
+```
+
+
 
 
 

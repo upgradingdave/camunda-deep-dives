@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.camunda</groupId>
   <artifactId>zbctl-java</artifactId>
-  <name>Java Zeebe Client</name>
+  <name>Java zbctl</name>
   <version>1.0.0-SNAPSHOT</version>
   <description>A Java Zeebe Client that can be run from the command line</description>
   <build>
@@ -12,11 +12,13 @@
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
+            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
             <configuration>
               <shadedArtifactAttached>true</shadedArtifactAttached>
+              <finalName>zbctl.jar</finalName>
               <transformers>
                 <transformer>
                   <mainClass>io.camunda.zbctl.Main</mainClass>
@@ -46,6 +48,5 @@
   </build>
   <properties>
     <java.version>17</java.version>
-    <zeebe.version>8.4.2</zeebe.version>
   </properties>
 </project>
