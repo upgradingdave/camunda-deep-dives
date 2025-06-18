@@ -1,7 +1,7 @@
 # Camunda RPA Example (as of Spring 2025)
 
 > [!NOTE]  
-> Thanks to [superbeagle](https://github.com/superbeagle) for this great example :clap:
+> Thanks to [superbeagle](https://github.com/superbeagle) for this great example :clap:gi
 
 [Camunda RPA Getting Started Docs](https://docs.camunda.io/docs/components/rpa/getting-started/#test-your-script)
 
